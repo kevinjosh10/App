@@ -2110,6 +2110,7 @@ function getSortedReportActionsForDisplay(
     shouldIncludeInvisibleActions = false,
     visibleReportActionsData?: VisibleReportActionsDerivedValue,
     reportID?: string,
+    shouldIncludeDEWRoutedActions = true,
 ): ReportAction[] {
     let filteredReportActions: ReportAction[] = [];
     if (!reportActions) {
@@ -2134,7 +2135,8 @@ function getSortedReportActionsForDisplay(
     }
 
     const baseURLAdjustedReportActions = filteredReportActions.map((reportAction) => replaceBaseURLInPolicyChangeLogAction(reportAction));
-    return getSortedReportActions(withDEWRoutedActionsArray(baseURLAdjustedReportActions), true);
+    const actionsToSort = shouldIncludeDEWRoutedActions ? withDEWRoutedActionsArray(baseURLAdjustedReportActions) : baseURLAdjustedReportActions;
+    return getSortedReportActions(actionsToSort, true);
 }
 
 /**

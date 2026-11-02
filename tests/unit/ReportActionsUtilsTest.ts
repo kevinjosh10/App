@@ -1210,6 +1210,31 @@ describe('ReportActionsUtils', () => {
             // Then the whisper with deleted set should be filtered out, leaving only the ADD_COMMENT
             expect(result).toStrictEqual([input.at(0)]);
         });
+
+        it('should exclude synthetic DEW routed actions when shouldIncludeDEWRoutedActions is false (used for pagination)', () => {
+            const dewSubmittedAction = {
+                actionName: CONST.REPORT.ACTIONS.TYPE.SUBMITTED,
+                reportActionID: '12345',
+                created: '2026-11-02 12:00:00.000',
+                originalMessage: {
+                    workflow: CONST.POLICY.APPROVAL_MODE.DYNAMICEXTERNAL,
+                    to: 'approver@expensify.com',
+                },
+                message: [{html: 'submitted', type: 'COMMENT', text: 'submitted'}],
+            } as unknown as ReportAction;
+
+            const input = [dewSubmittedAction];
+
+            // When shouldIncludeDEWRoutedActions is true (UI display), synthetic DEW action is included
+            const displayResult = ReportActionsUtils.getSortedReportActionsForDisplay(input, true, true, undefined, '1', true);
+            expect(displayResult).toHaveLength(2);
+            expect(displayResult.some((action) => action.reportActionID === '12345DEW')).toBe(true);
+
+            // When shouldIncludeDEWRoutedActions is false (pagination), synthetic DEW action is excluded
+            const paginationResult = ReportActionsUtils.getSortedReportActionsForDisplay(input, true, true, undefined, '1', false);
+            expect(paginationResult).toHaveLength(1);
+            expect(paginationResult[0].reportActionID).toBe('12345');
+        });
     });
 
     describe('hasRequestFromCurrentAccount', () => {

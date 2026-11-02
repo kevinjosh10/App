@@ -116,7 +116,8 @@ function useLoadReportActions({
         // Use the Pusher-safe cursor when available instead of newestReportAction
         // (which may include Pusher-delivered actions like Concierge replies that skip gaps)
         if (newestFetchedReportActionID) {
-            getNewerActions(reportID, newestFetchedReportActionID);
+            const sanitizedCursor = newestFetchedReportActionID.endsWith('DEW') ? newestFetchedReportActionID.slice(0, -3) : newestFetchedReportActionID;
+            getNewerActions(reportID, sanitizedCursor);
 
             // Keep transaction thread in sync for mixed report+thread views.
             if (isTransactionThreadReport) {
