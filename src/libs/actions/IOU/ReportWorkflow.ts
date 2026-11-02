@@ -214,7 +214,17 @@ function approveMoneyRequest(params: ApproveMoneyRequestFunctionParams) {
               predictedNextStatus,
               isTrackIntentUser,
           });
-    const chatReport = getReportOrDraftReport({reportID: expenseReport.chatReportID});
+    const chatReport =
+        getReportOrDraftReport({reportID: expenseReport.chatReportID}) ??
+        (expenseReport.chatReportID && expenseReport.policyID
+            ? ({
+                  reportID: expenseReport.chatReportID,
+                  policyID: expenseReport.policyID,
+                  type: CONST.REPORT.TYPE.CHAT,
+                  chatType: CONST.REPORT.CHAT_TYPE.POLICY_EXPENSE_CHAT,
+                  ownerAccountID: expenseReport.ownerAccountID,
+              } as OnyxTypes.Report)
+            : undefined);
 
     const optimisticData: Array<
         OnyxUpdate<
@@ -245,6 +255,12 @@ function approveMoneyRequest(params: ApproveMoneyRequestFunctionParams) {
             ? {
                   lastMessageText: getReportActionText(optimisticApprovedReportAction),
                   lastMessageHtml: getReportActionHtml(optimisticApprovedReportAction),
+              }
+            : {}),
+        ...(hasHeldExpenses && !full && !!unheldTotal
+            ? {
+                  total: unheldTotal,
+                  reimbursableTotal: getUnheldReimbursableTotal(expenseReport),
               }
             : {}),
         // For DEW policies, don't optimistically update stateNum, statusNum, managerID, or nextStep

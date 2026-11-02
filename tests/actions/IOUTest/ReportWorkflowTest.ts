@@ -5497,6 +5497,67 @@ describe('actions/IOU/ReportWorkflow', () => {
             expect(newExpenseReport?.stateNum).toBe(CONST.REPORT.STATE_NUM.SUBMITTED);
             expect(newExpenseReport?.statusNum).toBe(CONST.REPORT.STATUS_NUM.SUBMITTED);
         });
+
+        it('should update original report totals and create held report when approving partially as a delegate without chatReport in Onyx', async () => {
+            await Onyx.set(ONYXKEYS.SESSION, {
+                email: adminEmail,
+                accountID: adminAccountID,
+            });
+
+            // Simulate vacation delegate scenario: remove chatReport from Onyx
+            await Onyx.set(`${ONYXKEYS.COLLECTION.REPORT}${chatReport.reportID}`, null);
+
+            const heldTransaction = {
+                transactionID: 'tx_held_1',
+                reportID: expenseReport.reportID,
+                amount: -5000,
+                currency: 'USD',
+                comment: {hold: 'hold_reason'},
+            };
+            const heldIouAction = {
+                reportActionID: 'action_held_1',
+                actionName: CONST.REPORT.ACTIONS.TYPE.IOU,
+                originalMessage: {IOUTransactionID: heldTransaction.transactionID},
+            };
+
+            await Onyx.set(`${ONYXKEYS.COLLECTION.TRANSACTION}${heldTransaction.transactionID}`, heldTransaction);
+            await Onyx.set(`${ONYXKEYS.COLLECTION.REPORT_ACTIONS}${expenseReport.reportID}`, {
+                [heldIouAction.reportActionID]: heldIouAction,
+            });
+            await waitForBatchedUpdates();
+
+            const newExpenseReportID = approveMoneyRequest({
+                personalDetailsByLogins: {},
+                rules: undefined,
+                getCurrencyDecimals: getCurrencyDecimalsLocal,
+                expenseReport: {
+                    ...expenseReport,
+                    total: -10000,
+                    reimbursableTotal: -10000,
+                    unheldTotal: -5000,
+                    unheldReimbursableTotal: -5000,
+                },
+                expenseReportPolicy: policy,
+                currentUserAccountIDParam: adminAccountID,
+                currentUserEmailParam: adminEmail,
+                hasViolations: false,
+                isASAPSubmitBetaEnabled: false,
+                userBillingGracePeriodEnds: undefined,
+                amountOwed: 0,
+                full: false,
+                ownerBillingGracePeriodEnd: undefined,
+                delegateEmail: undefined,
+                delegateAccountID: 999,
+                isTrackIntentUser: false,
+                ownerLogin: undefined,
+            });
+            await waitForBatchedUpdates();
+
+            expect(newExpenseReportID).toBeDefined();
+            const originalReport = await getOnyxValue(`${ONYXKEYS.COLLECTION.REPORT}${expenseReport.reportID}`);
+            expect(originalReport?.total).toBe(-5000);
+            expect(originalReport?.reimbursableTotal).toBe(-5000);
+        });
     });
 
     describe('getReportOriginalCreationTimestamp', () => {
