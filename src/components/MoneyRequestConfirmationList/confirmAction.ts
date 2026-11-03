@@ -94,10 +94,9 @@ function buildConfirmAction({
             return;
         }
 
+        setFormError('');
+
         if (iouType !== CONST.IOU.TYPE.PAY) {
-            if (formError) {
-                return;
-            }
             onConfirm?.();
             return;
         }
@@ -108,9 +107,6 @@ function buildConfirmAction({
         }
         if (isDelegateAccessRestricted) {
             showDelegateNoAccessModal();
-            return;
-        }
-        if (formError) {
             return;
         }
         Log.info(`[IOU] Sending money via: ${paymentMethod}`);
