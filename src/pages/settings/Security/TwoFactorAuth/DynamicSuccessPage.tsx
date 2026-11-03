@@ -26,9 +26,9 @@ import SCREENS from '@src/SCREENS';
 import {hasCompletedGuidedSetupFlowSelector} from '@src/selectors/Onboarding';
 import isLoadingOnyxValue from '@src/types/utils/isLoadingOnyxValue';
 
-import {findFocusedRoute} from '@react-navigation/native';
+import {findFocusedRoute, usePreventRemove} from '@react-navigation/native';
 import {authTokenTypeSelector} from '@selectors/Session';
-import React from 'react';
+import React, {useRef} from 'react';
 
 import SuccessPageBase from './SuccessPageBase';
 
@@ -86,6 +86,13 @@ function DynamicSuccessPage({route}: DynamicSuccessPageProps) {
             },
         });
     };
+
+    const isDismissingRef = useRef(false);
+
+    usePreventRemove((isForcedSetupFlow || shouldReturnToOnboardingAfter2FA) && !isDismissingRef.current, () => {
+        isDismissingRef.current = true;
+        goBack();
+    });
 
     const goBack = () => {
         if (shouldReturnToOnboardingAfter2FA) {

@@ -152,4 +152,19 @@ describe('DynamicSuccessPage', () => {
         expect(Navigation.revealRouteBeforeDismissingModal).not.toHaveBeenCalled();
         expect(quitAndNavigateBack).not.toHaveBeenCalled();
     });
+
+    it('reveals Home on back action when forced 2FA setup is completed', async () => {
+        // Given forced 2FA setup was completed
+        mockedUseDynamicBackPath.mockReturnValue(ROUTES.SETTINGS_SECURITY.getRoute(true));
+        await Onyx.merge(ONYXKEYS.ACCOUNT, {requiresTwoFactorAuth: true});
+        await Onyx.merge(ONYXKEYS.NVP_ONBOARDING, {hasCompletedGuidedSetupFlow: true});
+        await renderPage({forceSetup: 'true'});
+
+        // When back is triggered (system back, overlay click, or header back)
+        mockOnBackButtonPress?.();
+
+        // Then Home is revealed instead of dropping the user back to Settings > Security
+        expect(Navigation.revealRouteBeforeDismissingModal).toHaveBeenCalledWith(ROUTES.HOME, expect.anything());
+        expect(clearTwoFactorAuthData).toHaveBeenCalledWith(true, true);
+    });
 });
