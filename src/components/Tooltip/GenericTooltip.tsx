@@ -155,6 +155,7 @@ function GenericTooltip({
         }
         TooltipSense.deactivate();
         setIsVisible(false);
+        setIsRendered(false);
     };
 
     const onPressOverlay = () => {

@@ -75,8 +75,10 @@ function BaseGenericTooltip({
             // Temporarily reset the scale caused by animation to get the untransformed size.
             rootWrapperStyle.transform = 'scale(1)';
         }
-        setContentMeasuredWidth(contentRef.current?.getBoundingClientRect().width);
-        setWrapperMeasuredHeight(rootWrapper.current?.getBoundingClientRect().height);
+        const measuredWidth = contentRef.current?.getBoundingClientRect().width;
+        const measuredHeight = rootWrapper.current?.getBoundingClientRect().height;
+        setContentMeasuredWidth((prev) => (prev === measuredWidth ? prev : measuredWidth));
+        setWrapperMeasuredHeight((prev) => (prev === measuredHeight ? prev : measuredHeight));
         if (isScaled) {
             rootWrapperStyle.transform = 'scale(0)';
         }
