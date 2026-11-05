@@ -20,6 +20,7 @@ import {
     isAttendeeTrackingEnabled as isAttendeeTrackingEnabledForPolicy,
     isDefaultTagName,
     isMatchingVendorListLoaded,
+    isTagInPolicy,
     isTaxTrackingEnabled,
     resolveCurrentTaxCode,
 } from '@libs/PolicyUtils';
@@ -575,8 +576,8 @@ function getIsViolationFixed(violationError: string, params: ViolationFixParams)
             if (!hasAnyEnabledTags) {
                 return true;
             }
-            const hasMatchingTag = Object.values(policyTagLists).some((tagList) => !!tagList.tags?.[tag]?.enabled);
-            return hasMatchingTag;
+            return isTagInPolicy(tag, policyTagLists);
+
         },
         [`${CONST.VIOLATIONS_PREFIX}${CONST.VIOLATIONS.TAX_OUT_OF_POLICY}`]: () => {
             if (!taxCode || !policyTaxRates) {

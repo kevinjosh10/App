@@ -157,7 +157,7 @@ function isTagInPolicy(tagValue: string, policyTags: OnyxEntry<PolicyTagLists>):
             return false;
         }
         const tag = findPolicyTagAtLevel(levelTags, component, tagComponents.slice(0, index).join(':'));
-        return !!tag && tag.pendingAction !== CONST.RED_BRICK_ROAD_PENDING_ACTION.DELETE;
+        return !!tag && !!tag.enabled && tag.pendingAction !== CONST.RED_BRICK_ROAD_PENDING_ACTION.DELETE;
     });
 }
 

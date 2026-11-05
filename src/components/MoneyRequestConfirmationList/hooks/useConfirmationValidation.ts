@@ -7,7 +7,7 @@ import {convertToFrontendAmountAsString} from '@libs/CurrencyUtils';
 import {isP2PRecipient} from '@libs/IOUUtils';
 import {isConfirmationAmountMissing, isConfirmationDateMissing, isTaxAmountInvalid, isValidMoneyRequestAmount, validateAmount} from '@libs/MoneyRequestUtils';
 import type {getTagLists as getTagListsFn} from '@libs/PolicyUtils';
-import {canSubmitPerDiemExpenseFromWorkspace, isAttendeeTrackingEnabled} from '@libs/PolicyUtils';
+import {canSubmitPerDiemExpenseFromWorkspace, isAttendeeTrackingEnabled, isTagInPolicy} from '@libs/PolicyUtils';
 import {hasEnabledTags, hasMatchingTag} from '@libs/TagsOptionsListUtils';
 import {isValidTimeExpenseAmount} from '@libs/TimeTrackingUtils';
 import {
@@ -270,7 +270,7 @@ function useConfirmationValidation({
             return {errorKey: 'iou.error.invalidTagLength'};
         }
 
-        if (transactionTag && hasEnabledTags(policyTagLists) && !hasMatchingTag(policyTags, transactionTag)) {
+        if (transactionTag && hasEnabledTags(policyTagLists) && !isTagInPolicy(transactionTag, policyTags)) {
             return {errorKey: 'violations.tagOutOfPolicy'};
         }
 
