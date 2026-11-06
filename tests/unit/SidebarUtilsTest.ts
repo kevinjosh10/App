@@ -4661,6 +4661,31 @@ describe('SidebarUtils', () => {
         describe('sortCategorizedReports', () => {
             const mockLocaleCompare = (a: string, b: string) => a.localeCompare(b);
 
+            it('should prioritize pinned reports over unpinned reports requiring attention', () => {
+                // Given pinned reports and unpinned reports requiring attention
+                const categories = {
+                    pinnedAndGBRReports: [
+                        {reportID: '1', displayName: 'Zebra', sortKey: 'zebra', isPinned: true},
+                        {reportID: '2', displayName: 'Alpha', sortKey: 'alpha', isPinned: true},
+                        {reportID: '3', displayName: 'Bravo', sortKey: 'bravo', isPinned: false},
+                    ],
+                    errorReports: [],
+                    draftReports: [],
+                    nonArchivedReports: [],
+                    archivedReports: [],
+                };
+
+                // When the reports are sorted
+                const result = _sortCategorizedReports(categories, true, mockLocaleCompare);
+
+                // Then pinned reports appear first in alphabetical order followed by unpinned reports requiring attention
+                expect(result.pinnedAndGBRReports.map((report) => report.displayName)).toEqual([
+                    'Alpha',
+                    'Zebra',
+                    'Bravo',
+                ]);
+            });
+
             it('should sort reports correctly in default mode', () => {
                 // Given the reports are created
                 const categories = {

@@ -138,6 +138,7 @@ type MiniReport = {
     displayName: string;
     sortKey: string;
     lastVisibleActionCreated?: string;
+    isPinned?: boolean;
 };
 
 type ShouldDisplayReportInLHNParams = {
@@ -507,15 +508,16 @@ function categorizeReportsForLHN(
 
         const reportID = report.reportID;
         const displayName = getReportName(report, reportAttributes?.[report.reportID]?.reportName);
+        const isPinned = !!report.isPinned;
+        const requiresAttention = !!report?.requiresAttention;
+
         const miniReport: MiniReport = {
             reportID,
             displayName,
             sortKey: buildSortKey(displayName),
             lastVisibleActionCreated: report.lastVisibleActionCreated,
+            isPinned,
         };
-
-        const isPinned = !!report.isPinned;
-        const requiresAttention = !!report?.requiresAttention;
 
         if (isPinned || requiresAttention) {
             pinnedAndGBRReports.push(miniReport);
@@ -594,8 +596,18 @@ function sortCategorizedReports(
 
     const sortIfNeeded = <T>(arr: T[], compareFn: (a: T, b: T) => number): T[] => (arr.length < 2 ? arr : arr.sort(compareFn));
 
+    const comparePinnedAndGBR = (a: MiniReport, b: MiniReport) => {
+        if (a.isPinned && !b.isPinned) {
+            return -1;
+        }
+        if (!a.isPinned && b.isPinned) {
+            return 1;
+        }
+        return compareDisplayNames(a, b);
+    };
+
     // Sort each group of reports accordingly
-    const sortedPinnedAndGBRReports = sortIfNeeded(pinnedAndGBRReports, compareDisplayNames);
+    const sortedPinnedAndGBRReports = sortIfNeeded(pinnedAndGBRReports, comparePinnedAndGBR);
     const sortedErrorReports = sortIfNeeded(errorReports, compareDisplayNames);
     const sortedDraftReports = sortIfNeeded(draftReports, compareDisplayNames);
 
