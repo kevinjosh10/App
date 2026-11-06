@@ -272,11 +272,17 @@ function useFormErrorManagement({
         if (routeError) {
             return routeError;
         }
+        if (formError === 'common.error.fieldRequired') {
+            return translate('iou.error.enterRequiredFields');
+        }
         // This runs ahead of the split branch below because splits render those same inline fields, so they duplicate the same way.
         if (isSuppressedInline(formError)) {
             return undefined;
         }
         if (isTypeSplit && !shouldShowReadOnlySplits) {
+            if (debouncedFormError === 'common.error.fieldRequired') {
+                return translate('iou.error.enterRequiredFields');
+            }
             // Splits render the debounced value, so the suppression has to be re-checked against it. `formError` clears
             // the instant the user fixes the field while `debouncedFormError` lags by USE_DEBOUNCED_STATE_DELAY, and
             // without this the suppressed error would pop into the footer for that window (#96565).

@@ -131,10 +131,10 @@ describe('useFormErrorManagement', () => {
         expect(result.current.errorMessage).toBeUndefined();
     });
 
-    it('errorMessage suppresses required/invalid amount errors (surfaced inline)', () => {
+    it('errorMessage shows enterRequiredFields summary error for fieldRequired in footer', () => {
         const {result: required} = renderHook(() => useFormErrorManagement(baseParams), {wrapper: Wrapper});
         act(() => required.current.setFormError('common.error.fieldRequired'));
-        expect(required.current.errorMessage).toBeUndefined();
+        expect(required.current.errorMessage).toBe('Please enter the required fields.');
 
         const {result: invalid} = renderHook(() => useFormErrorManagement(baseParams), {wrapper: Wrapper});
         act(() => invalid.current.setFormError('common.error.invalidAmount'));

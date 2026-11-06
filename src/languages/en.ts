@@ -1871,6 +1871,7 @@ const translations = {
             genericEditFailureMessage: 'Unexpected error editing this expense. Please try again later.',
             genericSplitFailureMessage: 'Unexpected error splitting this expense. Please try again later.',
             genericSmartscanFailureMessage: 'Transaction is missing fields',
+            enterRequiredFields: 'Please enter the required fields.',
             duplicateWaypointsErrorMessage: 'Please remove duplicate waypoints',
             atLeastTwoDifferentWaypoints: 'Please enter at least two different addresses',
             splitExpenseMultipleParticipantsErrorMessage: 'An expense cannot be split between a workspace and other members. Please update your selection.',
