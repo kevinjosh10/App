@@ -17042,6 +17042,31 @@ describe('ReportUtils', () => {
 
             expect(canLeaveChat(report, reportPolicy, currentUserAccountID, false, false)).toBe(true);
         });
+
+        it('should return false if the report is a transaction thread', () => {
+            const report: Report = {
+                ...createRandomReport(1, undefined),
+                type: CONST.REPORT.TYPE.CHAT,
+                parentReportID: '12345',
+                parentReportActionID: '67890',
+                participants: {
+                    [currentUserAccountID]: {
+                        notificationPreference: CONST.REPORT.NOTIFICATION_PREFERENCE.ALWAYS,
+                    },
+                },
+            };
+
+            const parentReportAction: ReportAction = {
+                ...createRandomReportAction(1),
+                actionName: CONST.REPORT.ACTIONS.TYPE.IOU,
+                originalMessage: {
+                    type: CONST.IOU.REPORT_ACTION_TYPE.CREATE,
+                    IOUTransactionID: '1',
+                },
+            };
+
+            expect(canLeaveChat(report, undefined, currentUserAccountID, false, false, parentReportAction)).toBe(false);
+        });
     });
 
     describe('canJoinChat', () => {
@@ -17135,6 +17160,34 @@ describe('ReportUtils', () => {
             await Onyx.set(ONYXKEYS.SESSION, {email: currentUserEmail, accountID: currentUserAccountID});
 
             expect(canJoinChat(report, undefined, undefined, parentInvoiceReport)).toBe(false);
+        });
+
+        it('should return false if the report is a transaction thread', async () => {
+            const report: Report = {
+                ...createRandomReport(1, undefined),
+                type: CONST.REPORT.TYPE.CHAT,
+                participants: {
+                    ...buildParticipantsFromAccountIDs([currentUserAccountID, 1234]),
+                    [currentUserAccountID]: {
+                        notificationPreference: CONST.REPORT.NOTIFICATION_PREFERENCE.HIDDEN,
+                    },
+                },
+                parentReportID: '12345',
+                parentReportActionID: '67890',
+            };
+
+            const parentReportAction: ReportAction = {
+                ...createRandomReportAction(1),
+                actionName: CONST.REPORT.ACTIONS.TYPE.IOU,
+                originalMessage: {
+                    type: CONST.IOU.REPORT_ACTION_TYPE.CREATE,
+                    IOUTransactionID: '1',
+                },
+            };
+
+            await Onyx.set(ONYXKEYS.SESSION, {email: currentUserEmail, accountID: currentUserAccountID});
+
+            expect(canJoinChat(report, parentReportAction, undefined, undefined)).toBe(false);
         });
 
         it('should respect workspace membership for restricted visibility rooms', async () => {

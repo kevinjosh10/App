@@ -8,6 +8,7 @@ import {useMemoizedLazyExpensifyIcons} from '@hooks/useLazyAsset';
 import useLocalize from '@hooks/useLocalize';
 import useOnyx from '@hooks/useOnyx';
 import {useAllPersonalDetails} from '@hooks/usePersonalDetails';
+import useParentReportAction from '@hooks/useParentReportAction';
 import useReportIsArchived from '@hooks/useReportIsArchived';
 
 import {isPolicyAdmin as isPolicyAdminUtil, isPolicyEmployee as isPolicyEmployeeUtil, isPolicyGuest as isPolicyGuestUtil} from '@libs/PolicyUtils';
@@ -50,10 +51,11 @@ function ReportDetailsMenuLeaveItem({reportID}: ReportDetailsMenuLeaveItemProps)
     const currentUserPersonalDetails = useCurrentUserPersonalDetails();
     const currentUserAccountID = currentUserPersonalDetails?.accountID;
     const isAnonymousUser = useIsAnonymousUser();
+    const parentReportAction = useParentReportAction(report);
     const isReportArchived = useReportIsArchived(reportID);
     const {showConfirmModal} = useConfirmModal();
 
-    const shouldShowLeaveButton = canLeaveChat(report, policy, currentUserAccountID, isAnonymousUser, !!reportNameValuePairs?.private_isArchived);
+    const shouldShowLeaveButton = canLeaveChat(report, policy, currentUserAccountID, isAnonymousUser, !!reportNameValuePairs?.private_isArchived, parentReportAction);
 
     if (!report || !shouldShowLeaveButton) {
         return null;

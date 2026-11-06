@@ -13381,9 +13381,10 @@ function canJoinChat(
     isReportArchived = false,
     currentUserEmail?: string,
 ): boolean {
+    const resolvedParentReportAction = parentReportAction ?? allReportActions?.[`${ONYXKEYS.COLLECTION.REPORT_ACTIONS}${report?.parentReportID}`]?.[report?.parentReportActionID ?? ''];
     // We disabled thread functions for whisper action
     // So we should not show join option for existing thread on whisper message that has already been left, or manually leave it
-    if (isWhisperAction(parentReportAction)) {
+    if (isWhisperAction(resolvedParentReportAction)) {
         return false;
     }
 
@@ -13396,7 +13397,8 @@ function canJoinChat(
         isMoneyRequestReport(report) ||
         isMoneyRequest(report) ||
         isInvoiceReport(report) ||
-        isTrackExpenseReportNew(report, parentReport, parentReportAction) ||
+        isTransactionThread(resolvedParentReportAction) ||
+        isTrackExpenseReportNew(report, parentReport, resolvedParentReportAction) ||
         isInvoiceReport(parentReport);
     // Anyone viewing these chat types is already a participant and therefore cannot join
     if (isRootGroupChat(report, isReportArchived) || isSelfDM(report) || isInvoiceRoom(report) || isSystemChat(report) || isExpenseChat) {
@@ -13424,7 +13426,14 @@ function canJoinChat(
 /**
  * Whether the user can leave a report
  */
-function canLeaveChat(report: OnyxEntry<Report>, policy: OnyxEntry<Policy>, currentUserAccountID: number | undefined, isAnonymousUser: boolean, isReportArchived = false): boolean {
+function canLeaveChat(
+    report: OnyxEntry<Report>,
+    policy: OnyxEntry<Policy>,
+    currentUserAccountID: number | undefined,
+    isAnonymousUser: boolean,
+    isReportArchived = false,
+    parentReportAction?: OnyxInputOrEntry<ReportAction>,
+): boolean {
     if (isRootGroupChat(report, isReportArchived)) {
         return true;
     }
@@ -13453,6 +13462,11 @@ function canLeaveChat(report: OnyxEntry<Report>, policy: OnyxEntry<Policy>, curr
 
     if (isInvoiceRoom(report)) {
         return canLeaveInvoiceRoom(report);
+    }
+
+    const resolvedParentReportAction = parentReportAction ?? allReportActions?.[`${ONYXKEYS.COLLECTION.REPORT_ACTIONS}${report?.parentReportID}`]?.[report?.parentReportActionID ?? ''];
+    if (isTransactionThread(resolvedParentReportAction)) {
+        return false;
     }
 
     return (
