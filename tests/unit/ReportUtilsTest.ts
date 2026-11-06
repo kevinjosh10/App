@@ -28930,6 +28930,30 @@ describe('ReportUtils', () => {
     });
 
     describe('getNonHeldAndFullAmount', () => {
+        it('calculates unheld amount from active transactions when stored unheldReimbursableTotal is 0', () => {
+            const heldTxn = {
+                ...createRandomTransaction(1),
+                amount: 5000,
+                comment: {hold: {reason: 'Missing receipt'}},
+            };
+            const newUnheldTxn = {
+                ...createRandomTransaction(2),
+                amount: 3000,
+                comment: {},
+            };
+            const iouReport: Report = {
+                ...createRandomReport(0, undefined),
+                type: CONST.REPORT.TYPE.IOU,
+                currency: CONST.CURRENCY.USD,
+                total: 8000,
+                unheldTotal: 0,
+                reimbursableTotal: 8000,
+                unheldReimbursableTotal: 0,
+            };
+            const result = getNonHeldAndFullAmount(iouReport, true, [heldTxn, newUnheldTxn], convertToDisplayString);
+            expect(result.hasValidNonHeldAmount).toBe(true);
+            expect(result.nonHeldAmount).toContain('30.00');
+        });
         it('uses the freshly tracked unheldReimbursableTotal when shouldExcludeNonReimbursables is true', () => {
             const expenseReport: Report = {
                 ...createRandomReport(0, undefined),

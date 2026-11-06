@@ -12860,7 +12860,16 @@ function getNonHeldAndFullAmount(
     // sum of the underlying transactions, so deriving from reimbursableTotal/nonReimbursableTotal keeps
     // displayed amounts in sync with what the user actually entered.
     const reimbursableTotal = getReimbursableTotal(iouReport);
-    const unheldReimbursableTotal = getUnheldReimbursableTotal(iouReport);
+    let unheldReimbursableTotal = getUnheldReimbursableTotal(iouReport);
+
+    if (unheldReimbursableTotal === 0 && allReportTransactions?.length > 0) {
+        const computedUnheldReimbursable = allReportTransactions
+            .filter((tx) => !isOnHoldTransactionUtils(tx) && !isTransactionPendingDelete(tx) && isReimbursable(tx))
+            .reduce((sum, tx) => sum + (tx.amount ?? 0), 0);
+        if (computedUnheldReimbursable > 0) {
+            unheldReimbursableTotal = computedUnheldReimbursable;
+        }
+    }
 
     let total: number;
     let unheldTotal: number;
@@ -12883,7 +12892,7 @@ function getNonHeldAndFullAmount(
     const hasValidNonHeldAmount =
         hasHeldExpensesLocal &&
         // For normal cases (positive amounts or IOU reports)
-        (adjustedUnheldTotal >= 0 ||
+        (adjustedUnheldTotal > 0 ||
             // For expense reports with negative amounts, check if amounts are meaningful
             (isExpenseReport(iouReport) && Math.abs(adjustedUnheldTotal) > 0 && Math.abs(adjustedUnheldTotal) !== Math.abs(adjustedTotal)));
 
