@@ -247,6 +247,30 @@ describe('createMemberCustomFieldsSelector', () => {
         // Then it returns an empty object rather than throwing
         expect(createMemberCustomFieldsSelector(['1'])(undefined)).toEqual({});
     });
+
+    it('ignores null or undefined member entries without throwing', () => {
+        // Given an employee list containing null or undefined entries (e.g. from deleted members or Onyx deletions)
+        const policies = {
+            [`${P}1`]: buildPolicy({
+                id: '1',
+                name: 'Workspace 1',
+                // @ts-expect-error -- intentionally passing null/undefined employee entries to verify runtime resilience
+                employeeList: {
+                    'valid@b.com': {email: 'valid@b.com', employeeUserID: 'U1', employeePayrollID: 'P1'},
+                    'deleted@b.com': null,
+                    'undefined@b.com': undefined,
+                },
+            }),
+        };
+
+        // When the selector runs
+        // Then it skips the null/undefined entries and returns only valid members
+        expect(createMemberCustomFieldsSelector(['1'])(policies)).toEqual({
+            '1': {
+                'valid@b.com': {employeeUserID: 'U1', employeePayrollID: 'P1'},
+            },
+        });
+    });
 });
 
 describe('isAdminForPolicyByIDSelector', () => {
