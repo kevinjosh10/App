@@ -26,15 +26,15 @@ import SCREENS from '@src/SCREENS';
 import {hasCompletedGuidedSetupFlowSelector} from '@src/selectors/Onboarding';
 import isLoadingOnyxValue from '@src/types/utils/isLoadingOnyxValue';
 
-import {findFocusedRoute, usePreventRemove} from '@react-navigation/native';
+import {findFocusedRoute} from '@react-navigation/native';
 import {authTokenTypeSelector} from '@selectors/Session';
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import SuccessPageBase from './SuccessPageBase';
 
 type DynamicSuccessPageProps = PlatformStackScreenProps<TwoFactorAuthNavigatorParamList, typeof SCREENS.TWO_FACTOR_AUTH.DYNAMIC_SUCCESS>;
 
-function DynamicSuccessPage({route}: DynamicSuccessPageProps) {
+function DynamicSuccessPage({navigation, route}: DynamicSuccessPageProps) {
     const {environmentURL} = useEnvironment();
     const [session] = useOnyx(ONYXKEYS.SESSION, {selector: authTokenTypeSelector});
     const dynamicBackPath = useDynamicBackPath(DYNAMIC_ROUTES.TWO_FACTOR_AUTH_SUCCESS.path);
@@ -46,7 +46,7 @@ function DynamicSuccessPage({route}: DynamicSuccessPageProps) {
     const isSecuritySettingsFlow = focusedRoute?.name === SCREENS.SETTINGS.SECURITY;
     // The require-2FA overlay opens setup on settings/security?forceSetup=true. The base route's query params are merged
     // into this screen's params and survive the Onyx clear in validateTwoFactorAuth, unlike account flags.
-    const isForcedSetupFlow = isSecuritySettingsFlow && route.params?.forceSetup === 'true';
+    const isForcedSetup = route.params?.forceSetup === 'true';
 
     const [tryNewDot, tryNewDotMetadata] = useOnyx(ONYXKEYS.NVP_TRY_NEW_DOT);
     const [account] = useOnyx(ONYXKEYS.ACCOUNT);
@@ -87,19 +87,12 @@ function DynamicSuccessPage({route}: DynamicSuccessPageProps) {
         });
     };
 
-    const isDismissingRef = useRef(false);
-
-    usePreventRemove((isForcedSetupFlow || shouldReturnToOnboardingAfter2FA) && !isDismissingRef.current, () => {
-        isDismissingRef.current = true;
-        goBack();
-    });
-
     const goBack = () => {
         if (shouldReturnToOnboardingAfter2FA) {
             completeForcedOnboarding2FAHandoff();
             return;
         }
-        if (isForcedSetupFlow) {
+        if (isForcedSetup) {
             sendForcedSetupUserHome();
             return;
         }
@@ -119,6 +112,31 @@ function DynamicSuccessPage({route}: DynamicSuccessPageProps) {
         quitAndNavigateBack(is2FAEnabled, dynamicBackPath);
     };
 
+    const isExitingRef = useRef(false);
+
+    useEffect(() => {
+        if (!isForcedSetup && !shouldReturnToOnboardingAfter2FA) {
+            return;
+        }
+
+        const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+            if (e.data.action.type === CONST.NAVIGATION.ACTION_TYPE.DISMISS_MODAL) {
+                return;
+            }
+
+            e.preventDefault();
+
+            if (isExitingRef.current) {
+                return;
+            }
+            isExitingRef.current = true;
+
+            goBack();
+        });
+
+        return unsubscribe;
+    }, [isForcedSetup, shouldReturnToOnboardingAfter2FA, navigation, goBack]);
+
     const onButtonPress = () => {
         if (CONFIG.IS_HYBRID_APP && isClassicRedirectDismissed && !isClassicRedirectBlocked) {
             closeReactNativeApp({shouldSetNVP: false, isTrackingGPS: false});
@@ -128,7 +146,7 @@ function DynamicSuccessPage({route}: DynamicSuccessPageProps) {
             completeForcedOnboarding2FAHandoff();
             return;
         }
-        if (isForcedSetupFlow) {
+        if (isForcedSetup) {
             sendForcedSetupUserHome();
             return;
         }
