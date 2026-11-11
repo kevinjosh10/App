@@ -4979,6 +4979,7 @@ function createWorkspaceFromIOUPayment({
         policyID,
         policyName: workspaceName,
         type: CONST.REPORT.TYPE.EXPENSE,
+        pendingAction: CONST.RED_BRICK_ROAD_PENDING_ACTION.UPDATE,
         ...ReportUtils.getNegatedReportTotals(iouReport),
         fieldList: newWorkspace.fieldList,
     };
@@ -4998,6 +4999,13 @@ function createWorkspaceFromIOUPayment({
         onyxMethod: Onyx.METHOD.MERGE,
         key: `${ONYXKEYS.COLLECTION.REPORT}${iouReportID}`,
         value: expenseReport,
+    });
+    successData.push({
+        onyxMethod: Onyx.METHOD.MERGE,
+        key: `${ONYXKEYS.COLLECTION.REPORT}${iouReportID}`,
+        value: {
+            pendingAction: null,
+        },
     });
     failureData.push({
         onyxMethod: Onyx.METHOD.MERGE,
@@ -5075,6 +5083,16 @@ function createWorkspaceFromIOUPayment({
                         },
                     ],
                     created: DateUtils.getDBTime(),
+                    pendingAction: CONST.RED_BRICK_ROAD_PENDING_ACTION.ADD,
+                },
+            },
+        });
+        successData.push({
+            onyxMethod: Onyx.METHOD.MERGE,
+            key: `${ONYXKEYS.COLLECTION.REPORT_ACTIONS}${memberData.workspaceChatReportID}`,
+            value: {
+                [reportPreviewAction.reportActionID]: {
+                    pendingAction: null,
                 },
             },
         });
