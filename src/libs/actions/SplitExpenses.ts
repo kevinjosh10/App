@@ -5,7 +5,7 @@ import createDynamicRoute from '@libs/Navigation/helpers/dynamicRoutesUtils/crea
 import isSearchTopmostFullScreenRoute from '@libs/Navigation/helpers/isSearchTopmostFullScreenRoute';
 import Navigation from '@libs/Navigation/Navigation';
 import {rand64} from '@libs/NumberUtils';
-import {getTransactionDetails, isSelfDM} from '@libs/ReportUtils';
+import {getTransactionDetails, isOpenReport, isSelfDM} from '@libs/ReportUtils';
 import {buildOptimisticTransaction, getAttendees, getChildTransactions, getOriginalTransactionWithSplitInfo, isDistanceRequest} from '@libs/TransactionUtils';
 
 import CONST from '@src/CONST';
@@ -85,7 +85,8 @@ function initSplitExpense(
     const relatedTransactions = getChildTransactions(allTransactions, originalTransactionID);
     const hasMultipleSplits = relatedTransactions.length > 1;
     const transactionReport = allReports?.[`${ONYXKEYS.COLLECTION.REPORT}${transaction?.reportID}`];
-    const shouldShowSplitIndicator = isExpenseSplit && hasMultipleSplits;
+    const isReportOpen = isOpenReport(report) || isOpenReport(parentReport) || isOpenReport(transactionReport);
+    const shouldShowSplitIndicator = isExpenseSplit && (hasMultipleSplits || isReportOpen);
 
     const isSelfDMReport = isSelfDM(report) || isSelfDM(parentReport);
 

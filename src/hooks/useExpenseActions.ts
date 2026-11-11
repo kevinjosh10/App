@@ -23,6 +23,7 @@ import {
     canUserPerformWriteAction as canUserPerformWriteActionReportUtils,
     generateReportID,
     isDM,
+    isOpenReport,
     isSelfDM,
     navigateOnDeleteExpense,
 } from '@libs/ReportUtils';
@@ -209,7 +210,8 @@ function useExpenseActions({reportID, isReportInSearch = false, backTo, onDuplic
     // Split indicator
     const {isExpenseSplit} = getOriginalTransactionWithSplitInfo(transaction, originalTransaction);
     const hasMultipleSplits = !!transaction?.comment?.originalTransactionID && getChildTransactions(allTransactions, transaction.comment.originalTransactionID).length > 1;
-    const hasSplitIndicator = isExpenseSplit && hasMultipleSplits;
+    const isReportOpen = isOpenReport(moneyRequestReport);
+    const hasSplitIndicator = isExpenseSplit && (hasMultipleSplits || isReportOpen);
     const isDeletingOwnExpense = requestParentReportAction?.actorAccountID === accountID;
     const shouldShowEditSplitOnDeleteAction = isDeletingOwnExpense && !!transaction?.transactionID && shouldOpenSplitExpenseEditFlowOnDelete([transaction.transactionID]);
 
