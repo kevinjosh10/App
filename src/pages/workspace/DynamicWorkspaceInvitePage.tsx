@@ -82,7 +82,7 @@ function DynamicWorkspaceInvitePage({route}: WorkspaceInvitePageProps) {
 
     useNetwork({onReconnect: openWorkspaceInvitePage});
 
-    const ineligibleInvites = getIneligibleInvitees(policy?.employeeList);
+    const ineligibleInvites = getIneligibleInvitees(policy?.employeeList, policy?.primaryLoginsInvited);
     const excludedUsers = ineligibleInvites.reduce(
         (acc, login) => {
             acc[login] = true;

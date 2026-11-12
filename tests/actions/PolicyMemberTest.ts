@@ -1350,6 +1350,17 @@ describe('actions/PolicyMember', () => {
             expect(employeeList?.[primaryEmail]).toBeUndefined();
             expect(employeeList?.[secondaryEmail]).toBeUndefined();
             expect(employeeList?.[ownerEmail]).toBeDefined();
+
+            const updatedPolicy = await new Promise<Policy | undefined>((resolve) => {
+                const connection = Onyx.connectWithoutView({
+                    key: `${ONYXKEYS.COLLECTION.POLICY}${policyID}`,
+                    callback: (policyResult) => {
+                        connection.unsubscribe();
+                        resolve(policyResult);
+                    },
+                });
+            });
+            expect(updatedPolicy?.primaryLoginsInvited).toBeNull();
         });
     });
 

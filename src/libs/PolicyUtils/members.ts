@@ -11,7 +11,7 @@ import {generateAccountID} from '@libs/UserUtils';
 import CONST from '@src/CONST';
 import type {PersonalDetailsList, Policy, PolicyEmployeeList} from '@src/types/onyx';
 import type PolicyEmployee from '@src/types/onyx/PolicyEmployee';
-import {isEmptyObject} from '@src/types/utils/EmptyObject';
+import {isEmptyObject, isEmptyValueObject} from '@src/types/utils/EmptyObject';
 
 import type {OnyxCollection, OnyxEntry} from 'react-native-onyx';
 
@@ -207,13 +207,18 @@ function getAccountIDForSubmitManagerEmail(
 /**
  * Get login list that we should not show in the workspace invite options
  */
-function getIneligibleInvitees(employeeList?: PolicyEmployeeList): string[] {
+function getIneligibleInvitees(employeeList?: PolicyEmployeeList, primaryLoginsInvited?: Record<string, string>): string[] {
     const policyEmployeeList = employeeList ?? {};
     const memberEmailsToExclude: string[] = [...CONST.EXPENSIFY_EMAILS];
     for (const email of Object.keys(policyEmployeeList)) {
         const policyEmployee = policyEmployeeList?.[email];
-        // Policy members that are pending delete or have errors are not valid and we should show them in the invite options (don't exclude them).
-        if (policyEmployee?.pendingAction === CONST.RED_BRICK_ROAD_PENDING_ACTION.DELETE || Object.keys(policyEmployee?.errors ?? {}).length > 0) {
+        // Policy members that are pending delete, have errors, or are empty placeholder entries (e.g. from invited secondary logins) are not valid active members
+        if (
+            isEmptyValueObject(policyEmployee) ||
+            !policyEmployee?.role ||
+            policyEmployee?.pendingAction === CONST.RED_BRICK_ROAD_PENDING_ACTION.DELETE ||
+            Object.keys(policyEmployee?.errors ?? {}).length > 0
+        ) {
             continue;
         }
         if (!email) {
@@ -222,14 +227,29 @@ function getIneligibleInvitees(employeeList?: PolicyEmployeeList): string[] {
         memberEmailsToExclude.push(email);
     }
 
+    if (primaryLoginsInvited) {
+        for (const [secondaryLogin, primaryLogin] of Object.entries(primaryLoginsInvited)) {
+            const primaryEmployee = policyEmployeeList?.[primaryLogin];
+            if (
+                primaryEmployee &&
+                !isEmptyValueObject(primaryEmployee) &&
+                !!primaryEmployee.role &&
+                primaryEmployee.pendingAction !== CONST.RED_BRICK_ROAD_PENDING_ACTION.DELETE &&
+                Object.keys(primaryEmployee.errors ?? {}).length === 0
+            ) {
+                memberEmailsToExclude.push(secondaryLogin);
+            }
+        }
+    }
+
     return memberEmailsToExclude;
 }
 
 /**
  * Get excluded users as a Record for use in search selector
  */
-function getExcludedUsers(employeeList?: PolicyEmployeeList): Record<string, boolean> {
-    return Object.fromEntries(getIneligibleInvitees(employeeList).map((login) => [login, true]));
+function getExcludedUsers(employeeList?: PolicyEmployeeList, primaryLoginsInvited?: Record<string, string>): Record<string, boolean> {
+    return Object.fromEntries(getIneligibleInvitees(employeeList, primaryLoginsInvited).map((login) => [login, true]));
 }
 
 /**

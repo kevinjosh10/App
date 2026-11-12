@@ -554,12 +554,19 @@ function removeMembers(policy: OnyxEntry<Policy>, selectedMemberEmails: string[]
     if (!isEmptyObject(policy?.primaryLoginsInvited ?? {})) {
         // Take the current policy members and remove them optimistically
         const employeeListEmails = Object.keys(policy?.employeeList ?? {});
-        const remainingLogins = employeeListEmails.filter((email) => !selectedMemberEmails.includes(email));
+        const remainingLogins = employeeListEmails.filter((email) => !selectedMemberEmailsWithDuplicates.includes(email));
         const invitedPrimaryToSecondaryLogins: Record<string, string> = {};
 
         if (policy?.primaryLoginsInvited) {
             for (const key of Object.keys(policy.primaryLoginsInvited)) {
                 invitedPrimaryToSecondaryLogins[policy.primaryLoginsInvited?.[key] ?? ''] = key;
+            }
+        }
+
+        const removedSecondaryLogins: Record<string, null> = {};
+        for (const [secondaryLogin, primaryLogin] of Object.entries(primaryLoginsInvited)) {
+            if (selectedMemberEmailsWithDuplicates.includes(secondaryLogin) || selectedMemberEmailsWithDuplicates.includes(primaryLogin)) {
+                removedSecondaryLogins[secondaryLogin] = null;
             }
         }
 
@@ -570,6 +577,28 @@ function removeMembers(policy: OnyxEntry<Policy>, selectedMemberEmails: string[]
                 key: policyKey,
                 value: {
                     primaryLoginsInvited: null,
+                },
+            });
+            successData.push({
+                onyxMethod: Onyx.METHOD.MERGE,
+                key: policyKey,
+                value: {
+                    primaryLoginsInvited: null,
+                },
+            });
+        } else if (!isEmptyObject(removedSecondaryLogins)) {
+            optimisticData.push({
+                onyxMethod: Onyx.METHOD.MERGE,
+                key: policyKey,
+                value: {
+                    primaryLoginsInvited: removedSecondaryLogins,
+                },
+            });
+            successData.push({
+                onyxMethod: Onyx.METHOD.MERGE,
+                key: policyKey,
+                value: {
+                    primaryLoginsInvited: removedSecondaryLogins,
                 },
             });
         }
