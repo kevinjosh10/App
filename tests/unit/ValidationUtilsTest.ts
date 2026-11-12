@@ -477,11 +477,16 @@ describe('ValidationUtils', () => {
         test('Valid legal name', () => {
             expect(isValidLegalName('test name')).toBe(true);
             expect(isValidLegalName(`X Æ A test`)).toBe(true);
+            expect(isValidLegalName('Smith-Jones')).toBe(true);
+            expect(isValidLegalName('a hyphenated-name')).toBe(true);
         });
 
         test('Invalid legal name', () => {
-            expect(isValidLegalName(`a hyphenated-name`)).toBe(false);
             expect(isValidLegalName('άλφα')).toBe(false);
+            expect(isValidLegalName('-')).toBe(false);
+            expect(isValidLegalName('-Smith')).toBe(false);
+            expect(isValidLegalName('Smith-')).toBe(false);
+            expect(isValidLegalName('Smith--Jones')).toBe(false);
         });
     });
 

@@ -436,7 +436,7 @@ function isValidDisplayName(name: string): boolean {
  * Checks that the provided legal name doesn't contain special characters
  */
 function isValidLegalName(name: string): boolean {
-    return CONST.REGEX.ALPHABETIC_AND_LATIN_CHARS.test(name);
+    return CONST.REGEX.ALPHABETIC_AND_LATIN_CHARS.test(name.trim());
 }
 
 /**
