@@ -4,6 +4,7 @@ import VideoPlayer from '@components/VideoPlayer';
 import IconButton from '@components/VideoPlayer/IconButton';
 import {buildVideoSourceURL} from '@components/VideoPlayer/utils';
 import {usePlaybackActionsContext, usePlaybackStateContext} from '@components/VideoPlayerContexts/PlaybackContext';
+import {findURLInReportOrAncestorAttachments} from '@components/VideoPlayerContexts/PlaybackContext/playbackContextReportIDUtils';
 
 import useCheckIfRouteHasRemainedUnchanged from '@hooks/useCheckIfRouteHasRemainedUnchanged';
 import {useMemoizedLazyExpensifyIcons} from '@hooks/useLazyAsset';
@@ -15,6 +16,7 @@ import useThemeStyles from '@hooks/useThemeStyles';
 import useThumbnailDimensions from '@hooks/useThumbnailDimensions';
 
 import getPlatform from '@libs/getPlatform';
+import {isChatThread} from '@libs/ReportUtils';
 
 import Navigation from '@navigation/Navigation';
 
@@ -113,6 +115,8 @@ function VideoPlayerPreview({videoUrl, thumbnailUrl, reportID, fileName, videoDi
         updateCurrentURLAndReportID(videoUrl, report, reportID);
         if (isSmallScreenWidth) {
             onShowModalPress();
+        } else {
+            setIsThumbnail(false);
         }
     };
 
@@ -125,7 +129,8 @@ function VideoPlayerPreview({videoUrl, thumbnailUrl, reportID, fileName, videoDi
     if (prevPlaybackKey !== playbackKey) {
         setPrevPlaybackKey(playbackKey);
         const isFocused = doesUserRemainOnFirstRenderRoute();
-        if (videoUrl === currentlyPlayingURL && reportID === currentRouteReportID && isFocused) {
+        const isMatchingReport = reportID === currentRouteReportID || (isChatThread(report) && findURLInReportOrAncestorAttachments(report, videoUrl) === currentRouteReportID);
+        if (videoUrl === currentlyPlayingURL && isMatchingReport && isFocused) {
             setIsThumbnail(false);
         }
     }
