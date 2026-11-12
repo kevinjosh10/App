@@ -311,7 +311,14 @@ function SubmitDetailsPage({
     const [storedTransaction] = useOnyx(`${ONYXKEYS.COLLECTION.TRANSACTION}${getNonEmptyStringOnyxID(existingTransactionID)}`);
     const listOfParticipants = participants.filter((participant) => participant.selected);
     const participant = listOfParticipants.at(0) ?? selectedParticipants.at(0);
-    const reportToSubmit = resolveReportForMoneyRequest({transaction, transactionReport, routeReport: report, reportNameValuePair, rules});
+    const reportToSubmit = resolveReportForMoneyRequest({
+        transaction,
+        transactionReport,
+        routeReport: report,
+        reportNameValuePair,
+        rules,
+        currentUserAccountID: currentUserPersonalDetails.accountID,
+    });
     const postSubmitNavigationReportID = (isSelfDM(report) ? report : reportToSubmit)?.reportID ?? reportOrAccountID;
     const isIouReport = isMoneyRequestReport(reportToSubmit);
     const policyTagsForRequestMoney = useMoneyRequestPolicyTags({

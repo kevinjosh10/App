@@ -192,7 +192,8 @@ function IOURequestStepConfirmationContent({
     // expense onto the self-DM, whose report carries the placeholder '_FAKE_' policy. After selecting that workspace
     // chat via the in-place "To" picker, the route report is still that self-DM; its fake policyID must not shadow
     // the selected participant's report, or the workspace expense fields (Category, etc.) never resolve. See #96576.
-    const realPolicyID = selectedWorkspacePolicyID ?? getIOURequestPolicyID(initialTransaction, pickReportForPolicy(reportReal, participantReport));
+    const transactionReport = useReportOrReportDraft(transaction?.reportID);
+    const realPolicyID = selectedWorkspacePolicyID ?? getIOURequestPolicyID(initialTransaction, pickReportForPolicy(reportReal, transactionReport, participantReport));
     const draftPolicyID = getIOURequestPolicyID(initialTransaction, reportDraft);
     const [policyDraft] = useOnyx(`${ONYXKEYS.COLLECTION.POLICY_DRAFTS}${draftPolicyID}`);
     const [conciergeReportID] = useOnyx(ONYXKEYS.CONCIERGE_REPORT_ID);
@@ -201,22 +202,8 @@ function IOURequestStepConfirmationContent({
 
     const expensifyIcons = useMemoizedLazyExpensifyIcons(['ReplaceReceipt', 'SmartScan']);
 
-    /*
-     * We want to use a report from the transaction if it exists
-     * Also if the report was submitted and delayed submission is on, then we should use an initial report
-     * Additionally, if neither reportReal nor reportDraft exist, we fallback to the transactionReport
-     * to ensure proper navigation after expense creation.
-     */
-    const transactionReport = useReportOrReportDraft(transaction?.reportID);
     const reportWithDraftFallback = reportReal ?? reportDraft;
     const shouldHideToSection = isMoneyRequestReport(reportWithDraftFallback);
-    const report = resolveReportForMoneyRequest({
-        transaction,
-        transactionReport,
-        routeReport: reportWithDraftFallback,
-        reportNameValuePair,
-        rules,
-    });
     const [reportDrafts] = useOnyx(ONYXKEYS.COLLECTION.REPORT_DRAFT);
 
     const {policy} = usePolicyForTransaction({
@@ -229,6 +216,21 @@ function IOURequestStepConfirmationContent({
         // is routed to ConvertTrackedExpenseToRequest (which needs a real payer) instead of AddTrackedExpenseToPolicy.
         policyDraft,
         isPerDiemRequest,
+    });
+    /*
+     * We want to use a report from the transaction if it exists
+     * Also if the report was submitted and delayed submission is on, then we should use an initial report
+     * Additionally, if neither reportReal nor reportDraft exist, we fallback to the transactionReport
+     * to ensure proper navigation after expense creation.
+     */
+    const report = resolveReportForMoneyRequest({
+        transaction,
+        transactionReport,
+        routeReport: reportWithDraftFallback,
+        reportNameValuePair,
+        rules,
+        policy,
+        currentUserAccountID: currentUserPersonalDetails.accountID,
     });
     const policyID = policy?.id;
     const isDraftPolicy = policy === policyDraft;

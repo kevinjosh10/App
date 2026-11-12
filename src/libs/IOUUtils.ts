@@ -604,17 +604,21 @@ function resolveReportForMoneyRequest({
     routeReport,
     reportNameValuePair,
     rules,
+    policy,
+    currentUserAccountID,
 }: {
     transaction: OnyxEntry<Transaction>;
     transactionReport: OnyxEntry<Report>;
     routeReport: OnyxEntry<Report>;
     reportNameValuePair: OnyxInputOrEntry<ReportNameValuePairs>;
     rules: OnyxCollection<Rule>;
+    policy?: OnyxEntry<Policy>;
+    currentUserAccountID?: number;
 }): OnyxEntry<Report> {
     if (transaction?.reportID === CONST.REPORT.UNREPORTED_REPORT_ID) {
         return undefined;
     }
-    const canUseTransactionReport = canAddTransaction(transactionReport, rules, isArchivedReport(reportNameValuePair), false);
+    const canUseTransactionReport = canAddTransaction(transactionReport, rules, isArchivedReport(reportNameValuePair), false, policy, currentUserAccountID);
     const shouldUseTransactionReport = !!transactionReport && (canUseTransactionReport || !routeReport);
     if (shouldUseTransactionReport) {
         return transactionReport;
