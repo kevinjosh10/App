@@ -57,16 +57,23 @@ describe('ConnectToDigitsFlow', () => {
         expect(mockStartDigitsOAuth).toHaveBeenCalledWith(POLICY_ID);
     });
 
-    it('should show the currency prompt once for a workspace that is not in USD', () => {
+    it('should show the currency prompt once for a workspace that is not in USD and navigate with backTo accounting', async () => {
         // Given a workspace in EUR, which Digits can't connect to
         mockOutputCurrency = CONST.CURRENCY.EUR;
+        mockShowConfirmModal.mockResolvedValueOnce({action: 'CONFIRM'});
 
         // When the flow mounts under Strict Mode
         renderInStrictMode();
 
-        // Then a single currency prompt shows and the sign-in never opens
+        // Then a single currency prompt shows and navigating to currency passes backTo accounting
         expect(mockShowConfirmModal).toHaveBeenCalledTimes(1);
         expect(mockStartDigitsOAuth).not.toHaveBeenCalled();
+
+        // Allow promise resolution
+        await Promise.resolve();
+
+        expect(mockedNavigate).toHaveBeenCalledTimes(1);
+        expect(mockedNavigate).toHaveBeenCalledWith(ROUTES.WORKSPACE_OVERVIEW_CURRENCY.getRoute(POLICY_ID, {backTo: ROUTES.WORKSPACE_ACCOUNTING.getRoute(POLICY_ID)}));
     });
 
     it('should navigate to the existing connections once when another workspace is connected to Digits', () => {

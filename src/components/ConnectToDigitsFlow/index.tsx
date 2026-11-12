@@ -51,7 +51,7 @@ function ConnectToDigitsFlow({policyID}: ConnectToDigitsFlowProps) {
         if (shouldBlockCurrencyChange || result.action !== ModalActions.CONFIRM) {
             return;
         }
-        Navigation.navigate(ROUTES.WORKSPACE_OVERVIEW_CURRENCY.getRoute(policyID));
+        Navigation.navigate(ROUTES.WORKSPACE_OVERVIEW_CURRENCY.getRoute(policyID, {backTo: ROUTES.WORKSPACE_ACCOUNTING.getRoute(policyID)}));
     };
 
     useEffect(() => {

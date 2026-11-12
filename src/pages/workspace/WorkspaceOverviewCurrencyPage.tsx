@@ -35,12 +35,13 @@ function WorkspaceOverviewCurrencyPage({policy}: WorkspaceOverviewCurrencyPagePr
     const {translate} = useLocalize();
     const isForcedToChangeCurrency = !!route.params?.isForcedToChangeCurrency;
     const shouldStartExpensifyCardEnrollment = !!route.params?.shouldStartExpensifyCardEnrollment;
+    const backTo = route.params?.backTo;
     const shouldBlockCurrencyChange = useShouldBlockCurrencyChange(policy?.id);
     const {showConfirmModal} = useConfirmModal();
     const applyWorkspaceCurrencyChange = useApplyWorkspaceCurrencyChange(policy);
 
     const applyCurrencySelection = (currencyCode: string) => {
-        applyWorkspaceCurrencyChange(currencyCode, {isForcedToChangeCurrency, shouldStartExpensifyCardEnrollment});
+        applyWorkspaceCurrencyChange(currencyCode, {isForcedToChangeCurrency, shouldStartExpensifyCardEnrollment, backTo});
     };
 
     const onSelectCurrency = (item: CurrencyListItem) => {
@@ -101,7 +102,7 @@ function WorkspaceOverviewCurrencyPage({policy}: WorkspaceOverviewCurrencyPagePr
             >
                 <HeaderWithBackButton
                     title={translate('workspace.editor.currencyInputLabel')}
-                    onBackButtonPress={() => Navigation.goBack()}
+                    onBackButtonPress={() => Navigation.goBack(backTo)}
                 />
 
                 <CurrencySelectionList

@@ -3258,7 +3258,7 @@ const ROUTES = {
         route: 'workspaces/:policyID/overview/currency',
         getRoute: (
             policyID: string,
-            {isForcedToChangeCurrency, shouldStartExpensifyCardEnrollment}: {isForcedToChangeCurrency?: boolean; shouldStartExpensifyCardEnrollment?: boolean} = {},
+            {isForcedToChangeCurrency, shouldStartExpensifyCardEnrollment, backTo}: {isForcedToChangeCurrency?: boolean; shouldStartExpensifyCardEnrollment?: boolean; backTo?: Route} = {},
         ) => {
             const params = new URLSearchParams();
             if (isForcedToChangeCurrency) {
@@ -3266,6 +3266,9 @@ const ROUTES = {
             }
             if (shouldStartExpensifyCardEnrollment) {
                 params.set('shouldStartExpensifyCardEnrollment', 'true');
+            }
+            if (backTo) {
+                params.set('backTo', backTo);
             }
             const query = params.toString();
             return `workspaces/${policyID}/overview/currency${query ? `?${query}` : ''}` as const;
