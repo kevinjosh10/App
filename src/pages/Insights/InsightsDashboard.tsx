@@ -36,7 +36,7 @@ import viewRef from '@src/types/utils/viewRef';
 import type {OnyxCollection} from 'react-native-onyx';
 
 import {useIsFocused} from '@react-navigation/native';
-import React, {useEffect, useEffectEvent} from 'react';
+import React, {useEffect, useEffectEvent, useMemo} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Animated, {FadeIn, FadeOut} from 'react-native-reanimated';
 
@@ -358,14 +358,21 @@ function InsightsDashboard({dashboardID, accessibleDashboards}: {dashboardID: In
         selector: hasStoredDashboardResponse,
     });
     // Until the filters and workspaces load, the charts have no query to read data for, so they show their loading state
-    const visibleChartQueries = query
-        ? [query.headlineChart, ...query.supportingCharts]
-        : [headlineSpec, ...eligibleCharts].map((chart): InsightsChartQuery => ({chart, queryJSON: undefined}));
-    const snapshots = useMultipleSnapshots(
-        visibleChartQueries.flatMap(({queryJSON, previousPeriodQueryJSON}) =>
-            [queryJSON, previousPeriodQueryJSON].flatMap((chartQueryJSON) => (chartQueryJSON ? [String(chartQueryJSON.hash)] : [])),
-        ),
+    const visibleChartQueries = useMemo(
+        () =>
+            query
+                ? [query.headlineChart, ...query.supportingCharts]
+                : [headlineSpec, ...eligibleCharts].map((chart): InsightsChartQuery => ({chart, queryJSON: undefined})),
+        [query, headlineSpec, eligibleCharts],
     );
+    const snapshotHashes = useMemo(
+        () =>
+            visibleChartQueries.flatMap(({queryJSON, previousPeriodQueryJSON}) =>
+                [queryJSON, previousPeriodQueryJSON].flatMap((chartQueryJSON) => (chartQueryJSON ? [String(chartQueryJSON.hash)] : [])),
+            ),
+        [visibleChartQueries],
+    );
+    const snapshots = useMultipleSnapshots(snapshotHashes);
     const charts = visibleChartQueries.map((chartQuery): InsightsDashboardChart => {
         const graph = dashboard?.graphs?.[chartQuery.chart.graphKey];
         return {
