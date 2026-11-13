@@ -1,3 +1,6 @@
+import useIsAuthenticated from '@hooks/useIsAuthenticated';
+import usePrevious from '@hooks/usePrevious';
+
 import Log from '@libs/Log';
 
 import CONST from '@src/CONST';
@@ -30,6 +33,7 @@ type ModalContextType = {
     closeModal(data?: ModalStateChangePayload): void;
     closeModalByID(id: string, data?: ModalStateChangePayload): void;
     resolveModal(data?: ModalStateChangePayload): void;
+    dismissAllModals(): void;
 };
 
 const ModalContext = React.createContext<ModalContextType>({
@@ -37,6 +41,7 @@ const ModalContext = React.createContext<ModalContextType>({
     closeModal: noop,
     closeModalByID: noop,
     resolveModal: noop,
+    dismissAllModals: noop,
 });
 
 const useModal = () => useContext(ModalContext);
@@ -156,11 +161,36 @@ function ModalProvider({children}: {children: React.ReactNode}) {
         });
     };
 
+    const dismissAllModals = () => {
+        setModalStack((prevState) => {
+            for (const modal of prevState.modals) {
+                const modalPromise = modalPromisesStack.current?.[modal.id];
+                if (modalPromise) {
+                    modalPromise.resolve({action: ModalActions.DISMISS});
+                    delete modalPromisesStack.current[modal.id];
+                }
+            }
+            return {modals: []};
+        });
+    };
+
+    const isAuthenticated = useIsAuthenticated();
+    const prevIsAuthenticated = usePrevious(isAuthenticated);
+
+    // Dismiss all authenticated modals when the user signs out or loses their session (e.g. from another tab or device)
+    useEffect(() => {
+        if (!prevIsAuthenticated || isAuthenticated) {
+            return;
+        }
+
+        dismissAllModals();
+    }, [isAuthenticated, prevIsAuthenticated]);
+
     const modalToRender = modalStack.modals.length > 0 ? modalStack.modals.at(modalStack.modals.length - 1) : null;
     const ModalComponent = modalToRender?.component;
 
     return (
-        <ModalContext.Provider value={{showModal, closeModal, closeModalByID, resolveModal}}>
+        <ModalContext.Provider value={{showModal, closeModal, closeModalByID, resolveModal, dismissAllModals}}>
             {children}
             {!!ModalComponent && (
                 <ModalComponent

@@ -71,7 +71,7 @@ describe('useReportPDFDownloadModal', () => {
         jest.clearAllMocks();
         mockOnyxValues = {
             [`${ONYXKEYS.COLLECTION.REPORT}${REPORT_ID}`]: {reportID: REPORT_ID, reportName: 'Expense Report'},
-            [ONYXKEYS.SESSION]: {encryptedAuthToken: 'token'},
+            [ONYXKEYS.SESSION]: {authToken: 'token', encryptedAuthToken: 'token'},
         };
         (jest.mocked(useOnyx) as jest.Mock).mockImplementation(useMockOnyx);
     });
@@ -277,5 +277,23 @@ describe('useReportPDFDownloadModal', () => {
 
         // Then the stall timer stops
         expect(jest.mocked(useStallLogger).mock.calls.at(-1)?.[0]).toBe(false);
+    });
+
+    it('dismisses the modal and resolves with DISMISS when session is lost (signed out from another tab)', async () => {
+        // Given the modal opened while authenticated
+        const {result} = renderReportPDFDownloadModal();
+        let showPromise: Promise<{action: string}> | undefined;
+        await act(async () => {
+            showPromise = result.current.showReportPDFDownloadModal({reportID: REPORT_ID});
+            await waitForBatchedUpdates();
+        });
+        expect(getLatestModalProps()).toEqual(expect.objectContaining({isVisible: true}));
+
+        // When the user signs out on another tab/device, clearing the session
+        await setOnyxValue(ONYXKEYS.SESSION, {authToken: null});
+
+        // Then the modal is dismissed and its promise resolves with DISMISS
+        const modalResult = await showPromise;
+        expect(modalResult).toEqual({action: ModalActions.DISMISS});
     });
 });
