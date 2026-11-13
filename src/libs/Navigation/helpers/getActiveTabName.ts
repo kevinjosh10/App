@@ -1,6 +1,11 @@
+import {getPreservedNavigatorState} from '@libs/Navigation/AppNavigator/createSplitNavigator/usePreserveNavigatorState';
+import {getTabScreenParam} from '@libs/Navigation/helpers/tabNavigatorUtils';
 import type {NavigationRoute} from '@libs/Navigation/types';
 
 import NAVIGATORS from '@src/NAVIGATORS';
+import SCREENS from '@src/SCREENS';
+
+import type {NavigationState} from '@react-navigation/native';
 
 /**
  * Returns the active tab name for a given route.
@@ -12,9 +17,19 @@ function getActiveTabName(route: NavigationRoute | undefined): string | undefine
         return undefined;
     }
 
-    if (route.name === NAVIGATORS.TAB_NAVIGATOR && route.state) {
-        const index = route.state.index ?? 0;
-        return route.state.routes?.at(index)?.name;
+    if (route.name === NAVIGATORS.TAB_NAVIGATOR) {
+        const state = (route.state ?? (route.key ? getPreservedNavigatorState<NavigationState>(route.key) : undefined)) as NavigationState | undefined;
+        if (state?.routes) {
+            const index = state.index ?? 0;
+            return state.routes.at(index)?.name;
+        }
+
+        const paramScreen = getTabScreenParam(route);
+        if (paramScreen) {
+            return paramScreen;
+        }
+
+        return SCREENS.HOME;
     }
 
     return route.name;

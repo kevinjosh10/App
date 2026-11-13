@@ -101,6 +101,17 @@ describe('useIsTabFocused', () => {
         expect(isFocused).toBe(false);
     });
 
+    it('falls back to default Home tab when tab navigator state is unhydrated behind an RHP', () => {
+        // Given Home selected, but the top-level tab navigator route has lost its nested state while covered by a modal
+        const state = buildRootState([{key: 'tabs', name: NAVIGATORS.TAB_NAVIGATOR}, {key: 'rhp', name: NAVIGATORS.RIGHT_MODAL_NAVIGATOR}]);
+
+        // When the hook is asked about Home
+        const isFocused = renderWithState(state);
+
+        // Then it defaults to Home rather than dropping to false and triggering a false tab arrival on modal close
+        expect(isFocused).toBe(true);
+    });
+
     it('is false before the navigation ref is ready', () => {
         // Given navigation that has not initialized, which passes `undefined` to the selector
 
