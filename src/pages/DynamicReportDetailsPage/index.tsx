@@ -12,11 +12,11 @@ import ReportDetailsContent from './ReportDetailsContent';
 type DynamicReportDetailsPageProps = PlatformStackScreenProps<ReportDetailsNavigatorParamList, typeof SCREENS.REPORT_DETAILS.DYNAMIC_ROOT>;
 
 function DynamicReportDetailsPage({route}: DynamicReportDetailsPageProps) {
-    const reportID = route.params.reportID;
+    const reportID = route?.params?.reportID;
 
     return (
         <ReportOrNotFoundGuard reportID={reportID}>
-            <ReportDetailsContent reportID={reportID} />
+            <ReportDetailsContent reportID={reportID ?? ''} />
         </ReportOrNotFoundGuard>
     );
 }

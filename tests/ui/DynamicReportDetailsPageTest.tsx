@@ -422,4 +422,25 @@ describe('DynamicReportDetailsPage', () => {
             expect(screen.queryByTestId('FullPageNotFoundView')).toBeNull();
         });
     });
+
+    describe('missing navigation parameters', () => {
+        it('renders NotFoundPage without throwing when route.params is undefined', async () => {
+            jest.mocked(useIsFocused).mockReturnValue(true);
+            jest.mocked(useRoute).mockReturnValue({key: 'report-details', name: 'Report_Details_Root'} as ReturnType<typeof useRoute>);
+
+            render(
+                <OnyxListItemProvider>
+                    <LocaleContextProvider>
+                        <DynamicReportDetailsPage
+                            navigation={navigationMock}
+                            route={createMock<PlatformStackScreenProps<ReportDetailsNavigatorParamList, typeof SCREENS.REPORT_DETAILS.DYNAMIC_ROOT>['route']>({params: undefined})}
+                        />
+                    </LocaleContextProvider>
+                </OnyxListItemProvider>,
+            );
+            await waitForBatchedUpdatesWithAct();
+
+            expect(screen.getByTestId('FullPageNotFoundView')).toBeTruthy();
+        });
+    });
 });

@@ -37,7 +37,7 @@ type ExportSelectorType = SelectorType<ExportType>;
 
 function DynamicReportDetailsExportPage({route}: DynamicReportDetailsExportPageProps) {
     const connectionName = route?.params?.connectionName;
-    const reportID = route.params.reportID;
+    const reportID = route?.params?.reportID;
     const navigateBackFromExportPath = useDynamicBackPath(DYNAMIC_ROUTES.REPORT_DETAILS_EXPORT.path);
     const [report] = useOnyx(`${ONYXKEYS.COLLECTION.REPORT}${reportID}`);
     const [reportActions] = useOnyx(`${ONYXKEYS.COLLECTION.REPORT_ACTIONS}${reportID}`);

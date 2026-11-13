@@ -76,11 +76,11 @@ type WithReportOrNotFoundProps = WithReportOrNotFoundOnyxProps & {
 export default function (shouldRequireReportID = true): <TProps extends WithReportOrNotFoundProps>(WrappedComponent: ComponentType<TProps>) => ComponentType<TProps> {
     return function <TProps extends WithReportOrNotFoundProps>(WrappedComponent: ComponentType<TProps>) {
         function WithReportOrNotFound(props: TProps) {
-            const params = props.route.params;
+            const params = props.route?.params;
             // Most screens carry the report ID under `reportID`. The notification-preferences screen instead
             // owns its target report as a distinct path param (`notificationReportID`) so it never collides
             // with a `reportID` inherited from the surrounding report chain in the URL.
-            const reportID = 'notificationReportID' in params ? params.notificationReportID : params.reportID;
+            const reportID = params && 'notificationReportID' in params ? params.notificationReportID : params?.reportID;
             const {isBetaEnabled} = usePermissions();
             const [report] = useOnyx(`${ONYXKEYS.COLLECTION.REPORT}${reportID}`);
             const [policy] = useOnyx(`${ONYXKEYS.COLLECTION.POLICY}${report?.policyID}`);
