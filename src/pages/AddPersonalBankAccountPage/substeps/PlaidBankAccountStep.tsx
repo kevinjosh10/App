@@ -14,9 +14,10 @@ import Navigation from '@libs/Navigation/Navigation';
 import {validatePlaidSelection} from '@userActions/BankAccounts';
 
 import ONYXKEYS from '@src/ONYXKEYS';
+import ROUTES from '@src/ROUTES';
 import INPUT_IDS from '@src/types/form/PersonalBankAccountForm';
 
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 const BANK_INFO_STEP_KEYS = INPUT_IDS.BANK_INFO_STEP;
 const STEP_FIELDS = [BANK_INFO_STEP_KEYS.SELECTED_PLAID_ACCOUNT_ID];
@@ -33,6 +34,10 @@ function PlaidBankAccountStep({onNext, isEditing}: SubPageProps) {
         onNext,
         shouldSaveDraft: true,
     });
+
+    const handleExitPlaid = useCallback(() => {
+        Navigation.goBack(ROUTES.SETTINGS_ADD_BANK_ACCOUNT);
+    }, []);
 
     return (
         <FormProvider
@@ -54,7 +59,7 @@ function PlaidBankAccountStep({onNext, isEditing}: SubPageProps) {
                 plaidData={plaidData}
                 defaultValue={bankAccountPersonalDetails?.selectedPlaidAccountID}
                 isDisplayedInWalletFlow
-                onExitPlaid={Navigation.goBack}
+                onExitPlaid={handleExitPlaid}
                 receivedRedirectURI={getPlaidOAuthReceivedRedirectURI()}
                 selectedPlaidAccountID={bankAccountPersonalDetails?.selectedPlaidAccountID ?? selectedPlaidAccountId}
             />
