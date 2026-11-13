@@ -9,6 +9,7 @@ import useLocalize from '@hooks/useLocalize';
 import useOnyx from '@hooks/useOnyx';
 import useResponsiveLayout from '@hooks/useResponsiveLayout';
 import useThemeStyles from '@hooks/useThemeStyles';
+import useVerifyAccountAndResume from '@hooks/useVerifyAccountAndResume';
 
 import {isBankAccountPartiallySetup} from '@libs/BankAccountUtils';
 import {REIMBURSEMENT_ACCOUNT_ROUTE_NAMES} from '@libs/ReimbursementAccountUtils';
@@ -69,6 +70,16 @@ function ConnectExistingBusinessBankAccountPage({route}: ConnectExistingBusiness
         Navigation.setNavigationActionToMicrotaskQueue(() => {
             Navigation.navigate(appendParam(ROUTES.BANK_ACCOUNT_WITH_STEP_TO_OPEN.getRoute({policyID, backTo, isChangingBankAccount}), 'stepToOpen', REIMBURSEMENT_ACCOUNT_ROUTE_NAMES.NEW));
         });
+    };
+
+    const {isUserValidated, verifyAccountAndResume} = useVerifyAccountAndResume(() => handleAddBankAccountPress());
+
+    const onAddBankAccountPress = () => {
+        if (!isUserValidated) {
+            verifyAccountAndResume(undefined);
+            return;
+        }
+        handleAddBankAccountPress();
     };
 
     const handleItemPress = ({methodID, accountData}: PaymentMethodPressHandlerParams) => {
@@ -133,7 +144,7 @@ function ConnectExistingBusinessBankAccountPage({route}: ConnectExistingBusiness
                     <Text>{translate('workspace.bankAccount.chooseAnExisting')}</Text>
                     <PaymentMethodList
                         onPress={handleItemPress}
-                        onAddBankAccountPress={handleAddBankAccountPress}
+                        onAddBankAccountPress={onAddBankAccountPress}
                         style={[styles.mt5, styles.mhn5]}
                         listItemStyle={styles.ph5}
                         itemIconRight={icons.ArrowRight}
