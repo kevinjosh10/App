@@ -53,11 +53,12 @@ function ApprovalWorkflowEditor({approvalWorkflow, removeApprovalWorkflow, polic
     const {translate, toLocaleOrdinalWithWords, localeCompare, formatPhoneNumber} = useLocalize();
     const {convertToDisplayString} = useCurrencyListActions();
     const shouldUseApprovalWorkflowRules = useShouldUseApprovalWorkflowRules(policy);
-    const approverCount = approvalWorkflow.approvers.length;
+    const approvers = approvalWorkflow.approvers ?? [];
+    const approverCount = approvers.length;
     const currency = policy?.outputCurrency ?? CONST.CURRENCY.USD;
 
     const approverDescriptions = getApproverTitles({
-        approvers: approvalWorkflow.approvers,
+        approvers,
         getTitle: (position, count, approver, isLast) => {
             if (approverCount <= 1) {
                 return translate('workflowsPage.approver');
@@ -92,7 +93,7 @@ function ApprovalWorkflowEditor({approvalWorkflow, removeApprovalWorkflow, polic
         return previousMember?.pendingFields?.forwardsTo;
     };
 
-    const sortedMembers = approvalWorkflow.isDefault ? [] : sortAlphabetically(approvalWorkflow.members, 'displayName', localeCompare);
+    const sortedMembers = approvalWorkflow.isDefault ? [] : sortAlphabetically(approvalWorkflow.members ?? [], 'displayName', localeCompare);
 
     const members = approvalWorkflow.isDefault
         ? translate('workspace.common.everyone')
@@ -204,7 +205,7 @@ function ApprovalWorkflowEditor({approvalWorkflow, removeApprovalWorkflow, polic
                     sentryLabel={CONST.SENTRY_LABEL.WORKSPACE.WORKFLOWS.APPROVAL_EDITOR_MEMBERS}
                 />
 
-                {approvalWorkflow.approvers.map((approver, approverIndex) => {
+                {approvers.map((approver, approverIndex) => {
                     const errorText = approverErrorMessage(approver, approverIndex);
                     // Without rules an approver has one employeeList entry shared by every workflow they are in, so an edit here
                     // reaches all of them. With rules each workflow routes through its own rules and the edit stays in this one.

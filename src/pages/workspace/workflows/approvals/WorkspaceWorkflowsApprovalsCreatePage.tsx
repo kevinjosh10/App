@@ -5,6 +5,7 @@ import FormAlertWithSubmitButton from '@components/FormAlertWithSubmitButton';
 import HeaderWithBackButton from '@components/HeaderWithBackButton';
 import ScreenWrapper from '@components/ScreenWrapper';
 
+import useApprovalWorkflows from '@hooks/useApprovalWorkflows';
 import useCurrentUserPersonalDetails from '@hooks/useCurrentUserPersonalDetails';
 import useLocalize from '@hooks/useLocalize';
 import useOnyx from '@hooks/useOnyx';
@@ -16,13 +17,13 @@ import Navigation from '@libs/Navigation/Navigation';
 import type {PlatformStackScreenProps} from '@libs/Navigation/PlatformStackNavigation/types';
 import type {WorkspaceSplitNavigatorParamList} from '@libs/Navigation/types';
 import {canMemberWrite, goBackFromInvalidPolicy, isPendingDeletePolicy, shouldHideDynamicExternalWorkflowPeople} from '@libs/PolicyUtils';
-import {getWorkflowMemberEmails, includesEveryWorkspaceMember, isApprovalWorkflowLockedByIntegration} from '@libs/WorkflowUtils';
+import {getWorkflowMemberEmails, includesEveryWorkspaceMember, INITIAL_APPROVAL_WORKFLOW, isApprovalWorkflowLockedByIntegration} from '@libs/WorkflowUtils';
 
 import AccessOrNotFoundWrapper from '@pages/workspace/AccessOrNotFoundWrapper';
 import withPolicyAndFullscreenLoading from '@pages/workspace/withPolicyAndFullscreenLoading';
 import type {WithPolicyAndFullscreenLoadingProps} from '@pages/workspace/withPolicyAndFullscreenLoading';
 
-import {createApprovalWorkflow as createApprovalWorkflowAction, createApprovalWorkflowRules, validateApprovalWorkflow} from '@userActions/Workflow';
+import {clearApprovalWorkflow, createApprovalWorkflow as createApprovalWorkflowAction, createApprovalWorkflowRules, setApprovalWorkflow, validateApprovalWorkflow} from '@userActions/Workflow';
 
 import CONST from '@src/CONST';
 import ONYXKEYS from '@src/ONYXKEYS';
@@ -33,7 +34,7 @@ import type {ComponentRef} from 'react';
 // eslint-disable-next-line no-restricted-imports
 import type {ScrollView} from 'react-native';
 
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {View} from 'react-native';
 
 import ApprovalWorkflowEditor from './ApprovalWorkflowEditor';
@@ -61,6 +62,27 @@ function WorkspaceWorkflowsApprovalsCreatePage({policy, isLoadingReportData = tr
         isPendingDeletePolicy(policy) ||
         isApprovalWorkflowLockedByIntegration(policy) ||
         shouldHideDynamicExternalWorkflowPeople(policy);
+
+    const {availableMembers, usedApproverEmails} = useApprovalWorkflows(policy);
+
+    useEffect(() => {
+        if (approvalWorkflow || !policy || isLoadingReportData || shouldShowNotFoundView) {
+            return;
+        }
+
+        setApprovalWorkflow({
+            ...INITIAL_APPROVAL_WORKFLOW,
+            isInitialFlow: false,
+            availableMembers,
+            usedApproverEmails,
+        });
+    }, [approvalWorkflow, policy, isLoadingReportData, shouldShowNotFoundView, availableMembers, usedApproverEmails]);
+
+    useEffect(() => {
+        return () => {
+            clearApprovalWorkflow();
+        };
+    }, []);
 
     const createApprovalWorkflow = () => {
         if (!approvalWorkflow) {
