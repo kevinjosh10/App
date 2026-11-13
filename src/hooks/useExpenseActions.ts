@@ -250,7 +250,7 @@ function useExpenseActions({reportID, isReportInSearch = false, backTo, onDuplic
     // Duplicate expense: unsupported / shouldClose flags
     const transactionViolations = useTransactionViolations(transaction?.transactionID);
     const hasCustomUnitOutOfPolicyViolation = hasCustomUnitOutOfPolicyViolationTransactionUtils(transactionViolations);
-    const isPerDiemRequestOnNonDefaultWorkspace = isPerDiemRequest(transaction) && duplicateTargetPolicy?.id !== policy?.id;
+    const isPerDiemRequestOnNonDefaultWorkspace = isPerDiemRequest(transaction) && defaultExpensePolicy?.id !== policy?.id;
     const isDistanceExpenseUnsupportedForDuplicating = !!(
         isDistanceRequest(transaction) &&
         (isArchivedReport || isChatReportArchived || (activePolicyExpenseChat && (isDM(chatReport) || isSelfDM(chatReport))))
