@@ -103,8 +103,20 @@ function PressableWithDelayToggle({
         if (!isActive) {
             return;
         }
-        temporarilyDisableInteractions();
-        onPress?.();
+        const result = onPress?.();
+        if (result instanceof Promise) {
+            result
+                .then((success) => {
+                    if (success !== false) {
+                        temporarilyDisableInteractions();
+                    }
+                })
+                .catch(() => {});
+            return;
+        }
+        if (result !== false) {
+            temporarilyDisableInteractions();
+        }
     };
 
     const tooltipTexts = !isActive ? tooltipTextChecked : tooltipText;

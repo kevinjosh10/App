@@ -1,4 +1,5 @@
 import * as Browser from '@libs/Browser';
+import Log from '@libs/Log';
 
 import CONST from '@src/CONST';
 
@@ -102,9 +103,9 @@ function setHTMLSync(html: string, text: string) {
 /**
  * Writes the content as HTML if the web client supports it.
  */
-const setHtml: SetHtml = (html: string, text: string) => {
+const setHtml: SetHtml = async (html: string, text: string): Promise<boolean> => {
     if (!html || !text) {
-        return;
+        return false;
     }
 
     if (!canSetHtml()) {
@@ -117,26 +118,59 @@ const setHtml: SetHtml = (html: string, text: string) => {
         // contents as HTML and keep whitespaces in the start of line on Safari.
         // See https://webkit.org/blog/10855/async-clipboard-api/ for more details.
         setHTMLSync(html, text);
-    } else {
-        const htmlNonClosingTags = html
-            .replaceAll(/<mention-report reportID="(\d+)" *\/>/gi, '<mention-report reportID="$1"></mention-report>')
-            .replaceAll(/<mention-user accountID="(\d+)" *\/>/gi, '<mention-user accountID="$1"></mention-user>');
+        return true;
+    }
 
-        navigator.clipboard.write([
+    const htmlNonClosingTags = html
+        .replaceAll(/<mention-report reportID="(\d+)" *\/>/gi, '<mention-report reportID="$1"></mention-report>')
+        .replaceAll(/<mention-user accountID="(\d+)" *\/>/gi, '<mention-user accountID="$1"></mention-user>');
+
+    try {
+        await navigator.clipboard.write([
             new ClipboardItem({
                 /* eslint-disable @typescript-eslint/naming-convention */
                 'text/html': new Blob([htmlNonClosingTags], {type: 'text/html'}),
                 'text/plain': new Blob([text], {type: 'text/plain'}),
             }),
         ]);
+        return true;
+    } catch (error) {
+        Log.warn('Failed to copy HTML using navigator.clipboard.write, falling back to setHTMLSync', {
+            error: error instanceof Error ? error.message : String(error),
+        });
+        try {
+            setHTMLSync(html, text);
+            return true;
+        } catch {
+            return false;
+        }
     }
 };
 
 /**
- * Sets a string on the Clipboard object via react-native-web
+ * Sets a string on the Clipboard object via the modern Clipboard API with fallback
  */
-const setString: SetString = (text) => {
-    Clipboard.setString(text);
+const setString: SetString = async (text: string): Promise<boolean> => {
+    if (navigator?.clipboard?.writeText) {
+        try {
+            await navigator.clipboard.writeText(text);
+            return true;
+        } catch (error) {
+            Log.warn('Failed to copy text using navigator.clipboard.writeText, falling back', {
+                error: error instanceof Error ? error.message : String(error),
+            });
+        }
+    }
+
+    try {
+        setHTMLSync('', text);
+        return true;
+    } catch (fallbackError) {
+        Log.warn('Failed to copy text using fallback', {
+            error: fallbackError instanceof Error ? fallbackError.message : String(fallbackError),
+        });
+        return false;
+    }
 };
 
 export default {
