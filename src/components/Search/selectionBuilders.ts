@@ -232,7 +232,7 @@ function mapTransactionItemToSelectedEntry({
             groupAmount: item.groupAmount,
             currency: item.currency,
             isFromOneTransactionReport: isOneTransactionReport(item.report),
-            ownerAccountID: item.reportAction?.actorAccountID,
+            ownerAccountID: item.reportAction?.actorAccountID ?? (item.from?.accountID ? item.from.accountID : undefined),
             reportAction: item.reportAction,
             report: item.report,
         },

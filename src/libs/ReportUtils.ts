@@ -3944,7 +3944,16 @@ function canDeleteMoneyRequestReport(
     const isReportPolicyAdmin = isPolicyAdmin(policy);
     const transaction = reportTransactions.at(0);
     const transactionID = transaction?.transactionID;
-    const isOwner = transactionID ? getIOUActionForTransactionID(reportActions, transactionID)?.actorAccountID === currentUserAccountID : false;
+    const actionOwner = transactionID ? getIOUActionForTransactionID(reportActions, transactionID)?.actorAccountID : undefined;
+    const isActionOwner = actionOwner === currentUserAccountID;
+    const isReportOwner = isSelfDM(report) && report?.ownerAccountID === currentUserAccountID;
+    const isCardOwner = transaction?.cardID ? cardList?.[transaction.cardID]?.accountID === currentUserAccountID : false;
+    const isUnreported = isSelfDM(report) || transaction?.reportID === CONST.REPORT.UNREPORTED_REPORT_ID;
+    const isOwner =
+        isActionOwner ||
+        (isUnreported &&
+            !actionOwner &&
+            (isReportOwner || isCardOwner || (!transaction?.cardID && (!report || report.reportID === CONST.REPORT.UNREPORTED_REPORT_ID))));
     const isReportOpenOrProcessing = isOpenReport(report) || isProcessingReport(report);
     const isSingleTransaction = reportTransactions.length === 1;
 

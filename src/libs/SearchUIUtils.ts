@@ -2679,7 +2679,10 @@ function createAndOpenSearchTransactionThread({
     const actionReportID = item.reportAction?.reportID ? String(item.reportAction.reportID) : undefined;
     const ownerSelfDMReportID = actionReportID !== CONST.REPORT.UNREPORTED_REPORT_ID ? actionReportID : undefined;
     const ownSelfDMAction = isUnreportedTransaction ? getIOUActionForReportID(findSelfDMReportID(), item.transactionID) : undefined;
-    const isOwnExpense = (ownSelfDMAction ?? item.reportAction)?.actorAccountID === currentUserAccountID;
+    const isExplicitOtherUser =
+        (item.reportAction?.actorAccountID && item.reportAction.actorAccountID !== currentUserAccountID) ||
+        (item.from?.accountID && item.from.accountID !== currentUserAccountID && item.from.accountID !== 0);
+    const isOwnExpense = (ownSelfDMAction ?? item.reportAction)?.actorAccountID === currentUserAccountID || (isUnreportedTransaction && !isExplicitOtherUser);
     const expenseSelfDMReportID = isOwnExpense ? (findSelfDMReportID() ?? ownerSelfDMReportID) : ownerSelfDMReportID;
     const selfDMReportID = isUnreportedTransaction ? expenseSelfDMReportID : undefined;
     const iouReportAction = getIOUActionForReportID(selfDMReportID ?? item.reportID, item.transactionID);
@@ -8305,9 +8308,15 @@ function shouldShowDeleteOption(
               if (!transaction) {
                   return false;
               }
-              const parentReportID = transaction.reportID;
-              const parentReport = currentSearchResults?.[`${ONYXKEYS.COLLECTION.REPORT}${parentReportID}`] ?? selectedTransactions[id].report;
-              const rowReportAction = selectedTransactions[id].reportAction;
+              const isUnreportedTransaction = transaction.reportID === CONST.REPORT.UNREPORTED_REPORT_ID;
+              if (isUnreportedTransaction && selectedTransactions[id]?.ownerAccountID && selectedTransactions[id].ownerAccountID !== currentUserAccountID) {
+                  return false;
+              }
+              const selfDMReportID = isUnreportedTransaction ? findSelfDMReportID() : undefined;
+              const parentReportID = isUnreportedTransaction ? (selfDMReportID ?? transaction.reportID) : transaction.reportID;
+              const parentReport = (isUnreportedTransaction ? undefined : currentSearchResults?.[`${ONYXKEYS.COLLECTION.REPORT}${parentReportID}`]) ?? selectedTransactions[id].report;
+              const rowReportAction =
+                  selectedTransactions[id].reportAction ?? (isUnreportedTransaction && selfDMReportID ? getIOUActionForReportID(selfDMReportID, transaction.transactionID) : undefined);
               // Grouped searches carry no report actions in the snapshot, so the row's own IOU action is kept for the ownership check
               const parentReportActions = Object.values({
                   ...getReportActionsFromSearchSnapshot(parentReportID, currentSearchResults, allReportActions, true),
