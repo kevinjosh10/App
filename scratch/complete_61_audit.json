@@ -1,0 +1,1020 @@
+[
+  {
+    "number": 106764,
+    "title": "[$175] Prevent unnecessary SAML sign-outs during mobile session hydration",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "0d 0h",
+    "duration_total_hours": 0,
+    "assignees": [
+      "huult",
+      "mountiny",
+      "allgandalf"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 3,
+    "posted_at": "2026-11-12T19:16:40Z",
+    "closed_at": null
+  },
+  {
+    "number": 106743,
+    "title": "[$175] Bank account verification fails because hyphens are not allowed in the legal name field.",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "0d 3h",
+    "duration_total_hours": 3,
+    "assignees": [
+      "linhvovan29546"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 3,
+    "posted_at": "2026-11-12T16:04:53Z",
+    "closed_at": null
+  },
+  {
+    "number": 106741,
+    "title": "[$175] Reimbursable field missing from bulk edit while individual editing works",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "0d 4h",
+    "duration_total_hours": 4,
+    "assignees": [
+      "Krishna2323"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 2,
+    "posted_at": "2026-11-12T16:00:19Z",
+    "closed_at": null
+  },
+  {
+    "number": 106721,
+    "title": "[$175] Infinite loading when open /insights",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "0d 5h",
+    "duration_total_hours": 5,
+    "assignees": [
+      "luacmartins",
+      "ahmedGaber93"
+    ],
+    "is_first": true,
+    "is_sole": true,
+    "proposals_count": 1,
+    "posted_at": "2026-11-12T14:32:54Z",
+    "closed_at": null
+  },
+  {
+    "number": 106670,
+    "title": "[$175] Digits - The background page switches to the Workspace Overview after reloading the page",
+    "state": "OPEN",
+    "status_label": "OPEN_LOST",
+    "duration_str": "0d 8h",
+    "duration_total_hours": 8,
+    "assignees": [
+      "lakchote",
+      "truph01",
+      "daledah"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 4,
+    "posted_at": "2026-11-12T11:18:26Z",
+    "closed_at": null
+  },
+  {
+    "number": 106633,
+    "title": "[$175] Split - Expense is labelled Split but does not act as a split expense after unapproving & retracting",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "1d 3h",
+    "duration_total_hours": 27,
+    "assignees": [
+      "ahmedGaber93"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 5,
+    "posted_at": "2026-11-11T16:19:40Z",
+    "closed_at": null
+  },
+  {
+    "number": 106630,
+    "title": "[$175] Members - Removed user with secondary login is shown as \"already a member\" in search list",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "0d 8h",
+    "duration_total_hours": 8,
+    "assignees": [
+      "FitseTLT"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 5,
+    "posted_at": "2026-11-12T11:39:11Z",
+    "closed_at": null
+  },
+  {
+    "number": 106627,
+    "title": "[$175] Attachment \u2013 Unable to Open Video in Thread Chat",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "0d 8h",
+    "duration_total_hours": 8,
+    "assignees": [
+      "FitseTLT"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 4,
+    "posted_at": "2026-11-12T11:42:16Z",
+    "closed_at": null
+  },
+  {
+    "number": 106616,
+    "title": "[$175] Onboarding - Expand accounting software options with searchable compact selectors",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "1d 10h",
+    "duration_total_hours": 34,
+    "assignees": [
+      "dylanexpensify",
+      "dubielzyk-expensify",
+      "truph01"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 5,
+    "posted_at": "2026-11-11T09:04:21Z",
+    "closed_at": null
+  },
+  {
+    "number": 106612,
+    "title": "[$175] IOU - Report appear normal state instead of pending after \"Pay with business bank account\"",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "1d 11h",
+    "duration_total_hours": 35,
+    "assignees": [
+      "Ollyws",
+      "grgia"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 5,
+    "posted_at": "2026-11-11T08:51:20Z",
+    "closed_at": null
+  },
+  {
+    "number": 106596,
+    "title": "[$175] The \"Create a rule\" banner doesn't appears on the second expense creation",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "1d 15h",
+    "duration_total_hours": 39,
+    "assignees": [
+      "thelullabyy"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 3,
+    "posted_at": "2026-11-11T04:55:30Z",
+    "closed_at": null
+  },
+  {
+    "number": 106561,
+    "title": "[$175] Insights - Root link does not open Spend dashboard",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "1d 15h",
+    "duration_total_hours": 39,
+    "assignees": [
+      "luacmartins",
+      "ahmedGaber93"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 3,
+    "posted_at": "2026-11-11T04:59:33Z",
+    "closed_at": null
+  },
+  {
+    "number": 106558,
+    "title": "[$175] Users cannot sign in to Expensify through Okta on the web and receive the error: \u201cSomething went wrong. Grab a snack and try again later.\u201d",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "1d 14h",
+    "duration_total_hours": 38,
+    "assignees": [
+      "rojiphil",
+      "allgandalf"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 3,
+    "posted_at": "2026-11-11T05:04:09Z",
+    "closed_at": null
+  },
+  {
+    "number": 106556,
+    "title": "[$175] User adds a receipt via smartscan and selects a report; once saved, it then for some reason goes to a different report",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "0d 8h",
+    "duration_total_hours": 8,
+    "assignees": [
+      "rojiphil"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 6,
+    "posted_at": "2026-11-12T11:43:31Z",
+    "closed_at": null
+  },
+  {
+    "number": 106543,
+    "title": "[$175] [Sentry: APP-P0M] Null employee entry crashes Search custom-field selector",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "2d 1h",
+    "duration_total_hours": 49,
+    "assignees": [
+      "mountiny",
+      "aimane-chnaif"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 5,
+    "posted_at": "2026-11-10T18:11:11Z",
+    "closed_at": null
+  },
+  {
+    "number": 106517,
+    "title": "[$175] Concierge - The empathetic reply does not include a clickable link \"talk to a human\" link",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "2d 2h",
+    "duration_total_hours": 50,
+    "assignees": [
+      "jayeshmangwani"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 3,
+    "posted_at": "2026-11-10T17:30:01Z",
+    "closed_at": null
+  },
+  {
+    "number": 106463,
+    "title": "[$175] Day is not mentioned first in Dutch on Sub page",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "2d 8h",
+    "duration_total_hours": 56,
+    "assignees": [
+      "TaduJR"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 3,
+    "posted_at": "2026-11-10T11:55:56Z",
+    "closed_at": null
+  },
+  {
+    "number": 106459,
+    "title": "[$175] Statements-Page loads infinitely when navigating to /statements/<YYYYMM>",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "2d 8h",
+    "duration_total_hours": 56,
+    "assignees": [
+      "thesahindia"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 4,
+    "posted_at": "2026-11-10T11:26:21Z",
+    "closed_at": null
+  },
+  {
+    "number": 106458,
+    "title": "[$175] There right approver is not shown after turning back the approval mode",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "2d 11h",
+    "duration_total_hours": 59,
+    "assignees": [
+      "AndrewGable",
+      "ikevin127"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 5,
+    "posted_at": "2026-11-10T08:04:03Z",
+    "closed_at": null
+  },
+  {
+    "number": 106454,
+    "title": "[$175] Web - Onboarding - Concierge RHP doesn't open after landing on the Home page",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "2d 12h",
+    "duration_total_hours": 60,
+    "assignees": [
+      "sobitneupane"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 3,
+    "posted_at": "2026-11-10T07:17:15Z",
+    "closed_at": null
+  },
+  {
+    "number": 106449,
+    "title": "[$175] Deeplink - Valid payment receipt deeplink does not display the receipt",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "2d 13h",
+    "duration_total_hours": 61,
+    "assignees": [
+      "Eskalifer1"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 9,
+    "posted_at": "2026-11-10T06:09:28Z",
+    "closed_at": null
+  },
+  {
+    "number": 106419,
+    "title": "[$175] Tax isn't disabled after delete offline",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "2d 23h",
+    "duration_total_hours": 71,
+    "assignees": [
+      "abdulrahuman5196"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 5,
+    "posted_at": "2026-11-09T20:46:31Z",
+    "closed_at": null
+  },
+  {
+    "number": 106418,
+    "title": "[$175] Merchant list displays escape characters",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "2d 23h",
+    "duration_total_hours": 71,
+    "assignees": [
+      "FitseTLT"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 6,
+    "posted_at": "2026-11-09T20:28:49Z",
+    "closed_at": null
+  },
+  {
+    "number": 106416,
+    "title": "[$175] Investigate expense creation rejections reported by APP-5WY",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "2d 23h",
+    "duration_total_hours": 71,
+    "assignees": [
+      "mountiny",
+      "kacper-mikolajczak",
+      "Eskalifer1"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 4,
+    "posted_at": "2026-11-09T20:42:46Z",
+    "closed_at": null
+  },
+  {
+    "number": 106412,
+    "title": "[Due for payment 2026-11-18] [$175] [Performance] Avatars re-render when transactions in unrelated reports change",
+    "state": "OPEN",
+    "status_label": "OPEN_LOST",
+    "duration_str": "2d 23h",
+    "duration_total_hours": 71,
+    "assignees": [
+      "mountiny",
+      "Eskalifer1"
+    ],
+    "is_first": true,
+    "is_sole": true,
+    "proposals_count": 1,
+    "posted_at": "2026-11-09T20:07:41Z",
+    "closed_at": null
+  },
+  {
+    "number": 106409,
+    "title": "[$175] [Sentry: APP-NZR] TypeError: Cannot read properties of undefined (reading 'toLowerCase')",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "3d 0h",
+    "duration_total_hours": 72,
+    "assignees": [
+      "Julesssss",
+      "parasharrajat",
+      "mountiny"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 5,
+    "posted_at": "2026-11-09T19:11:35Z",
+    "closed_at": null
+  },
+  {
+    "number": 106405,
+    "title": "[$175] [Sentry: APP-P01] TypeError: Cannot read property 'domainAccountID' of undefined",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "3d 1h",
+    "duration_total_hours": 73,
+    "assignees": [
+      "amyevans",
+      "mountiny",
+      "abdulrahuman5196"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 4,
+    "posted_at": "2026-11-09T18:28:41Z",
+    "closed_at": null
+  },
+  {
+    "number": 106398,
+    "title": "[$175] Expense - Day on Next step incorrect with the default frequency setting Submission twice a month",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "3d 1h",
+    "duration_total_hours": 73,
+    "assignees": [
+      "ZhenjaHorbach"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 4,
+    "posted_at": "2026-11-09T18:38:35Z",
+    "closed_at": null
+  },
+  {
+    "number": 106396,
+    "title": "[$175] Commercial feeds appear as identical Mastercard entries in New Expensify\u2019s Add Cards flow, making it difficult to select the correct feed.",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "3d 3h",
+    "duration_total_hours": 75,
+    "assignees": [
+      "rlinoz",
+      "ikevin127"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 2,
+    "posted_at": "2026-11-09T16:15:54Z",
+    "closed_at": null
+  },
+  {
+    "number": 106395,
+    "title": "[$175] Web - Company Cards - page loading infinitely with 'simulate failing network request'",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "3d 3h",
+    "duration_total_hours": 75,
+    "assignees": [
+      "aimane-chnaif"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 4,
+    "posted_at": "2026-11-09T16:11:07Z",
+    "closed_at": null
+  },
+  {
+    "number": 106387,
+    "title": "[$175] Expensify is not in app's list when share HEIC file from device file manager",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "3d 4h",
+    "duration_total_hours": 76,
+    "assignees": [
+      "DylanDylann"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 3,
+    "posted_at": "2026-11-09T15:49:05Z",
+    "closed_at": null
+  },
+  {
+    "number": 106380,
+    "title": "[$175] Scheduled call isn't displayed after booking via Calendly",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "3d 4h",
+    "duration_total_hours": 76,
+    "assignees": [
+      "huult",
+      "marcaaron"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 2,
+    "posted_at": "2026-11-09T15:16:15Z",
+    "closed_at": null
+  },
+  {
+    "number": 106366,
+    "title": "[$175] [UseDot] Add a Join modal with Terms of Service and Privacy Policy to all sign-up paths",
+    "state": "CLOSED",
+    "status_label": "CLOSED",
+    "duration_str": "2d 6h",
+    "duration_total_hours": 54,
+    "assignees": [
+      "roryabraham",
+      "dylanexpensify",
+      "cretadn22"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 2,
+    "posted_at": "2026-11-09T13:43:42Z",
+    "closed_at": "2026-11-11T20:09:54Z"
+  },
+  {
+    "number": 106343,
+    "title": "[$175] Describe Rule obscured after dismissing keyboard using Android navigation bar",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "3d 11h",
+    "duration_total_hours": 83,
+    "assignees": [
+      "dmkt9"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 4,
+    "posted_at": "2026-11-09T08:27:24Z",
+    "closed_at": null
+  },
+  {
+    "number": 106342,
+    "title": "[$175] Android - Plaid login page rotates to landscape instead of remaining in portrait",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "3d 11h",
+    "duration_total_hours": 83,
+    "assignees": [
+      "brunovjk"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 3,
+    "posted_at": "2026-11-09T08:27:12Z",
+    "closed_at": null
+  },
+  {
+    "number": 106340,
+    "title": "[$250] [Sentry: APP-77W] iOS: investigate main thread app hangs",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "3d 11h",
+    "duration_total_hours": 83,
+    "assignees": [
+      "mountiny",
+      "staszekscp",
+      "situchan"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 12,
+    "posted_at": "2026-11-09T08:44:03Z",
+    "closed_at": null
+  },
+  {
+    "number": 106338,
+    "title": "[Due for payment 2026-11-19] [$175] [Sentry: APP-NAP] react-native-pdf throws \"undefined is not a function\" when a PDF download is canceled",
+    "state": "OPEN",
+    "status_label": "OPEN_LOST",
+    "duration_str": "3d 11h",
+    "duration_total_hours": 83,
+    "assignees": [
+      "suneox",
+      "mountiny",
+      "staszekscp"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 3,
+    "posted_at": "2026-11-09T08:44:05Z",
+    "closed_at": null
+  },
+  {
+    "number": 106330,
+    "title": "[$175] Keep only report column headers sticky on wide layouts",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "3d 11h",
+    "duration_total_hours": 83,
+    "assignees": [
+      "mountiny",
+      "aimane-chnaif"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 3,
+    "posted_at": "2026-11-09T08:27:38Z",
+    "closed_at": null
+  },
+  {
+    "number": 106329,
+    "title": "[$175] [Sentry: APP-NZ2] java.lang.IllegalStateException: Cannot trigger event client-userIsTyping because connection is in RECONNECTING state",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "3d 5h",
+    "duration_total_hours": 77,
+    "assignees": [
+      "mountiny",
+      "truph01"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 2,
+    "posted_at": "2026-11-09T14:45:21Z",
+    "closed_at": null
+  },
+  {
+    "number": 106323,
+    "title": "[$175] [Auto] - Concierge - Pre-generated Concierge response does not appears while offline",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "2d 23h",
+    "duration_total_hours": 71,
+    "assignees": [
+      "Julesssss",
+      "daledah"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 2,
+    "posted_at": "2026-11-09T20:34:36Z",
+    "closed_at": null
+  },
+  {
+    "number": 106314,
+    "title": "[$175] [Sentry: APP-NY2 / APP-NK1] iOS Insights crashes with \u201cInvalid time value\u201d",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "4d 17h",
+    "duration_total_hours": 113,
+    "assignees": [
+      "mountiny",
+      "FitseTLT"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 7,
+    "posted_at": "2026-11-08T02:37:56Z",
+    "closed_at": null
+  },
+  {
+    "number": 106299,
+    "title": "[$175] Members - 100+ members does not add to member page after import",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "5d 1h",
+    "duration_total_hours": 121,
+    "assignees": [
+      "grgia",
+      "Eskalifer1"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 2,
+    "posted_at": "2026-11-07T18:44:08Z",
+    "closed_at": null
+  },
+  {
+    "number": 106297,
+    "title": "[$175] Concierge - \u201cExport my last report to PDF\u201d is displayed for a new user who has no expenses or reports",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "5d 2h",
+    "duration_total_hours": 122,
+    "assignees": [
+      "marcochavezf",
+      "mkhutornyi"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 7,
+    "posted_at": "2026-11-07T17:56:36Z",
+    "closed_at": null
+  },
+  {
+    "number": 106284,
+    "title": "[$175] All - Uber - Workspace is not connected to Uber at the end of connection flow",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "5d 10h",
+    "duration_total_hours": 130,
+    "assignees": [
+      "suneox"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 6,
+    "posted_at": "2026-11-07T09:39:09Z",
+    "closed_at": null
+  },
+  {
+    "number": 106276,
+    "title": "[$175] Expense - Create Expense button exits loading state before confirmation screen closes",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "5d 12h",
+    "duration_total_hours": 132,
+    "assignees": [
+      "mountiny",
+      "jmgraa",
+      "truph01"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 4,
+    "posted_at": "2026-11-07T07:07:57Z",
+    "closed_at": null
+  },
+  {
+    "number": 106257,
+    "title": "[$175] Android - Insights - Spend Over Time menu is covered by + button in landscape",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "5d 23h",
+    "duration_total_hours": 143,
+    "assignees": [
+      "jayeshmangwani"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 9,
+    "posted_at": "2026-11-06T20:42:10Z",
+    "closed_at": null
+  },
+  {
+    "number": 106253,
+    "title": "[Due for payment 2026-11-14] Company cards-Join button and 2 members displayed in member's unreported card expense details",
+    "state": "OPEN",
+    "status_label": "OPEN_LOST",
+    "duration_str": "6d 0h",
+    "duration_total_hours": 144,
+    "assignees": [
+      "roryabraham",
+      "Krishna2323"
+    ],
+    "is_first": true,
+    "is_sole": true,
+    "proposals_count": 1,
+    "posted_at": "2026-11-06T19:42:54Z",
+    "closed_at": null
+  },
+  {
+    "number": 106242,
+    "title": "[$175] AU - Track distance - Expense creation fails with unexpected error",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "5d 22h",
+    "duration_total_hours": 142,
+    "assignees": [
+      "eVoloshchak"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 8,
+    "posted_at": "2026-11-06T21:38:29Z",
+    "closed_at": null
+  },
+  {
+    "number": 106238,
+    "title": "[Exploratory] Hold-\"Pay 0\" displays on receiver when sender create new IOU to the held expense",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "6d 1h",
+    "duration_total_hours": 145,
+    "assignees": [],
+    "is_first": true,
+    "is_sole": true,
+    "proposals_count": 1,
+    "posted_at": "2026-11-06T18:42:03Z",
+    "closed_at": null
+  },
+  {
+    "number": 106237,
+    "title": "[CFI] [$175] Expense creation - Show required-field validation error above the footer button",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "6d 1h",
+    "duration_total_hours": 145,
+    "assignees": [
+      "rlinoz",
+      "TaduJR"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 10,
+    "posted_at": "2026-11-06T18:35:30Z",
+    "closed_at": null
+  },
+  {
+    "number": 106235,
+    "title": "[$175] LHN - Pinned chats are displayed in the wrong order",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "6d 1h",
+    "duration_total_hours": 145,
+    "assignees": [
+      "parasharrajat"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 10,
+    "posted_at": "2026-11-06T18:25:33Z",
+    "closed_at": null
+  },
+  {
+    "number": 106189,
+    "title": "[$175] Members - Browser back buttton does not return to workspace page after viewing chat history",
+    "state": "OPEN",
+    "status_label": "OPEN_LOST",
+    "duration_str": "6d 2h",
+    "duration_total_hours": 146,
+    "assignees": [
+      "NikkiWines",
+      "sobitneupane"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 6,
+    "posted_at": "2026-11-06T17:09:12Z",
+    "closed_at": null
+  },
+  {
+    "number": 106158,
+    "title": "[Due for payment 2026-11-16] [$175] [Sentry: APP-HSM] Search bulk actions crash reading 'type' of undefined searchResults.search",
+    "state": "OPEN",
+    "status_label": "OPEN_LOST",
+    "duration_str": "6d 13h",
+    "duration_total_hours": 157,
+    "assignees": [
+      "mountiny",
+      "daledah"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 4,
+    "posted_at": "2026-11-06T06:11:26Z",
+    "closed_at": null
+  },
+  {
+    "number": 106107,
+    "title": "[$175] Spend > Expenses - Workspace admin can see another user's (former employee's) unreported cash expenses but cannot take any action on them",
+    "state": "CLOSED",
+    "status_label": "CLOSED",
+    "duration_str": "0d 8h",
+    "duration_total_hours": 8,
+    "assignees": [
+      "rojiphil"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 2,
+    "posted_at": "2026-11-06T12:54:01Z",
+    "closed_at": "2026-11-06T21:40:40Z"
+  },
+  {
+    "number": 105899,
+    "title": "[$175] Connections - Error is being displayed when trying to Export a Report to Rillet",
+    "state": "OPEN",
+    "status_label": "OPEN_RANK1",
+    "duration_str": "6d 13h",
+    "duration_total_hours": 157,
+    "assignees": [
+      "brunovjk"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 4,
+    "posted_at": "2026-11-06T06:46:17Z",
+    "closed_at": null
+  },
+  {
+    "number": 105756,
+    "title": "[$175] Unable to create a new Expense from Reports > More > Create Expense",
+    "state": "CLOSED",
+    "status_label": "CLOSED",
+    "duration_str": "3d 5h",
+    "duration_total_hours": 77,
+    "assignees": [
+      "nyomanjyotisa"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 7,
+    "posted_at": "2026-11-03T13:00:00Z",
+    "closed_at": "2026-11-06T18:15:30Z"
+  },
+  {
+    "number": 105707,
+    "title": "[$175] [Sentry: APP-JKQ] Web: BaseGenericTooltip loops into \"Maximum update depth exceeded\" in Search expense report rows",
+    "state": "OPEN",
+    "status_label": "OPEN_COMPETITIVE",
+    "duration_str": "9d 11h",
+    "duration_total_hours": 227,
+    "assignees": [
+      "mountiny",
+      "gijoe0295"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 6,
+    "posted_at": "2026-11-03T08:02:06Z",
+    "closed_at": null
+  },
+  {
+    "number": 105705,
+    "title": "[$175] LHN - Red dot is missing from the LHN when an expense has a missing category",
+    "state": "CLOSED",
+    "status_label": "CLOSED",
+    "duration_str": "7d 8h",
+    "duration_total_hours": 176,
+    "assignees": [
+      "cretadn22"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 4,
+    "posted_at": "2026-11-03T07:53:05Z",
+    "closed_at": "2026-11-10T16:11:10Z"
+  },
+  {
+    "number": 105693,
+    "title": "[$250] Account - System back button on 2FA success RHP navigates to Account > Security",
+    "state": "OPEN",
+    "status_label": "OPEN_LOST",
+    "duration_str": "9d 17h",
+    "duration_total_hours": 233,
+    "assignees": [
+      "MariaHCD",
+      "neerajbachani",
+      "daledah"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 30,
+    "posted_at": "2026-11-03T02:32:55Z",
+    "closed_at": null
+  },
+  {
+    "number": 105649,
+    "title": "[Due for payment 2026-11-16] [$175] NewDot audit log doesn\u2019t show all report actions, possibly due to DEW forwards",
+    "state": "OPEN",
+    "status_label": "OPEN_LOST",
+    "duration_str": "10d 3h",
+    "duration_total_hours": 243,
+    "assignees": [
+      "bernhardoj"
+    ],
+    "is_first": true,
+    "is_sole": false,
+    "proposals_count": 3,
+    "posted_at": "2026-11-02T16:25:11Z",
+    "closed_at": null
+  },
+  {
+    "number": 104341,
+    "title": "[Due for payment 2026-11-19] [$250] Expense - Both approved & held expenses' total is shown after approving",
+    "state": "OPEN",
+    "status_label": "OPEN_LOST",
+    "duration_str": "10d 3h",
+    "duration_total_hours": 243,
+    "assignees": [
+      "tylerkaraszewski",
+      "nkdengineer",
+      "paulnjs"
+    ],
+    "is_first": false,
+    "is_sole": false,
+    "proposals_count": 33,
+    "posted_at": "2026-11-02T16:03:04Z",
+    "closed_at": null
+  }
+]

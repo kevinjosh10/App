@@ -19,7 +19,7 @@ import {
     isValidEmailWithTLD,
     isValidExpirationDate,
     isValidInputLength,
-    isValidLegalName,
+    isValidDisplayName,
     isValidPastDate,
     isValidPaymentZipCode,
     isValidPersonName,
@@ -473,20 +473,21 @@ describe('ValidationUtils', () => {
         });
     });
 
-    describe('ValidateLegalName', () => {
-        test('Valid legal name', () => {
-            expect(isValidLegalName('test name')).toBe(true);
-            expect(isValidLegalName(`X Æ A test`)).toBe(true);
-            expect(isValidLegalName('Smith-Jones')).toBe(true);
-            expect(isValidLegalName('a hyphenated-name')).toBe(true);
+    describe('ValidateDisplayName', () => {
+        test('Valid display name', () => {
+            expect(isValidDisplayName('test name')).toBe(true);
+            expect(isValidDisplayName('Smith-Jones')).toBe(true);
+            expect(isValidDisplayName('a hyphenated-name')).toBe(true);
+            expect(isValidDisplayName('Anne-Marie')).toBe(true);
+            expect(isValidDisplayName(`X Æ A test`)).toBe(true);
+            expect(isValidDisplayName('άλφα')).toBe(true);
         });
 
-        test('Invalid legal name', () => {
-            expect(isValidLegalName('άλφα')).toBe(false);
-            expect(isValidLegalName('-')).toBe(false);
-            expect(isValidLegalName('-Smith')).toBe(false);
-            expect(isValidLegalName('Smith-')).toBe(false);
-            expect(isValidLegalName('Smith--Jones')).toBe(false);
+        test('Invalid display name with comma or semicolon', () => {
+            expect(isValidDisplayName('Smith, Jones')).toBe(false);
+            expect(isValidDisplayName('Smith; Jones')).toBe(false);
+            expect(isValidDisplayName(',')).toBe(false);
+            expect(isValidDisplayName(';')).toBe(false);
         });
     });
 

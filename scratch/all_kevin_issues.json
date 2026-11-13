@@ -1,0 +1,1342 @@
+[
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjIwMTc4NzYx",
+        "is_bot": false,
+        "login": "huult",
+        "type": "User",
+        "url": "https://github.com/huult"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106774,
+    "state": "open",
+    "title": "[$175] No modal is displayed when there are 2 enable Per diem Workspace",
+    "updatedAt": "2026-11-13T05:18:30Z",
+    "url": "https://github.com/Expensify/App/issues/106774"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjIwMTc4NzYx",
+        "is_bot": false,
+        "login": "huult",
+        "type": "User",
+        "url": "https://github.com/huult"
+      },
+      {
+        "id": "MDQ6VXNlcjM2MDgzNTUw",
+        "is_bot": false,
+        "login": "mountiny",
+        "type": "User",
+        "url": "https://github.com/mountiny"
+      },
+      {
+        "id": "U_kgDOBpbMIA",
+        "is_bot": false,
+        "login": "allgandalf",
+        "type": "User",
+        "url": "https://github.com/allgandalf"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106764,
+    "state": "open",
+    "title": "[$175] Prevent unnecessary SAML sign-outs during mobile session hydration",
+    "updatedAt": "2026-11-13T04:26:28Z",
+    "url": "https://github.com/Expensify/App/issues/106764"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjg0NjkyMTgz",
+        "is_bot": false,
+        "login": "linhvovan29546",
+        "type": "User",
+        "url": "https://github.com/linhvovan29546"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106743,
+    "state": "open",
+    "title": "[$175] Bank account verification fails because hyphens are not allowed in the legal name field.",
+    "updatedAt": "2026-11-13T03:14:06Z",
+    "url": "https://github.com/Expensify/App/issues/106743"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjg1ODk0ODcx",
+        "is_bot": false,
+        "login": "Krishna2323",
+        "type": "User",
+        "url": "https://github.com/Krishna2323"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106741,
+    "state": "open",
+    "title": "[$175] Reimbursable field missing from bulk edit while individual editing works",
+    "updatedAt": "2026-11-13T02:34:40Z",
+    "url": "https://github.com/Expensify/App/issues/106741"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjIyMjE5NTE5",
+        "is_bot": false,
+        "login": "luacmartins",
+        "type": "User",
+        "url": "https://github.com/luacmartins"
+      },
+      {
+        "id": "MDQ6VXNlcjQxMTI5ODcw",
+        "is_bot": false,
+        "login": "ahmedGaber93",
+        "type": "User",
+        "url": "https://github.com/ahmedGaber93"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106721,
+    "state": "open",
+    "title": "[$175] Infinite loading when open /insights",
+    "updatedAt": "2026-11-12T20:05:53Z",
+    "url": "https://github.com/Expensify/App/issues/106721"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjIxNTQ5Nzcx",
+        "is_bot": false,
+        "login": "lakchote",
+        "type": "User",
+        "url": "https://github.com/lakchote"
+      },
+      {
+        "id": "U_kgDOCic1vQ",
+        "is_bot": false,
+        "login": "truph01",
+        "type": "User",
+        "url": "https://github.com/truph01"
+      },
+      {
+        "id": "U_kgDOCjwRlw",
+        "is_bot": false,
+        "login": "daledah",
+        "type": "User",
+        "url": "https://github.com/daledah"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106670,
+    "state": "open",
+    "title": "[$175] Digits - The background page switches to the Workspace Overview after reloading the page",
+    "updatedAt": "2026-11-12T11:18:28Z",
+    "url": "https://github.com/Expensify/App/issues/106670"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjQxMTI5ODcw",
+        "is_bot": false,
+        "login": "ahmedGaber93",
+        "type": "User",
+        "url": "https://github.com/ahmedGaber93"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106633,
+    "state": "open",
+    "title": "[$175] Split - Expense is labelled Split but does not act as a split expense after unapproving & retracting",
+    "updatedAt": "2026-11-12T06:30:03Z",
+    "url": "https://github.com/Expensify/App/issues/106633"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM4NjQ5OTU3",
+        "is_bot": false,
+        "login": "FitseTLT",
+        "type": "User",
+        "url": "https://github.com/FitseTLT"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106630,
+    "state": "open",
+    "title": "[$175] Members - Removed user with secondary login is shown as \"already a member\" in search list",
+    "updatedAt": "2026-11-12T17:13:54Z",
+    "url": "https://github.com/Expensify/App/issues/106630"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM4NjQ5OTU3",
+        "is_bot": false,
+        "login": "FitseTLT",
+        "type": "User",
+        "url": "https://github.com/FitseTLT"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106627,
+    "state": "open",
+    "title": "[$175] Attachment \u2013 Unable to Open Video in Thread Chat",
+    "updatedAt": "2026-11-12T11:42:19Z",
+    "url": "https://github.com/Expensify/App/issues/106627"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjYwMTE3MjQ4",
+        "is_bot": false,
+        "login": "dylanexpensify",
+        "type": "User",
+        "url": "https://github.com/dylanexpensify"
+      },
+      {
+        "id": "U_kgDOCKriew",
+        "is_bot": false,
+        "login": "dubielzyk-expensify",
+        "type": "User",
+        "url": "https://github.com/dubielzyk-expensify"
+      },
+      {
+        "id": "U_kgDOCic1vQ",
+        "is_bot": false,
+        "login": "truph01",
+        "type": "User",
+        "url": "https://github.com/truph01"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106616,
+    "state": "open",
+    "title": "[$175] Onboarding - Expand accounting software options with searchable compact selectors",
+    "updatedAt": "2026-11-11T13:17:43Z",
+    "url": "https://github.com/Expensify/App/issues/106616"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjExNjA5MjU0",
+        "is_bot": false,
+        "login": "Ollyws",
+        "type": "User",
+        "url": "https://github.com/Ollyws"
+      },
+      {
+        "id": "MDQ6VXNlcjM4MDE1OTUw",
+        "is_bot": false,
+        "login": "grgia",
+        "type": "User",
+        "url": "https://github.com/grgia"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106612,
+    "state": "open",
+    "title": "[$175] IOU - Report appear normal state instead of pending after \"Pay with business bank account\"",
+    "updatedAt": "2026-11-11T16:24:36Z",
+    "url": "https://github.com/Expensify/App/issues/106612"
+  },
+  {
+    "assignees": [
+      {
+        "id": "U_kgDOCuKklA",
+        "is_bot": false,
+        "login": "thelullabyy",
+        "type": "User",
+        "url": "https://github.com/thelullabyy"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106596,
+    "state": "open",
+    "title": "[$175] The \"Create a rule\" banner doesn't appears on the second expense creation",
+    "updatedAt": "2026-11-11T13:17:49Z",
+    "url": "https://github.com/Expensify/App/issues/106596"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjIyMjE5NTE5",
+        "is_bot": false,
+        "login": "luacmartins",
+        "type": "User",
+        "url": "https://github.com/luacmartins"
+      },
+      {
+        "id": "MDQ6VXNlcjQxMTI5ODcw",
+        "is_bot": false,
+        "login": "ahmedGaber93",
+        "type": "User",
+        "url": "https://github.com/ahmedGaber93"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106561,
+    "state": "open",
+    "title": "[$175] Insights - Root link does not open Spend dashboard",
+    "updatedAt": "2026-11-11T13:17:53Z",
+    "url": "https://github.com/Expensify/App/issues/106561"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjMwMDQ2NTk=",
+        "is_bot": false,
+        "login": "rojiphil",
+        "type": "User",
+        "url": "https://github.com/rojiphil"
+      },
+      {
+        "id": "U_kgDOBpbMIA",
+        "is_bot": false,
+        "login": "allgandalf",
+        "type": "User",
+        "url": "https://github.com/allgandalf"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106558,
+    "state": "open",
+    "title": "[$175] Users cannot sign in to Expensify through Okta on the web and receive the error: \u201cSomething went wrong. Grab a snack and try again later.\u201d",
+    "updatedAt": "2026-11-12T02:15:58Z",
+    "url": "https://github.com/Expensify/App/issues/106558"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjMwMDQ2NTk=",
+        "is_bot": false,
+        "login": "rojiphil",
+        "type": "User",
+        "url": "https://github.com/rojiphil"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106556,
+    "state": "open",
+    "title": "[$175] User adds a receipt via smartscan and selects a report; once saved, it then for some reason goes to a different report",
+    "updatedAt": "2026-11-12T11:43:33Z",
+    "url": "https://github.com/Expensify/App/issues/106556"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM2MDgzNTUw",
+        "is_bot": false,
+        "login": "mountiny",
+        "type": "User",
+        "url": "https://github.com/mountiny"
+      },
+      {
+        "id": "U_kgDOBboE4w",
+        "is_bot": false,
+        "login": "aimane-chnaif",
+        "type": "User",
+        "url": "https://github.com/aimane-chnaif"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106543,
+    "state": "open",
+    "title": "[$175] [Sentry: APP-P0M] Null employee entry crashes Search custom-field selector",
+    "updatedAt": "2026-11-12T23:57:56Z",
+    "url": "https://github.com/Expensify/App/issues/106543"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM1MzcxMDUw",
+        "is_bot": false,
+        "login": "jayeshmangwani",
+        "type": "User",
+        "url": "https://github.com/jayeshmangwani"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106517,
+    "state": "open",
+    "title": "[$175] Concierge - The empathetic reply does not include a clickable link \"talk to a human\" link",
+    "updatedAt": "2026-11-11T19:48:11Z",
+    "url": "https://github.com/Expensify/App/issues/106517"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjkwODYxNzgw",
+        "is_bot": false,
+        "login": "TaduJR",
+        "type": "User",
+        "url": "https://github.com/TaduJR"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106463,
+    "state": "open",
+    "title": "[$175] Day is not mentioned first in Dutch on Sub page",
+    "updatedAt": "2026-11-11T20:16:04Z",
+    "url": "https://github.com/Expensify/App/issues/106463"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjgzMTc5Mjk1",
+        "is_bot": false,
+        "login": "thesahindia",
+        "type": "User",
+        "url": "https://github.com/thesahindia"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106459,
+    "state": "open",
+    "title": "[$175] Statements-Page loads infinitely when navigating to /statements/<YYYYMM>",
+    "updatedAt": "2026-11-11T19:14:12Z",
+    "url": "https://github.com/Expensify/App/issues/106459"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjI4Mzg4MTk=",
+        "is_bot": false,
+        "login": "AndrewGable",
+        "type": "User",
+        "url": "https://github.com/AndrewGable"
+      },
+      {
+        "id": "MDQ6VXNlcjU2NDU3NzM1",
+        "is_bot": false,
+        "login": "ikevin127",
+        "type": "User",
+        "url": "https://github.com/ikevin127"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106458,
+    "state": "open",
+    "title": "[$175] There right approver is not shown after turning back the approval mode",
+    "updatedAt": "2026-11-11T19:40:17Z",
+    "url": "https://github.com/Expensify/App/issues/106458"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjI1ODc2NTQ4",
+        "is_bot": false,
+        "login": "sobitneupane",
+        "type": "User",
+        "url": "https://github.com/sobitneupane"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106454,
+    "state": "open",
+    "title": "[$175] Web - Onboarding - Concierge RHP doesn't open after landing on the Home page",
+    "updatedAt": "2026-11-11T13:50:31Z",
+    "url": "https://github.com/Expensify/App/issues/106454"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjY2NzIzNjIw",
+        "is_bot": false,
+        "login": "Eskalifer1",
+        "type": "User",
+        "url": "https://github.com/Eskalifer1"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106449,
+    "state": "open",
+    "title": "[$175] Deeplink - Valid payment receipt deeplink does not display the receipt",
+    "updatedAt": "2026-11-11T13:18:10Z",
+    "url": "https://github.com/Expensify/App/issues/106449"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjQ2NzA3ODkw",
+        "is_bot": false,
+        "login": "abdulrahuman5196",
+        "type": "User",
+        "url": "https://github.com/abdulrahuman5196"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106419,
+    "state": "open",
+    "title": "[$175] Tax isn't disabled after delete offline",
+    "updatedAt": "2026-11-12T21:56:43Z",
+    "url": "https://github.com/Expensify/App/issues/106419"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM4NjQ5OTU3",
+        "is_bot": false,
+        "login": "FitseTLT",
+        "type": "User",
+        "url": "https://github.com/FitseTLT"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106418,
+    "state": "open",
+    "title": "[$175] Merchant list displays escape characters",
+    "updatedAt": "2026-11-12T21:56:39Z",
+    "url": "https://github.com/Expensify/App/issues/106418"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM2MDgzNTUw",
+        "is_bot": false,
+        "login": "mountiny",
+        "type": "User",
+        "url": "https://github.com/mountiny"
+      },
+      {
+        "id": "MDQ6VXNlcjYyNzQ3MDg4",
+        "is_bot": false,
+        "login": "kacper-mikolajczak",
+        "type": "User",
+        "url": "https://github.com/kacper-mikolajczak"
+      },
+      {
+        "id": "MDQ6VXNlcjY2NzIzNjIw",
+        "is_bot": false,
+        "login": "Eskalifer1",
+        "type": "User",
+        "url": "https://github.com/Eskalifer1"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106416,
+    "state": "open",
+    "title": "[$175] Investigate expense creation rejections reported by APP-5WY",
+    "updatedAt": "2026-11-12T23:19:02Z",
+    "url": "https://github.com/Expensify/App/issues/106416"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM2MDgzNTUw",
+        "is_bot": false,
+        "login": "mountiny",
+        "type": "User",
+        "url": "https://github.com/mountiny"
+      },
+      {
+        "id": "MDQ6VXNlcjY2NzIzNjIw",
+        "is_bot": false,
+        "login": "Eskalifer1",
+        "type": "User",
+        "url": "https://github.com/Eskalifer1"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106412,
+    "state": "open",
+    "title": "[Due for payment 2026-11-18] [$175] [Performance] Avatars re-render when transactions in unrelated reports change",
+    "updatedAt": "2026-11-11T07:50:03Z",
+    "url": "https://github.com/Expensify/App/issues/106412"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjEwNzM2ODYx",
+        "is_bot": false,
+        "login": "Julesssss",
+        "type": "User",
+        "url": "https://github.com/Julesssss"
+      },
+      {
+        "id": "MDQ6VXNlcjI0MzcwODA3",
+        "is_bot": false,
+        "login": "parasharrajat",
+        "type": "User",
+        "url": "https://github.com/parasharrajat"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106409,
+    "state": "open",
+    "title": "[$175] [Sentry: APP-NZR] TypeError: Cannot read properties of undefined (reading 'toLowerCase')",
+    "updatedAt": "2026-11-13T00:22:41Z",
+    "url": "https://github.com/Expensify/App/issues/106409"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM2MDgzNTUw",
+        "is_bot": false,
+        "login": "mountiny",
+        "type": "User",
+        "url": "https://github.com/mountiny"
+      },
+      {
+        "id": "MDQ6VXNlcjQ2NzA3ODkw",
+        "is_bot": false,
+        "login": "abdulrahuman5196",
+        "type": "User",
+        "url": "https://github.com/abdulrahuman5196"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106405,
+    "state": "open",
+    "title": "[$175] [Sentry: APP-P01] TypeError: Cannot read property 'domainAccountID' of undefined",
+    "updatedAt": "2026-11-12T23:11:50Z",
+    "url": "https://github.com/Expensify/App/issues/106405"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjY4MTI4MDI4",
+        "is_bot": false,
+        "login": "ZhenjaHorbach",
+        "type": "User",
+        "url": "https://github.com/ZhenjaHorbach"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106398,
+    "state": "open",
+    "title": "[$175] Expense - Day on Next step incorrect with the default frequency setting Submission twice a month",
+    "updatedAt": "2026-11-11T10:16:54Z",
+    "url": "https://github.com/Expensify/App/issues/106398"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjUyMDEyODI=",
+        "is_bot": false,
+        "login": "rlinoz",
+        "type": "User",
+        "url": "https://github.com/rlinoz"
+      },
+      {
+        "id": "MDQ6VXNlcjU2NDU3NzM1",
+        "is_bot": false,
+        "login": "ikevin127",
+        "type": "User",
+        "url": "https://github.com/ikevin127"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106396,
+    "state": "open",
+    "title": "[$175] Commercial feeds appear as identical Mastercard entries in New Expensify\u2019s Add Cards flow, making it difficult to select the correct feed.",
+    "updatedAt": "2026-11-11T19:22:06Z",
+    "url": "https://github.com/Expensify/App/issues/106396"
+  },
+  {
+    "assignees": [
+      {
+        "id": "U_kgDOBboE4w",
+        "is_bot": false,
+        "login": "aimane-chnaif",
+        "type": "User",
+        "url": "https://github.com/aimane-chnaif"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106395,
+    "state": "open",
+    "title": "[$175] Web - Company Cards - page loading infinitely with 'simulate failing network request'",
+    "updatedAt": "2026-11-12T21:56:09Z",
+    "url": "https://github.com/Expensify/App/issues/106395"
+  },
+  {
+    "assignees": [
+      {
+        "id": "U_kgDOCG2yDw",
+        "is_bot": false,
+        "login": "DylanDylann",
+        "type": "User",
+        "url": "https://github.com/DylanDylann"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106387,
+    "state": "open",
+    "title": "[$175] Expensify is not in app's list when share HEIC file from device file manager",
+    "updatedAt": "2026-11-12T21:56:06Z",
+    "url": "https://github.com/Expensify/App/issues/106387"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjIwMTc4NzYx",
+        "is_bot": false,
+        "login": "huult",
+        "type": "User",
+        "url": "https://github.com/huult"
+      },
+      {
+        "id": "MDQ6VXNlcjMyOTY5MDg3",
+        "is_bot": false,
+        "login": "marcaaron",
+        "type": "User",
+        "url": "https://github.com/marcaaron"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106380,
+    "state": "open",
+    "title": "[$175] Scheduled call isn't displayed after booking via Calendly",
+    "updatedAt": "2026-11-11T19:40:51Z",
+    "url": "https://github.com/Expensify/App/issues/106380"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjQ3NDM2MDky",
+        "is_bot": false,
+        "login": "roryabraham",
+        "type": "User",
+        "url": "https://github.com/roryabraham"
+      },
+      {
+        "id": "MDQ6VXNlcjYwMTE3MjQ4",
+        "is_bot": false,
+        "login": "dylanexpensify",
+        "type": "User",
+        "url": "https://github.com/dylanexpensify"
+      },
+      {
+        "id": "U_kgDOCgzklw",
+        "is_bot": false,
+        "login": "cretadn22",
+        "type": "User",
+        "url": "https://github.com/cretadn22"
+      }
+    ],
+    "closedAt": "2026-11-11T20:09:54Z",
+    "number": 106366,
+    "state": "closed",
+    "title": "[$175] [UseDot] Add a Join modal with Terms of Service and Privacy Policy to all sign-up paths",
+    "updatedAt": "2026-11-11T20:09:59Z",
+    "url": "https://github.com/Expensify/App/issues/106366"
+  },
+  {
+    "assignees": [
+      {
+        "id": "U_kgDODHB70w",
+        "is_bot": false,
+        "login": "dmkt9",
+        "type": "User",
+        "url": "https://github.com/dmkt9"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106343,
+    "state": "open",
+    "title": "[$175] Describe Rule obscured after dismissing keyboard using Android navigation bar",
+    "updatedAt": "2026-11-13T05:21:44Z",
+    "url": "https://github.com/Expensify/App/issues/106343"
+  },
+  {
+    "assignees": [
+      {
+        "id": "U_kgDOBbN2dA",
+        "is_bot": false,
+        "login": "brunovjk",
+        "type": "User",
+        "url": "https://github.com/brunovjk"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106342,
+    "state": "open",
+    "title": "[$175] Android - Plaid login page rotates to landscape instead of remaining in portrait",
+    "updatedAt": "2026-11-12T08:49:36Z",
+    "url": "https://github.com/Expensify/App/issues/106342"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM2MDgzNTUw",
+        "is_bot": false,
+        "login": "mountiny",
+        "type": "User",
+        "url": "https://github.com/mountiny"
+      },
+      {
+        "id": "MDQ6VXNlcjc1MDIwMDU3",
+        "is_bot": false,
+        "login": "staszekscp",
+        "type": "User",
+        "url": "https://github.com/staszekscp"
+      },
+      {
+        "id": "U_kgDOBnRp8w",
+        "is_bot": false,
+        "login": "situchan",
+        "type": "User",
+        "url": "https://github.com/situchan"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106340,
+    "state": "open",
+    "title": "[$250] [Sentry: APP-77W] iOS: investigate main thread app hangs",
+    "updatedAt": "2026-11-12T21:56:21Z",
+    "url": "https://github.com/Expensify/App/issues/106340"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjExOTU5ODY5",
+        "is_bot": false,
+        "login": "suneox",
+        "type": "User",
+        "url": "https://github.com/suneox"
+      },
+      {
+        "id": "MDQ6VXNlcjM2MDgzNTUw",
+        "is_bot": false,
+        "login": "mountiny",
+        "type": "User",
+        "url": "https://github.com/mountiny"
+      },
+      {
+        "id": "MDQ6VXNlcjc1MDIwMDU3",
+        "is_bot": false,
+        "login": "staszekscp",
+        "type": "User",
+        "url": "https://github.com/staszekscp"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106338,
+    "state": "open",
+    "title": "[Due for payment 2026-11-19] [$175] [Sentry: APP-NAP] react-native-pdf throws \"undefined is not a function\" when a PDF download is canceled",
+    "updatedAt": "2026-11-12T08:31:59Z",
+    "url": "https://github.com/Expensify/App/issues/106338"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM2MDgzNTUw",
+        "is_bot": false,
+        "login": "mountiny",
+        "type": "User",
+        "url": "https://github.com/mountiny"
+      },
+      {
+        "id": "U_kgDOBboE4w",
+        "is_bot": false,
+        "login": "aimane-chnaif",
+        "type": "User",
+        "url": "https://github.com/aimane-chnaif"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106330,
+    "state": "open",
+    "title": "[$175] Keep only report column headers sticky on wide layouts",
+    "updatedAt": "2026-11-12T21:56:30Z",
+    "url": "https://github.com/Expensify/App/issues/106330"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM2MDgzNTUw",
+        "is_bot": false,
+        "login": "mountiny",
+        "type": "User",
+        "url": "https://github.com/mountiny"
+      },
+      {
+        "id": "U_kgDOCic1vQ",
+        "is_bot": false,
+        "login": "truph01",
+        "type": "User",
+        "url": "https://github.com/truph01"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106329,
+    "state": "open",
+    "title": "[$175] [Sentry: APP-NZ2] java.lang.IllegalStateException: Cannot trigger event client-userIsTyping because connection is in RECONNECTING state",
+    "updatedAt": "2026-11-10T08:34:51Z",
+    "url": "https://github.com/Expensify/App/issues/106329"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjEwNzM2ODYx",
+        "is_bot": false,
+        "login": "Julesssss",
+        "type": "User",
+        "url": "https://github.com/Julesssss"
+      },
+      {
+        "id": "U_kgDOCjwRlw",
+        "is_bot": false,
+        "login": "daledah",
+        "type": "User",
+        "url": "https://github.com/daledah"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106323,
+    "state": "open",
+    "title": "[$175] [Auto] - Concierge - Pre-generated Concierge response does not appears while offline",
+    "updatedAt": "2026-11-10T13:05:42Z",
+    "url": "https://github.com/Expensify/App/issues/106323"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM2MDgzNTUw",
+        "is_bot": false,
+        "login": "mountiny",
+        "type": "User",
+        "url": "https://github.com/mountiny"
+      },
+      {
+        "id": "MDQ6VXNlcjM4NjQ5OTU3",
+        "is_bot": false,
+        "login": "FitseTLT",
+        "type": "User",
+        "url": "https://github.com/FitseTLT"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106314,
+    "state": "open",
+    "title": "[$175] [Sentry: APP-NY2 / APP-NK1] iOS Insights crashes with \u201cInvalid time value\u201d",
+    "updatedAt": "2026-11-11T14:00:02Z",
+    "url": "https://github.com/Expensify/App/issues/106314"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM4MDE1OTUw",
+        "is_bot": false,
+        "login": "grgia",
+        "type": "User",
+        "url": "https://github.com/grgia"
+      },
+      {
+        "id": "MDQ6VXNlcjY2NzIzNjIw",
+        "is_bot": false,
+        "login": "Eskalifer1",
+        "type": "User",
+        "url": "https://github.com/Eskalifer1"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106299,
+    "state": "open",
+    "title": "[$175] Members - 100+ members does not add to member page after import",
+    "updatedAt": "2026-11-10T12:29:33Z",
+    "url": "https://github.com/Expensify/App/issues/106299"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjY4Mjk0MjI=",
+        "is_bot": false,
+        "login": "marcochavezf",
+        "type": "User",
+        "url": "https://github.com/marcochavezf"
+      },
+      {
+        "id": "U_kgDOBdJrYw",
+        "is_bot": false,
+        "login": "mkhutornyi",
+        "type": "User",
+        "url": "https://github.com/mkhutornyi"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106297,
+    "state": "open",
+    "title": "[$175] Concierge - \u201cExport my last report to PDF\u201d is displayed for a new user who has no expenses or reports",
+    "updatedAt": "2026-11-09T03:27:35Z",
+    "url": "https://github.com/Expensify/App/issues/106297"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjExOTU5ODY5",
+        "is_bot": false,
+        "login": "suneox",
+        "type": "User",
+        "url": "https://github.com/suneox"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106284,
+    "state": "open",
+    "title": "[$175] All - Uber - Workspace is not connected to Uber at the end of connection flow",
+    "updatedAt": "2026-11-11T20:22:08Z",
+    "url": "https://github.com/Expensify/App/issues/106284"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM2MDgzNTUw",
+        "is_bot": false,
+        "login": "mountiny",
+        "type": "User",
+        "url": "https://github.com/mountiny"
+      },
+      {
+        "id": "U_kgDOBc8LhA",
+        "is_bot": false,
+        "login": "jmgraa",
+        "type": "User",
+        "url": "https://github.com/jmgraa"
+      },
+      {
+        "id": "U_kgDOCic1vQ",
+        "is_bot": false,
+        "login": "truph01",
+        "type": "User",
+        "url": "https://github.com/truph01"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106276,
+    "state": "open",
+    "title": "[$175] Expense - Create Expense button exits loading state before confirmation screen closes",
+    "updatedAt": "2026-11-12T14:35:49Z",
+    "url": "https://github.com/Expensify/App/issues/106276"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM1MzcxMDUw",
+        "is_bot": false,
+        "login": "jayeshmangwani",
+        "type": "User",
+        "url": "https://github.com/jayeshmangwani"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106257,
+    "state": "open",
+    "title": "[$175] Android - Insights - Spend Over Time menu is covered by + button in landscape",
+    "updatedAt": "2026-11-11T21:53:24Z",
+    "url": "https://github.com/Expensify/App/issues/106257"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjQ3NDM2MDky",
+        "is_bot": false,
+        "login": "roryabraham",
+        "type": "User",
+        "url": "https://github.com/roryabraham"
+      },
+      {
+        "id": "MDQ6VXNlcjg1ODk0ODcx",
+        "is_bot": false,
+        "login": "Krishna2323",
+        "type": "User",
+        "url": "https://github.com/Krishna2323"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106253,
+    "state": "open",
+    "title": "[Due for payment 2026-11-14] Company cards-Join button and 2 members displayed in member's unreported card expense details",
+    "updatedAt": "2026-11-12T21:55:10Z",
+    "url": "https://github.com/Expensify/App/issues/106253"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjkwNTk5NDU=",
+        "is_bot": false,
+        "login": "eVoloshchak",
+        "type": "User",
+        "url": "https://github.com/eVoloshchak"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106242,
+    "state": "open",
+    "title": "[$175] AU - Track distance - Expense creation fails with unexpected error",
+    "updatedAt": "2026-11-11T21:53:15Z",
+    "url": "https://github.com/Expensify/App/issues/106242"
+  },
+  {
+    "assignees": [],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106238,
+    "state": "open",
+    "title": "[Exploratory] Hold-\"Pay 0\" displays on receiver when sender create new IOU to the held expense",
+    "updatedAt": "2026-11-11T21:53:12Z",
+    "url": "https://github.com/Expensify/App/issues/106238"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjUyMDEyODI=",
+        "is_bot": false,
+        "login": "rlinoz",
+        "type": "User",
+        "url": "https://github.com/rlinoz"
+      },
+      {
+        "id": "MDQ6VXNlcjkwODYxNzgw",
+        "is_bot": false,
+        "login": "TaduJR",
+        "type": "User",
+        "url": "https://github.com/TaduJR"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106237,
+    "state": "open",
+    "title": "[CFI] [$175] Expense creation - Show required-field validation error above the footer button",
+    "updatedAt": "2026-11-11T19:19:19Z",
+    "url": "https://github.com/Expensify/App/issues/106237"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjI0MzcwODA3",
+        "is_bot": false,
+        "login": "parasharrajat",
+        "type": "User",
+        "url": "https://github.com/parasharrajat"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106235,
+    "state": "open",
+    "title": "[$175] LHN - Pinned chats are displayed in the wrong order",
+    "updatedAt": "2026-11-11T21:53:08Z",
+    "url": "https://github.com/Expensify/App/issues/106235"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjE2NzQ3ODIy",
+        "is_bot": false,
+        "login": "NikkiWines",
+        "type": "User",
+        "url": "https://github.com/NikkiWines"
+      },
+      {
+        "id": "MDQ6VXNlcjI1ODc2NTQ4",
+        "is_bot": false,
+        "login": "sobitneupane",
+        "type": "User",
+        "url": "https://github.com/sobitneupane"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106189,
+    "state": "open",
+    "title": "[$175] Members - Browser back buttton does not return to workspace page after viewing chat history",
+    "updatedAt": "2026-11-11T21:53:05Z",
+    "url": "https://github.com/Expensify/App/issues/106189"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM2MDgzNTUw",
+        "is_bot": false,
+        "login": "mountiny",
+        "type": "User",
+        "url": "https://github.com/mountiny"
+      },
+      {
+        "id": "U_kgDOCjwRlw",
+        "is_bot": false,
+        "login": "daledah",
+        "type": "User",
+        "url": "https://github.com/daledah"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 106158,
+    "state": "open",
+    "title": "[Due for payment 2026-11-16] [$175] [Sentry: APP-HSM] Search bulk actions crash reading 'type' of undefined searchResults.search",
+    "updatedAt": "2026-11-11T19:19:29Z",
+    "url": "https://github.com/Expensify/App/issues/106158"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjMwMDQ2NTk=",
+        "is_bot": false,
+        "login": "rojiphil",
+        "type": "User",
+        "url": "https://github.com/rojiphil"
+      }
+    ],
+    "closedAt": "2026-11-06T21:40:40Z",
+    "number": 106107,
+    "state": "closed",
+    "title": "[$175] Spend > Expenses - Workspace admin can see another user's (former employee's) unreported cash expenses but cannot take any action on them",
+    "updatedAt": "2026-11-07T16:16:09Z",
+    "url": "https://github.com/Expensify/App/issues/106107"
+  },
+  {
+    "assignees": [
+      {
+        "id": "U_kgDOBbN2dA",
+        "is_bot": false,
+        "login": "brunovjk",
+        "type": "User",
+        "url": "https://github.com/brunovjk"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 105899,
+    "state": "open",
+    "title": "[$175] Connections - Error is being displayed when trying to Export a Report to Rillet",
+    "updatedAt": "2026-11-11T19:19:27Z",
+    "url": "https://github.com/Expensify/App/issues/105899"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjczMjgxNTc1",
+        "is_bot": false,
+        "login": "nyomanjyotisa",
+        "type": "User",
+        "url": "https://github.com/nyomanjyotisa"
+      }
+    ],
+    "closedAt": "2026-11-06T18:15:30Z",
+    "number": 105756,
+    "state": "closed",
+    "title": "[$175] Unable to create a new Expense from Reports > More > Create Expense",
+    "updatedAt": "2026-11-07T16:15:43Z",
+    "url": "https://github.com/Expensify/App/issues/105756"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjM2MDgzNTUw",
+        "is_bot": false,
+        "login": "mountiny",
+        "type": "User",
+        "url": "https://github.com/mountiny"
+      },
+      {
+        "id": "U_kgDOCR6oeA",
+        "is_bot": false,
+        "login": "gijoe0295",
+        "type": "User",
+        "url": "https://github.com/gijoe0295"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 105707,
+    "state": "open",
+    "title": "[$175] [Sentry: APP-JKQ] Web: BaseGenericTooltip loops into \"Maximum update depth exceeded\" in Search expense report rows",
+    "updatedAt": "2026-11-12T17:50:29Z",
+    "url": "https://github.com/Expensify/App/issues/105707"
+  },
+  {
+    "assignees": [
+      {
+        "id": "U_kgDOCgzklw",
+        "is_bot": false,
+        "login": "cretadn22",
+        "type": "User",
+        "url": "https://github.com/cretadn22"
+      }
+    ],
+    "closedAt": "2026-11-10T16:11:10Z",
+    "number": 105705,
+    "state": "closed",
+    "title": "[$175] LHN - Red dot is missing from the LHN when an expense has a missing category",
+    "updatedAt": "2026-11-11T19:19:47Z",
+    "url": "https://github.com/Expensify/App/issues/105705"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjEyMjY4Mzcy",
+        "is_bot": false,
+        "login": "MariaHCD",
+        "type": "User",
+        "url": "https://github.com/MariaHCD"
+      },
+      {
+        "id": "U_kgDOB2m-hg",
+        "is_bot": false,
+        "login": "neerajbachani",
+        "type": "User",
+        "url": "https://github.com/neerajbachani"
+      },
+      {
+        "id": "U_kgDOCjwRlw",
+        "is_bot": false,
+        "login": "daledah",
+        "type": "User",
+        "url": "https://github.com/daledah"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 105693,
+    "state": "open",
+    "title": "[$250] Account - System back button on 2FA success RHP navigates to Account > Security",
+    "updatedAt": "2026-11-12T15:40:27Z",
+    "url": "https://github.com/Expensify/App/issues/105693"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjUwOTE5NDQz",
+        "is_bot": false,
+        "login": "bernhardoj",
+        "type": "User",
+        "url": "https://github.com/bernhardoj"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 105649,
+    "state": "open",
+    "title": "[Due for payment 2026-11-16] [$175] NewDot audit log doesn\u2019t show all report actions, possibly due to DEW forwards",
+    "updatedAt": "2026-11-12T21:54:45Z",
+    "url": "https://github.com/Expensify/App/issues/105649"
+  },
+  {
+    "assignees": [
+      {
+        "id": "MDQ6VXNlcjcwNTAwMA==",
+        "is_bot": false,
+        "login": "tylerkaraszewski",
+        "type": "User",
+        "url": "https://github.com/tylerkaraszewski"
+      },
+      {
+        "id": "U_kgDOCaUxTQ",
+        "is_bot": false,
+        "login": "nkdengineer",
+        "type": "User",
+        "url": "https://github.com/nkdengineer"
+      },
+      {
+        "id": "U_kgDODWtdQw",
+        "is_bot": false,
+        "login": "paulnjs",
+        "type": "User",
+        "url": "https://github.com/paulnjs"
+      }
+    ],
+    "closedAt": "0001-01-01T00:00:00Z",
+    "number": 104341,
+    "state": "open",
+    "title": "[Due for payment 2026-11-19] [$250] Expense - Both approved & held expenses' total is shown after approving",
+    "updatedAt": "2026-11-12T08:30:58Z",
+    "url": "https://github.com/Expensify/App/issues/104341"
+  }
+]

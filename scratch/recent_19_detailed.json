@@ -1,0 +1,432 @@
+[
+  {
+    "number": 106774,
+    "title": "[$175] No modal is displayed when there are 2 enable Per diem Workspace",
+    "state": "OPEN",
+    "assignees": [
+      "huult"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl2yHwg",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T20:43:50Z",
+        "body_snippet": "Triggered auto assignment to Contributor-plus team member for initial proposal review - @huult (`External`)"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl2yR2g",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T20:43:57Z",
+        "body_snippet": "Job added to Upwork: https://www.upwork.com/jobs/~022120980933642501026"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl2yXuQ",
+        "author": "MelvinBot",
+        "createdAt": "2026-11-12T20:44:01Z",
+        "body_snippet": "\ud83e\udd16 Web test steps verification results: \u26a0\ufe0f partial  Signed-in dev NewDot web was reachable. Per-diem duplication checks w"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl3Igow",
+        "author": "TassioSales",
+        "createdAt": "2026-11-12T21:00:20Z",
+        "body_snippet": "## Proposal  ### What is the root cause of that problem?  In `MoneyRequestHeaderSecondaryActions.tsx` and `useExpenseAct"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl90SZA",
+        "author": "huult",
+        "createdAt": "2026-11-13T03:21:33Z",
+        "body_snippet": "@nlemma This is expected behavior, as described in https://github.com/Expensify/App/pull/103072. Could you update the te"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl93qWQ",
+        "author": "cocvn157",
+        "createdAt": "2026-11-13T03:25:18Z",
+        "body_snippet": "## Proposal  ### Please re-state the problem that we are trying to solve in this issue. 1. When duplicating a Per Diem e"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl_yEgw",
+        "author": "kevinjosh10",
+        "createdAt": "2026-11-13T05:18:30Z",
+        "body_snippet": "## Proposal  ### What is the root cause of that problem? The behavior observed in this regression test stems directly fr"
+      }
+    ]
+  },
+  {
+    "number": 106764,
+    "title": "[$175] Prevent unnecessary SAML sign-outs during mobile session hydration",
+    "state": "OPEN",
+    "assignees": [
+      "huult",
+      "mountiny",
+      "allgandalf"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl01s3g",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T19:13:29Z",
+        "body_snippet": "Triggered auto assignment to Contributor-plus team member for initial proposal review - @dmkt9 (`External`)"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl013bA",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T19:13:36Z",
+        "body_snippet": "Job added to Upwork: https://www.upwork.com/jobs/~022120958197360704418"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl02DKA",
+        "author": "MelvinBot",
+        "createdAt": "2026-11-12T19:13:43Z",
+        "body_snippet": "\ud83e\udd16 Web test steps verification results: \u26a0\ufe0f partial  This issue cannot be safely reproduced in the ready web session. Mobi"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl05WzQ",
+        "author": "Stephen3453",
+        "createdAt": "2026-11-12T19:15:49Z",
+        "body_snippet": "## Proposal  ### What is the root cause of that problem? `makeXHR` calls `enhanceParameters` (`src/libs/Request.ts:25`) "
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl06sDw",
+        "author": "kevinjosh10",
+        "createdAt": "2026-11-12T19:16:40Z",
+        "body_snippet": "## Proposal  ### What is the root cause of that problem? In `src/libs/Request.ts:25-30`:  ```ts function makeXHR<TKey ex"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl07CHw",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T19:16:53Z",
+        "body_snippet": "\ud83d\udce3 @FueledByRedBull! \ud83d\udce3 Hey, it seems we don\u2019t have your contributor details yet! You'll only have to do this once, and th"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl1JF7w",
+        "author": "dhruvil-codes",
+        "createdAt": "2026-11-12T19:26:58Z",
+        "body_snippet": "## Proposal  ### What is the root cause of that problem? In `src/libs/Request.ts:25-30`:  ```ts function makeXHR<TKey ex"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl1JK1g",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T19:27:01Z",
+        "body_snippet": "\u26a0\ufe0f Invalid email. Please make sure to create an Expensify account with this email first [here](https://new.expensify.com"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl1OcyQ",
+        "author": "dhruvil-codes",
+        "createdAt": "2026-11-12T19:30:53Z",
+        "body_snippet": "Contributor details Your Expensify account email: dhruvilmistry16@gmail.com Upwork Profile Link: https://www.upwork.com/"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl1OjLQ",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T19:30:57Z",
+        "body_snippet": "\u2705 Contributor details stored successfully. Thank you for contributing to Expensify!"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl-4elQ",
+        "author": "cocvn157",
+        "createdAt": "2026-11-13T04:26:28Z",
+        "body_snippet": "## Proposal  ### Please re-state the problem that we are trying to solve in this issue. On mobile cold start, background"
+      }
+    ]
+  },
+  {
+    "number": 106743,
+    "title": "[$175] Bank account verification fails because hyphens are not allowed in the legal name field.",
+    "state": "OPEN",
+    "assignees": [
+      "linhvovan29546"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABlzg9Pg",
+        "author": "khizzcr7",
+        "createdAt": "2026-11-12T18:14:16Z",
+        "body_snippet": "## Proposal  ### What is the root cause of that problem? The personal-bank legal-name step (`LegalNameStep.tsx`) renders"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl9tX-w",
+        "author": "cocvn157",
+        "createdAt": "2026-11-13T03:14:06Z",
+        "body_snippet": "## Proposal  ### Please re-state the problem that we are trying to solve in this issue. When connecting a bank account a"
+      }
+    ]
+  },
+  {
+    "number": 106741,
+    "title": "[$175] Reimbursable field missing from bulk edit while individual editing works",
+    "state": "OPEN",
+    "assignees": [
+      "Krishna2323"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABlzh9Kw",
+        "author": "khizzcr7",
+        "createdAt": "2026-11-12T18:14:59Z",
+        "body_snippet": "## Proposal  ### What is the root cause of that problem? In `src/pages/Search/SearchEditMultiple/SearchEditMultiplePage."
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl9I80A",
+        "author": "cocvn157",
+        "createdAt": "2026-11-13T02:34:39Z",
+        "body_snippet": "## Proposal  ### Please re-state the problem that we are trying to solve in this issue. When selecting multiple cash exp"
+      }
+    ]
+  },
+  {
+    "number": 106721,
+    "title": "[$175] Infinite loading when open /insights",
+    "state": "OPEN",
+    "assignees": [
+      "luacmartins",
+      "ahmedGaber93"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABlzusrw",
+        "author": "jponikarchuk",
+        "createdAt": "2026-11-12T18:24:02Z",
+        "body_snippet": "@ahmedGaber93 This issue is still reproducible for me. Build v9.5.37-1  https://github.com/user-attachments/assets/3fc56"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl1-WIw",
+        "author": "samithreddychinni",
+        "createdAt": "2026-11-12T20:05:30Z",
+        "body_snippet": "@thelullabyy @ahmedGaber93 I found a reproducible difference between the working and failing paths on staging v9.5.37-1."
+      }
+    ]
+  },
+  {
+    "number": 106543,
+    "title": "[$175] [Sentry: APP-P0M] Null employee entry crashes Search custom-field selector",
+    "state": "OPEN",
+    "assignees": [
+      "mountiny",
+      "aimane-chnaif"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl6qzvw",
+        "author": "mountiny",
+        "createdAt": "2026-11-12T23:57:53Z",
+        "body_snippet": "@aimane-chnaif how is this looking? "
+      }
+    ]
+  },
+  {
+    "number": 106419,
+    "title": "[$175] Tax isn't disabled after delete offline",
+    "state": "OPEN",
+    "assignees": [
+      "abdulrahuman5196"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl4S1Gg",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T21:56:40Z",
+        "body_snippet": "@abdulrahuman5196 Whoops! This issue is 2 days overdue. Let's get this updated quick!"
+      }
+    ]
+  },
+  {
+    "number": 106418,
+    "title": "[$175] Merchant list displays escape characters",
+    "state": "OPEN",
+    "assignees": [
+      "FitseTLT"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl4Sw0A",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T21:56:37Z",
+        "body_snippet": "@FitseTLT Uh oh! This issue is overdue by 2 days. Don't forget to update your issues!"
+      }
+    ]
+  },
+  {
+    "number": 106416,
+    "title": "[$175] Investigate expense creation rejections reported by APP-5WY",
+    "state": "OPEN",
+    "assignees": [
+      "mountiny",
+      "kacper-mikolajczak",
+      "Eskalifer1"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl58-PA",
+        "author": "kacper-mikolajczak",
+        "createdAt": "2026-11-12T23:19:02Z",
+        "body_snippet": "Hi @Eskalifer1 \ud83d\udc4b Thanks for your input! Here's the summary of what I have done so far. Let me know if you find those use"
+      }
+    ]
+  },
+  {
+    "number": 106409,
+    "title": "[$175] [Sentry: APP-NZR] TypeError: Cannot read properties of undefined (reading 'toLowerCase')",
+    "state": "OPEN",
+    "assignees": [
+      "Julesssss",
+      "parasharrajat"
+    ],
+    "recent_comments": []
+  },
+  {
+    "number": 106405,
+    "title": "[$175] [Sentry: APP-P01] TypeError: Cannot read property 'domainAccountID' of undefined",
+    "state": "OPEN",
+    "assignees": [
+      "mountiny",
+      "abdulrahuman5196"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl5xhxg",
+        "author": "mountiny",
+        "createdAt": "2026-11-12T23:11:45Z",
+        "body_snippet": "@abdulrahuman5196 feel free to go ahead with the proposal"
+      }
+    ]
+  },
+  {
+    "number": 106395,
+    "title": "[$175] Web - Company Cards - page loading infinitely with 'simulate failing network request'",
+    "state": "OPEN",
+    "assignees": [
+      "aimane-chnaif"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl4SHWg",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T21:56:06Z",
+        "body_snippet": "@aimane-chnaif Whoops! This issue is 2 days overdue. Let's get this updated quick!"
+      }
+    ]
+  },
+  {
+    "number": 106387,
+    "title": "[$175] Expensify is not in app's list when share HEIC file from device file manager",
+    "state": "OPEN",
+    "assignees": [
+      "DylanDylann"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl4SDIA",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T21:56:03Z",
+        "body_snippet": "@DylanDylann Uh oh! This issue is overdue by 2 days. Don't forget to update your issues!"
+      }
+    ]
+  },
+  {
+    "number": 106343,
+    "title": "[$175] Describe Rule obscured after dismissing keyboard using Android navigation bar",
+    "state": "OPEN",
+    "assignees": [
+      "dmkt9"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl_0_KQ",
+        "author": "dmkt9",
+        "createdAt": "2026-11-13T05:21:44Z",
+        "body_snippet": "@MelvinBot Using `useBlurOnKeyboardHide` doesn't look good to me. Although `blur` is called without using `setTimeout`, "
+      }
+    ]
+  },
+  {
+    "number": 106340,
+    "title": "[$250] [Sentry: APP-77W] iOS: investigate main thread app hangs",
+    "state": "OPEN",
+    "assignees": [
+      "mountiny",
+      "staszekscp",
+      "situchan"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABly6m7A",
+        "author": "samithreddychinni",
+        "createdAt": "2026-11-12T17:46:46Z",
+        "body_snippet": "@arekm213 your planned PR overlaps with the signal classification described in my [proposal](https://github.com/Expensif"
+      },
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl4Sb5w",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T21:56:21Z",
+        "body_snippet": "@staszekscp Uh oh! This issue is overdue by 2 days. Don't forget to update your issues!"
+      }
+    ]
+  },
+  {
+    "number": 106330,
+    "title": "[$175] Keep only report column headers sticky on wide layouts",
+    "state": "OPEN",
+    "assignees": [
+      "mountiny",
+      "aimane-chnaif"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl4Sj-Q",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T21:56:28Z",
+        "body_snippet": "@aimane-chnaif Whoops! This issue is 2 days overdue. Let's get this updated quick!"
+      }
+    ]
+  },
+  {
+    "number": 106253,
+    "title": "[Due for payment 2026-11-14] Company cards-Join button and 2 members displayed in member's unreported card expense details",
+    "state": "OPEN",
+    "assignees": [
+      "roryabraham",
+      "Krishna2323"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl4Q7Dw",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T21:55:10Z",
+        "body_snippet": "@Krishna2323 Eep! 4 days overdue now. Issues have feelings too..."
+      }
+    ]
+  },
+  {
+    "number": 105707,
+    "title": "[$175] [Sentry: APP-JKQ] Web: BaseGenericTooltip loops into \"Maximum update depth exceeded\" in Search expense report rows",
+    "state": "OPEN",
+    "assignees": [
+      "mountiny",
+      "gijoe0295"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABly_0DQ",
+        "author": "gijoe0295",
+        "createdAt": "2026-11-12T17:50:27Z",
+        "body_snippet": "I'm working on it"
+      }
+    ]
+  },
+  {
+    "number": 105649,
+    "title": "[Due for payment 2026-11-16] [$175] NewDot audit log doesn\u2019t show all report actions, possibly due to DEW forwards",
+    "state": "OPEN",
+    "assignees": [
+      "bernhardoj"
+    ],
+    "recent_comments": [
+      {
+        "id": "IC_kwDOEQqHYc8AAAABl4QalQ",
+        "author": "melvin-bot",
+        "createdAt": "2026-11-12T21:54:45Z",
+        "body_snippet": "@bernhardoj Eep! 4 days overdue now. Issues have feelings too..."
+      }
+    ]
+  }
+]
