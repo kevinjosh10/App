@@ -10,7 +10,7 @@ import useThemeStyles from '@hooks/useThemeStyles';
 
 import {addTempShareFile, addValidatedShareFile, clearShareData} from '@libs/actions/Share';
 import {canUseTouchScreen} from '@libs/DeviceCapabilities';
-import {splitExtensionFromFileName, validateImageForCorruption} from '@libs/fileDownload/FileUtils';
+import {getFileName, splitExtensionFromFileName, validateImageForCorruption} from '@libs/fileDownload/FileUtils';
 import Log from '@libs/Log';
 import Navigation from '@libs/Navigation/Navigation';
 import OnyxTabNavigator, {TopTab} from '@libs/Navigation/OnyxTabNavigator';
@@ -64,7 +64,7 @@ function ShareRootPage() {
                 validateFiles(
                     [
                         {
-                            name: file.id,
+                            name: getFileName(file.content) || file.id,
                             uri: file.content,
                             type: file.mimeType,
                             size,

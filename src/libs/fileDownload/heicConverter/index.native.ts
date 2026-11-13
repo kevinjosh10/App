@@ -35,7 +35,7 @@ const convertImageWithManipulator = async (
         const {size} = await ReactNativeBlobUtil.fs.stat(fileURIToPath(manipulationResult.uri));
         onSuccess({
             uri: manipulationResult.uri,
-            name: getConvertedJpegFileName(file.name, getFileName(manipulationResult.uri)),
+            name: getConvertedJpegFileName(file.name ? getFileName(file.name) : file.name, getFileName(manipulationResult.uri)),
             type: 'image/jpeg',
             size,
             width: manipulationResult.width,

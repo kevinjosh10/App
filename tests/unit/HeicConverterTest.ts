@@ -135,4 +135,23 @@ describe('convertHeicImage (native)', () => {
         expect(onFinish).toHaveBeenCalledTimes(1);
         expect(onSuccess).not.toHaveBeenCalled();
     });
+
+    it('converts a shared HEIC file with path-based name and strips directory components from converted file name', async () => {
+        mockRenderSuccess();
+        const onSuccess = jest.fn();
+        const onError = jest.fn();
+
+        const sharedFile = {
+            uri: 'file:///var/mobile/Containers/Shared/AppGroup/sharedFiles/IMG_1234.HEIC',
+            name: '1794590000000_/var/mobile/Containers/Shared/AppGroup/sharedFiles/IMG_1234.HEIC',
+            type: 'image/heic',
+            size: 2048,
+        };
+
+        convertHeicImage(sharedFile, {onSuccess, onError});
+        await jest.runAllTimersAsync();
+
+        expect(onError).not.toHaveBeenCalled();
+        expect(onSuccess).toHaveBeenCalledWith(expect.objectContaining({uri: 'file:///photo.jpg', name: 'IMG_1234.jpg', type: 'image/jpeg'}));
+    });
 });
