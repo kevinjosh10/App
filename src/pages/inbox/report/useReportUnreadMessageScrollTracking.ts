@@ -24,6 +24,9 @@ type Args = {
     /** Whether the report has newer actions to load */
     hasNewerActions: boolean;
 
+    /** Whether the report contains any messages or newer actions */
+    hasMessages?: boolean;
+
     /** Callback to call on every scroll event */
     onTrackScrolling: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 
@@ -44,6 +47,7 @@ export default function useReportUnreadMessageScrollTracking({
     reportID,
     currentVerticalScrollingOffsetRef,
     hasNewerActions,
+    hasMessages = true,
     onUnreadActionVisible,
     onTrackScrolling,
     unreadMarkerReportActionIndex,
@@ -103,7 +107,8 @@ export default function useReportUnreadMessageScrollTracking({
             currentVerticalScrollingOffsetRef.current > CONST.REPORT.ACTIONS.ACTION_VISIBLE_THRESHOLD &&
             !isFloatingMessageCounterVisible &&
             !hasUnreadMarkerReportAction &&
-            !shouldBeAlignedToTop
+            !shouldBeAlignedToTop &&
+            hasMessages
         ) {
             setIsFloatingMessageCounterVisible(true);
         }
@@ -118,6 +123,12 @@ export default function useReportUnreadMessageScrollTracking({
             setIsFloatingMessageCounterVisible(false);
         }
     };
+
+    useEffect(() => {
+        if (!hasMessages && !hasNewerActions && isFloatingMessageCounterVisible) {
+            setIsFloatingMessageCounterVisible(false);
+        }
+    }, [hasMessages, hasNewerActions, isFloatingMessageCounterVisible]);
 
     /**
      * On every scroll event we want to:

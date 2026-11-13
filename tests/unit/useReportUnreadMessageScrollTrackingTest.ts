@@ -707,5 +707,58 @@ describe('useReportUnreadMessageScrollTracking', () => {
             // Then the live range wins and the pill does not flash
             expect(result.current.isActionBadgeAboveViewport).toBe(false);
         });
+
+        it('does not display latest-messages pill when there are no messages in the chat', () => {
+            // Given the scroll offset exceeds the threshold but the chat has no messages
+            const offsetRef = {current: CONST.REPORT.ACTIONS.ACTION_VISIBLE_THRESHOLD + 100};
+            const onTrackScrolling = jest.fn();
+            const {result} = renderHook(() =>
+                useReportUnreadMessageScrollTracking({
+                    reportID,
+                    currentVerticalScrollingOffsetRef: offsetRef,
+                    onUnreadActionVisible: jest.fn(),
+                    onTrackScrolling,
+                    hasNewerActions: false,
+                    hasMessages: false,
+                    unreadMarkerReportActionIndex: -1,
+                    isInverted: true,
+                }),
+            );
+
+            // When a scroll event occurs
+            act(() => result.current.trackVerticalScrolling(emptyScrollEventMock));
+
+            // Then the pill remains hidden
+            expect(result.current.isFloatingMessageCounterVisible).toBe(false);
+        });
+
+        it('hides latest-messages pill when hasMessages transitions from true to false', () => {
+            // Given the pill is initially visible because there were messages and offset was over threshold
+            const offsetRef = {current: CONST.REPORT.ACTIONS.ACTION_VISIBLE_THRESHOLD + 100};
+            const onTrackScrolling = jest.fn();
+            const {result, rerender} = renderHook(
+                ({hasMessages}) =>
+                    useReportUnreadMessageScrollTracking({
+                        reportID,
+                        currentVerticalScrollingOffsetRef: offsetRef,
+                        onUnreadActionVisible: jest.fn(),
+                        onTrackScrolling,
+                        hasNewerActions: false,
+                        hasMessages,
+                        unreadMarkerReportActionIndex: -1,
+                        isInverted: true,
+                    }),
+                {initialProps: {hasMessages: true}},
+            );
+
+            act(() => result.current.trackVerticalScrolling(emptyScrollEventMock));
+            expect(result.current.isFloatingMessageCounterVisible).toBe(true);
+
+            // When messages are cleared/deleted and hasMessages becomes false
+            rerender({hasMessages: false});
+
+            // Then the pill is hidden
+            expect(result.current.isFloatingMessageCounterVisible).toBe(false);
+        });
     });
 });

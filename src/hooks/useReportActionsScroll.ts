@@ -5,7 +5,7 @@ import Navigation from '@libs/Navigation/Navigation';
 import type {PlatformStackRouteProp} from '@libs/Navigation/PlatformStackNavigation/types';
 import REPORT_LINK_ROUTE_PARAMS from '@libs/Navigation/reportLinkRouteParams';
 import TransitionTracker from '@libs/Navigation/TransitionTracker';
-import {getVisibleReportActionErrors, isReportPreviewAction} from '@libs/ReportActionsUtils';
+import {getVisibleReportActionErrors, isCreatedAction, isReportPreviewAction} from '@libs/ReportActionsUtils';
 import {getReportLastVisibleActionCreated, shouldReportAlignToTop} from '@libs/ReportUtils';
 
 import type {ReportsSplitNavigatorParamList} from '@navigation/types';
@@ -213,6 +213,8 @@ function useReportActionsScroll({
         ...(shouldFocusToTopOnMount ? {autoscrollToBottomThreshold: shouldAutoscrollToBottom ? CONST.REPORT.ACTIONS.ACTION_VISIBLE_THRESHOLD : 0, animateAutoScrollToBottom: false} : {}),
     };
 
+    const hasMessages = hasNewerActions || sortedVisibleReportActions.some((action) => !isCreatedAction(action));
+
     const {
         isFloatingMessageCounterVisible,
         setIsFloatingMessageCounterVisible,
@@ -226,6 +228,7 @@ function useReportActionsScroll({
         currentVerticalScrollingOffsetRef: scrollOffsetRef,
         onUnreadActionVisible: completeSkippedMarkAsRead,
         hasNewerActions,
+        hasMessages,
         unreadMarkerReportActionIndex,
         isInverted: true,
         // The list is hidden behind the expanded composer, so scrolling it must not bring the Latest messages pill back
