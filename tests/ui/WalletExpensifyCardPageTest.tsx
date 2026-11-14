@@ -623,4 +623,41 @@ describe('ExpensifyCardPage', () => {
         unmount();
         await waitForBatchedUpdatesWithAct();
     });
+
+    it('hides Add to wallet button when signed in as a copilot', async () => {
+        // Given an account where the user is acting as a copilot
+        await TestHelper.signInWithTestUser();
+        await act(async () => {
+            await Onyx.merge(ONYXKEYS.ACCOUNT, {
+                delegatedAccess: {
+                    delegate: 'copilot@expensify.com',
+                },
+            });
+            await Onyx.merge(ONYXKEYS.CARD_LIST, {
+                [userCardID]: {
+                    cardID: 1234,
+                    accountID: 1,
+                    state: CONST.EXPENSIFY_CARD.STATE.OPEN,
+                    fundID: '12345',
+                    domainName: 'xyz',
+                    nameValuePairs: {
+                        isVirtual: true,
+                        cardTitle: 'Test Virtual Card',
+                    },
+                    availableSpend: 50000,
+                    fraud: null,
+                },
+            });
+        });
+
+        // When the copilot opens the card details page
+        const {unmount} = renderPage(SCREENS.SETTINGS.WALLET.DYNAMIC_DOMAIN_CARD, {cardID: userCardID});
+        await waitForBatchedUpdatesWithAct();
+
+        // Then Add to wallet button should not be displayed for copilots
+        expect(screen.queryByText('Add to wallet')).not.toBeOnTheScreen();
+
+        unmount();
+        await waitForBatchedUpdatesWithAct();
+    });
 });

@@ -146,8 +146,10 @@ function ExpensifyCardPage({route}: ExpensifyCardPageProps) {
         : [cardList?.[cardID]];
     const currentCard = cardsToShow?.find((card) => String(card?.cardID) === cardID) ?? cardsToShow?.at(0);
 
+    const isSignedInAsDelegate = !!account?.delegatedAccess?.delegate || false;
+
     // Any of the domain's cards can be the one awaiting approval, and the CTA has to open that card's flow.
-    const cardPendingDigitalWalletApproval = cardsToShow?.find((card) => isCardPendingDigitalWalletApproval(card));
+    const cardPendingDigitalWalletApproval = !isSignedInAsDelegate ? cardsToShow?.find((card) => isCardPendingDigitalWalletApproval(card)) : undefined;
     useRefreshPendingDigitalWalletApproval();
 
     const virtualCards = cardsToShow?.filter((card) => card?.nameValuePairs?.isVirtual && !isTravelCard(card));
@@ -155,7 +157,7 @@ function ExpensifyCardPage({route}: ExpensifyCardPageProps) {
     const physicalCards = cardsToShow?.filter((card) => !card?.nameValuePairs?.isVirtual);
     const isCardDetailsLoading = useAllVirtualCardDetailsLoading();
     const currentPhysicalCard = physicalCards?.find((card) => String(card?.cardID) === cardID) ?? physicalCards?.at(0);
-    const cardToAdd = virtualCards?.at(0) ?? currentPhysicalCard;
+    const cardToAdd = !isSignedInAsDelegate ? (virtualCards?.at(0) ?? currentPhysicalCard) : undefined;
     const revealedPIN = useRevealedPhysicalCardPin(String(currentPhysicalCard?.cardID));
     const revealedCardDetails = useAllRevealedVirtualCardDetails();
 
@@ -188,8 +190,6 @@ function ExpensifyCardPage({route}: ExpensifyCardPageProps) {
     const {limitTitleKey} = getLimitTypeTranslationKeys(currentCard?.nameValuePairs?.limitType);
     const currentCardLimitTypeTranslationKey = getTranslationKeyForLimitType(currentCard?.nameValuePairs?.limitType);
     const remainingLimitHint = limitTitleKey ? translate(limitTitleKey, formattedAvailableSpendAmount) : undefined;
-
-    const isSignedInAsDelegate = !!account?.delegatedAccess?.delegate || false;
 
     const session = useSession();
     const isCardHolder = currentCard?.accountID === session?.accountID;

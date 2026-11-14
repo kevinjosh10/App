@@ -2,7 +2,11 @@ import useIsCardInWallet from '@components/AddToWalletButton/useIsCardInWallet';
 import Text from '@components/Text';
 
 import useLocalize from '@hooks/useLocalize';
+import useOnyx from '@hooks/useOnyx';
 import useThemeStyles from '@hooks/useThemeStyles';
+
+import {isActingAsDelegateSelector} from '@selectors/Account';
+import ONYXKEYS from '@src/ONYXKEYS';
 
 import React from 'react';
 import {View} from 'react-native';
@@ -17,8 +21,9 @@ function BaseAddToWalletStatusText({card, style, platform}: BaseAddToWalletStatu
     const styles = useThemeStyles();
     const {translate} = useLocalize();
     const {isInWallet, isLoading: isCardLoading, isCardAvailable, isWalletAvailable} = useIsCardInWallet(card);
+    const [isActingAsDelegate = false] = useOnyx(ONYXKEYS.ACCOUNT, {selector: isActingAsDelegateSelector});
 
-    if (!isWalletAvailable || !isCardAvailable || isCardLoading || !isInWallet) {
+    if (isActingAsDelegate || !isWalletAvailable || !isCardAvailable || isCardLoading || !isInWallet) {
         return null;
     }
 

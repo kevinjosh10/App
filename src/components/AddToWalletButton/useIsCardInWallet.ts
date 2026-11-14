@@ -1,8 +1,11 @@
 import useAppFocusEvent from '@hooks/useAppFocusEvent';
+import useOnyx from '@hooks/useOnyx';
 
 import {checkIfWalletIsAvailable, isCardInWallet} from '@libs/Wallet';
 
+import {isActingAsDelegateSelector} from '@selectors/Account';
 import CONST from '@src/CONST';
+import ONYXKEYS from '@src/ONYXKEYS';
 import type {Card} from '@src/types/onyx';
 
 import {useEffect, useState} from 'react';
@@ -17,7 +20,8 @@ type UseIsCardInWalletType = {
 function useIsCardInWallet(card: Card): UseIsCardInWalletType {
     const [isInWallet, setIsInWallet] = useState<boolean | null>(null);
     const [isWalletAvailable, setIsWalletAvailable] = useState(false);
-    const isCardAvailable = card.state === CONST.EXPENSIFY_CARD.STATE.OPEN;
+    const [isActingAsDelegate = false] = useOnyx(ONYXKEYS.ACCOUNT, {selector: isActingAsDelegateSelector});
+    const isCardAvailable = !isActingAsDelegate && card.state === CONST.EXPENSIFY_CARD.STATE.OPEN;
     const [isLoading, setIsLoading] = useState(false);
     const checkIfCardIsInWallet = () => {
         isCardInWallet(card)

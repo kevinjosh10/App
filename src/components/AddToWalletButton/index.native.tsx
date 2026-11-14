@@ -1,6 +1,7 @@
 import ActivityIndicator from '@components/ActivityIndicator';
 import {useMultifactorAuthentication} from '@components/MultifactorAuthentication/Context/MultifactorAuthenticationMainContext';
 
+import useOnyx from '@hooks/useOnyx';
 import useThemeStyles from '@hooks/useThemeStyles';
 
 import {getPaymentMethods} from '@libs/actions/PaymentMethods';
@@ -10,7 +11,9 @@ import Log from '@libs/Log';
 import Navigation from '@libs/Navigation/Navigation';
 import {handleAddCardToWallet} from '@libs/Wallet/index';
 
+import {isActingAsDelegateSelector} from '@selectors/Account';
 import CONST from '@src/CONST';
+import ONYXKEYS from '@src/ONYXKEYS';
 import ROUTES from '@src/ROUTES';
 
 import type {TokenizationStatus} from '@expensify/react-native-wallet';
@@ -30,6 +33,7 @@ function AddToWalletButton({card, cardHolderName, cardDescription, style}: AddTo
     const styles = useThemeStyles();
     const {executeScenario} = useMultifactorAuthentication();
     const {isInWallet, isLoading: isCardLoading, isCardAvailable, isWalletAvailable} = useIsCardInWallet(card);
+    const [isActingAsDelegate = false] = useOnyx(ONYXKEYS.ACCOUNT, {selector: isActingAsDelegateSelector});
 
     const handleOnPress = () => {
         if (isUkEuExpensifyCard(card)) {
@@ -56,7 +60,7 @@ function AddToWalletButton({card, cardHolderName, cardDescription, style}: AddTo
             });
     };
 
-    if (!isWalletAvailable || isInWallet == null || isInWallet || !isCardAvailable) {
+    if (isActingAsDelegate || !isWalletAvailable || isInWallet == null || isInWallet || !isCardAvailable) {
         return null;
     }
 
