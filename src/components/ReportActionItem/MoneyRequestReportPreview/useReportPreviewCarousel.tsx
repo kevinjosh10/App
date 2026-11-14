@@ -102,8 +102,8 @@ function useReportPreviewCarousel({
             if (rbrComparison !== 0) {
                 return rbrComparison;
             }
-            // Tiebreak by date (ascending — oldest first) so position is stable across RBR state changes
-            return localeCompare(getCreated(a), getCreated(b));
+            // Tiebreak by date (ascending — oldest first) and transactionID so position is stable across RBR state changes
+            return localeCompare(getCreated(a), getCreated(b)) || localeCompare(a.transactionID, b.transactionID);
         });
         sortedTransactions = sorted;
     }
