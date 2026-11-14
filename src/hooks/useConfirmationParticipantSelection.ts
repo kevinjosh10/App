@@ -4,7 +4,7 @@ import {isParticipantP2P} from '@libs/IOUUtils';
 import {getDistanceRateCustomUnit} from '@libs/PolicyUtils';
 import {generateReportID, getReportOrDraftReport} from '@libs/ReportUtils';
 
-import {setCustomUnitRateID, setMoneyRequestCategory, setMoneyRequestParticipants, setMoneyRequestParticipantsFromReport, setMoneyRequestTag} from '@userActions/IOU/MoneyRequest';
+import {setCustomUnitRateID, setMoneyRequestCategory, setMoneyRequestCurrency, setMoneyRequestParticipants, setMoneyRequestParticipantsFromReport, setMoneyRequestTag} from '@userActions/IOU/MoneyRequest';
 
 import CONST from '@src/CONST';
 import type {IOUType} from '@src/CONST';
@@ -95,6 +95,10 @@ function useConfirmationParticipantSelection({
                 setMoneyRequestParticipantsFromReport(transactionToUpdate.transactionID, selfDMReport, currentUserPersonalDetails.accountID);
                 setTransactionReport(transactionToUpdate.transactionID, {reportID: CONST.REPORT.UNREPORTED_REPORT_ID}, true);
 
+                if (transactionToUpdate.iouRequestType === CONST.IOU.REQUEST_TYPE.MANUAL) {
+                    setMoneyRequestCurrency(transactionToUpdate.transactionID, personalPolicy?.outputCurrency ?? CONST.CURRENCY.USD);
+                }
+
                 // A workspace rate doesn't exist on the self DM and would leave the Rate field "Pending...", so use the
                 // self DM's own rate.
                 if (isDistanceRequest) {
@@ -141,6 +145,9 @@ function useConfirmationParticipantSelection({
 
                 // A P2P recipient drops the workspace's rate, category and tag, like useParticipantSubmission does.
                 if (!isPolicyExpenseChatParticipant) {
+                    if (transactionToUpdate.iouRequestType === CONST.IOU.REQUEST_TYPE.MANUAL) {
+                        setMoneyRequestCurrency(transactionIDToUpdate, personalPolicy?.outputCurrency ?? CONST.CURRENCY.USD);
+                    }
                     if (isDistanceRequest) {
                         const p2pRateID = DistanceRequestUtils.getCustomUnitRateID({
                             reportID: firstParticipant.reportID,
@@ -155,6 +162,9 @@ function useConfirmationParticipantSelection({
                     setMoneyRequestTag(transactionIDToUpdate, '');
                 } else {
                     const workspacePolicy = selectedPolicy;
+                    if (transactionToUpdate.iouRequestType === CONST.IOU.REQUEST_TYPE.MANUAL && workspacePolicy?.outputCurrency) {
+                        setMoneyRequestCurrency(transactionIDToUpdate, workspacePolicy.outputCurrency);
+                    }
                     if (isDistanceRequest) {
                         const currentRateID = transactionToUpdate.comment?.customUnit?.customUnitRateID;
                         const isCurrentRateFromWorkspace = !!currentRateID && !!DistanceRequestUtils.getMileageRates(workspacePolicy)[currentRateID];
