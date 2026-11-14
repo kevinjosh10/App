@@ -300,6 +300,11 @@ const OnboardingGuard: NavigationGuard = {
             return {type: 'REDIRECT', route: ROUTES.HOME};
         }
 
+        if (isInvitedOrGroupMember && (isNavigatingToOnboardingFlow(action) || isNavigatingWithReplace) && !isNavigatingToJoinWorkspaceTaskRoute) {
+            Log.info('[OnboardingGuard] Redirecting invited or group member away from onboarding route to home');
+            return {type: 'REDIRECT', route: ROUTES.HOME};
+        }
+
         const skipOnboardingConfig = CONFIG.SKIP_ONBOARDING;
         const isLoading = context.isLoading;
 

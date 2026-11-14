@@ -30,7 +30,7 @@ import ROUTES, {DYNAMIC_ROUTES} from '@src/ROUTES';
 import type {NavigationState} from '@react-navigation/native';
 
 import {findFocusedRoute, NavigationContainer} from '@react-navigation/native';
-import {hasCompletedGuidedSetupFlowSelector} from '@selectors/Onboarding';
+import {hasCompletedGuidedSetupFlowSelector, wasInvitedToNewDotSelector} from '@selectors/Onboarding';
 import * as Sentry from '@sentry/react-native';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
@@ -147,6 +147,9 @@ function NavigationRoot({authenticated, lastVisitedPath, initialUrl, onReady}: N
         selector: hasCompletedGuidedSetupFlowSelector,
     });
     const shouldSuppressPromotionalUI = useShouldSuppressPromotionalUI();
+    const [hasNonPersonalPolicy] = useOnyx(ONYXKEYS.HAS_NON_PERSONAL_POLICY);
+    const [introSelected] = useOnyx(ONYXKEYS.NVP_INTRO_SELECTED);
+    const isInvitedOrGroupMember = (hasNonPersonalPolicy || wasInvitedToNewDotSelector(introSelected)) ?? false;
 
     const previousAuthenticated = usePrevious(authenticated);
 
@@ -154,7 +157,7 @@ function NavigationRoot({authenticated, lastVisitedPath, initialUrl, onReady}: N
         const path = initialUrl ? getPathFromURL(initialUrl) : null;
         const shouldRedirectCompletedUser = !!path && isOnboardingPath(path) && !isJoinWorkspaceTaskPath(path);
         // An initial state skips OnboardingGuard, so copilot and supportal sessions are kept out of onboarding here too
-        if ((isOnboardingCompleted || shouldSuppressPromotionalUI) && shouldRedirectCompletedUser) {
+        if ((isOnboardingCompleted || shouldSuppressPromotionalUI || isInvitedOrGroupMember) && shouldRedirectCompletedUser) {
             return getAdaptedStateFromPath(ROUTES.HOME);
         }
 
@@ -181,6 +184,12 @@ function NavigationRoot({authenticated, lastVisitedPath, initialUrl, onReady}: N
             const isSpecificDeepLink = path && !isRootPath;
 
             if (!isSpecificDeepLink) {
+                if (isOnboardingPath(lastVisitedPath) && !isJoinWorkspaceTaskPath(lastVisitedPath)) {
+                    if (isOnboardingCompleted || shouldSuppressPromotionalUI || isInvitedOrGroupMember) {
+                        return getAdaptedStateFromPath(ROUTES.HOME);
+                    }
+                }
+
                 Log.info('Restoring last visited path on app startup', false, {lastVisitedPath, initialUrl, path});
                 return getAdaptedStateFromPath(lastVisitedPath);
             }

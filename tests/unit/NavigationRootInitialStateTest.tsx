@@ -112,4 +112,27 @@ describe('NavigationRoot initial state', () => {
         }
         expect(getPathFromState(mockCapturedInitialState)).toBe(getPathFromState(getAdaptedStateFromPath(ROUTES.HOME)));
     });
+
+    it('sends an invited workspace member with a stale onboarding lastVisitedPath to Home on cold start', async () => {
+        // Given an invited workspace member with an uncompleted onboarding state and a stale onboarding lastVisitedPath
+        await Onyx.set(ONYXKEYS.HAS_NON_PERSONAL_POLICY, true);
+        await Onyx.set(ONYXKEYS.NVP_ONBOARDING, {hasCompletedGuidedSetupFlow: false});
+        await waitForBatchedUpdates();
+
+        // When the app cold starts without an initial URL
+        render(
+            <NavigationRoot
+                authenticated
+                lastVisitedPath={ROUTES.ONBOARDING_PURPOSE.route as Route}
+                initialUrl={null}
+                onReady={() => {}}
+            />,
+        );
+
+        // Then the app opens Home instead of restoring the abandoned onboarding flow
+        if (!mockCapturedInitialState) {
+            throw new Error('NavigationRoot did not set an initial state');
+        }
+        expect(getPathFromState(mockCapturedInitialState)).toBe(getPathFromState(getAdaptedStateFromPath(ROUTES.HOME)));
+    });
 });
