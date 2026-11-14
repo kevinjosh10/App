@@ -2714,6 +2714,7 @@ const SENTRY_LABEL = {
             ADD_WORK_EMAIL: 'WorkspaceExpensifyCard-AddWorkEmail',
             BANK_ACCOUNT_ROW: 'WorkspaceExpensifyCard-BankAccountRow',
             DETAILS_CARD_NAME: 'WorkspaceExpensifyCard-DetailsCardName',
+            DETAILS_CARDHOLDER_EMAIL: 'WorkspaceExpensifyCard-DetailsCardholderEmail',
             DETAILS_DEACTIVATE: 'WorkspaceExpensifyCard-DetailsDeactivate',
             DETAILS_EDIT_SPEND_RULES: 'WorkspaceExpensifyCard-DetailsEditSpendRules',
             DETAILS_FREEZE: 'WorkspaceExpensifyCard-DetailsFreeze',

@@ -8494,6 +8494,7 @@ const translations = {
                 giveItName: 'Give it a name',
                 giveItNameInstruction: 'Make it unique enough to tell apart from other cards. Specific use cases are even better!',
                 cardName: 'Card name',
+                cardholderEmail: 'Cardholder email',
                 letsDoubleCheck: 'Let’s double check that everything looks right.',
                 willBeReadyToUse: 'This card will be ready to use immediately.',
                 willBeReadyToShip: 'This card will be ready to ship immediately.',
