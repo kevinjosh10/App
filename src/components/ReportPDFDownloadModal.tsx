@@ -9,7 +9,8 @@ import {downloadReportPDF} from '@libs/actions/Report';
 import CONST from '@src/CONST';
 import ONYXKEYS from '@src/ONYXKEYS';
 
-import React from 'react';
+import React, {useEffect} from 'react';
+import Onyx from 'react-native-onyx';
 
 import type {ModalProps} from './Modal/Global/ModalContext';
 
@@ -46,6 +47,12 @@ function ReportPDFDownloadModal({reportID, closeModal, resolveModal}: ReportPDFD
     useStallLogger(!isOffline && !reportPDFFilename ? reportID : false, '[PDFStall] reportPDFFilename never resolved to a filename or error while the download modal was open', {
         reportID,
     });
+
+    useEffect(() => {
+        return () => {
+            Onyx.set(`${ONYXKEYS.COLLECTION.NVP_EXPENSIFY_REPORT_PDF_FILENAME}${reportID}`, null);
+        };
+    }, [reportID]);
 
     const message = (() => {
         if (hasPDFDownloadFailed) {

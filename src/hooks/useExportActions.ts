@@ -295,8 +295,8 @@ function useExportActions({reportID, policy, onPDFModalOpen}: UseExportActionsPa
                 if (!moneyRequestReport?.reportID) {
                     return;
                 }
-                onPDFModalOpen?.();
                 exportReportToPDF({reportID: moneyRequestReport.reportID});
+                onPDFModalOpen?.();
             },
         },
         [CONST.REPORT.SECONDARY_ACTIONS.DOWNLOAD_RECEIPTS]: {
