@@ -29,7 +29,7 @@ import React, {useEffect, useState} from 'react';
 type DomainAlreadyExistsPageProps = PlatformStackScreenProps<WorkspacesDomainModalNavigatorParamList, typeof SCREENS.WORKSPACES_DOMAIN_ALREADY_EXISTS>;
 
 function DomainAlreadyExistsPage({route}: DomainAlreadyExistsPageProps) {
-    const {domainAccountID} = route.params;
+    const domainAccountID = Number(route.params.domainAccountID);
     const {asset: EmptyStateDomainExists} = useMemoizedLazyAsset(() => loadIllustration('EmptyStateDomainExists'));
     const {translate} = useLocalize();
     const styles = useThemeStyles();

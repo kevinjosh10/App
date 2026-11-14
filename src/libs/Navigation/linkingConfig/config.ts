@@ -2354,6 +2354,9 @@ const config: LinkingOptions<RootNavigatorParamList>['config'] = {
                         [SCREENS.WORKSPACES_DOMAIN_ALREADY_EXISTS]: {
                             path: ROUTES.WORKSPACES_DOMAIN_ALREADY_EXISTS.route,
                             exact: true,
+                            parse: {
+                                domainAccountID: Number,
+                            },
                         },
                     },
                 },
