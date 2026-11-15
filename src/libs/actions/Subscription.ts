@@ -92,6 +92,7 @@ function openPaymentDetailsPage(purchaseID: number) {
             value: {
                 [purchaseID]: {
                     isLoaded: true,
+                    purchaseID,
                 },
             },
         },

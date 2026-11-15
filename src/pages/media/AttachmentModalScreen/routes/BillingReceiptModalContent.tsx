@@ -43,12 +43,12 @@ function BillingReceiptModalContent() {
     // A completed lookup can leave an Onyx placeholder without purchase data, including after an API failure.
     // Dismiss from an effect to keep navigation out of render while Onyx resolves the lookup asynchronously.
     useEffect(() => {
-        if (!purchase?.isLoaded || purchase.purchaseID) {
+        if (!purchase?.isLoaded || purchase.purchaseID || purchase.receipt) {
             return;
         }
 
         Navigation.dismissModal();
-    }, [purchase?.isLoaded, purchase?.purchaseID]);
+    }, [purchase?.isLoaded, purchase?.purchaseID, purchase?.receipt]);
 
     const onDownloadAttachment = useDownloadAttachment({isAuthTokenRequired: true});
 
@@ -56,7 +56,7 @@ function BillingReceiptModalContent() {
         return <FullScreenLoadingIndicator shouldUseGoBackButton />;
     }
 
-    if (!purchase.purchaseID) {
+    if (!purchase.purchaseID && !purchase.receipt) {
         return null;
     }
 

@@ -345,6 +345,9 @@ function getReceiptPurchase(purchases: Purchases | null | undefined, purchaseID:
         return null;
     }
     const purchase = purchases[String(purchaseID)];
+    if (purchase?.receipt?.source) {
+        return purchase;
+    }
     // Onyx can persist lookup completion without purchase data, despite these fields being required by the type.
     // Reject placeholders before using their receipt or reading their message.
     if (!purchase?.purchaseID || !purchase.message) {
