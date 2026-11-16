@@ -24,11 +24,12 @@ import {clearDraftValues} from '@libs/actions/FormActions';
 import {openExternalLink} from '@libs/actions/Link';
 import {addMembersToWorkspace, clearWorkspaceInviteApproverDraft, clearWorkspaceInviteRoleDraft, clearWorkspaceInviteWorkArrangementDraft} from '@libs/actions/Policy/Member';
 import {setWorkspaceInviteMessageDraft} from '@libs/actions/Policy/Policy';
-import {saveFastEditApprovalWorkflow} from '@libs/actions/Workflow';
+import {importApprovalWorkflowRules, saveFastEditApprovalWorkflow, updateApprovalWorkflow} from '@libs/actions/Workflow';
 import createDynamicRoute from '@libs/Navigation/helpers/dynamicRoutesUtils/createDynamicRoute';
 import Navigation from '@libs/Navigation/Navigation';
 import {getAssignableOfficeLocations, getMemberOfficeLocation} from '@libs/OfficeLocationUtils';
 import {getNewAccountIDsAndLogins, getPersonalDetailsForAccountIDs, getPersonalDetailsOnyxDataForOptimisticUsers, temporaryGetDisplayNameOrDefault} from '@libs/PersonalDetailsUtils';
+import {addSMSDomainIfPhoneNumber} from '@libs/PhoneNumber';
 import {
     canMemberAssignElevatedRole,
     canMemberAssignRole,
@@ -43,6 +44,7 @@ import {
 } from '@libs/PolicyUtils';
 import {getAllPolicyExpenseChatReportActions} from '@libs/ReportUtils';
 import updateMultilineInputRange from '@libs/updateMultilineInputRange';
+import {getImportedApproversFromApprovers} from '@libs/WorkflowUtils';
 import {getSearchParamFromPath} from '@libs/Url';
 
 import variables from '@styles/variables';
@@ -52,6 +54,8 @@ import ONYXKEYS from '@src/ONYXKEYS';
 import AccessOrNotFoundWrapper from '@src/pages/workspace/AccessOrNotFoundWrapper';
 import ROUTES, {DYNAMIC_ROUTES} from '@src/ROUTES';
 import type {Route as Routes} from '@src/ROUTES';
+import type ApprovalWorkflow from '@src/types/onyx/ApprovalWorkflow';
+import type {ImportedSpreadsheetApprover} from '@src/types/onyx/ImportedSpreadsheetMemberData';
 import INPUT_IDS from '@src/types/form/WorkspaceInviteMessageForm';
 import type {CurrentUserPersonalDetails} from '@src/types/onyx/PersonalDetails';
 import type Policy from '@src/types/onyx/Policy';
@@ -129,7 +133,7 @@ function WorkspaceInviteMessageComponent({
 
     // `approvalMode` can drift from the actual workflow structure because it is updated optimistically.
     // Dynamic external workflows that hide people also have no selectable approver.
-    const {isAdvanceApproval, rulesCollection, shouldUseApprovalWorkflowRules} = useApprovalWorkflows(policy);
+    const {approvalWorkflows, isAdvanceApproval, rulesCollection, shouldUseApprovalWorkflowRules} = useApprovalWorkflows(policy);
 
     // Dynamic External Workflow also routes by each member's approver, even when the derived workflows look basic.
     const isDynamicExternalApproval = hasDynamicExternalWorkflow(policy) && isControlPolicy(policy);
@@ -224,7 +228,38 @@ function WorkspaceInviteMessageComponent({
                 policyCategories,
             },
         );
+
+        const invitedLogins = Object.keys(invitedEmailsToAccountIDsDraft ?? {}).map(addSMSDomainIfPhoneNumber);
+        const shouldExcludeInvitedMembers = shouldShowApproverRow && !!approverDraft && !!validatedApprover && validatedApprover !== approvalWorkflow?.approvers.at(0)?.email;
+
+        if (shouldShowApproverRow && (!isWorkflowApprovalExpensesFromRoute || shouldExcludeInvitedMembers) && validatedApprover && validatedApprover !== defaultApprover) {
+            if (shouldUseApprovalWorkflowRules) {
+                const approverWorkflow = approvalWorkflows.find((workflow) => !workflow.isDefault && workflow.approvers.at(0)?.email === validatedApprover);
+                const approvers: ImportedSpreadsheetApprover[] = approverWorkflow ? getImportedApproversFromApprovers(approverWorkflow.approvers) : [{email: validatedApprover}];
+                importApprovalWorkflowRules({
+                    policy,
+                    rules: rulesCollection,
+                    members: invitedLogins.map((email) => ({email, approvers})),
+                    addedMemberEmails: invitedLogins,
+                });
+            } else {
+                const approverWorkflow = approvalWorkflows.find((workflow) => workflow.approvers.at(0)?.email === validatedApprover);
+                const workflowToSave: ApprovalWorkflow = approverWorkflow
+                    ? {
+                          ...approverWorkflow,
+                          members: [...approverWorkflow.members, ...invitedLogins.map((email) => ({email, displayName: email}))],
+                      }
+                    : {
+                          members: invitedLogins.map((email) => ({email, displayName: email})),
+                          approvers: [{email: validatedApprover, displayName: validatedApprover, isCircularReference: false}],
+                          isDefault: false,
+                      };
+                updateApprovalWorkflow(workflowToSave, [], [], policy);
+            }
+        }
+
         setWorkspaceInviteMessageDraft(policyID, welcomeNote ?? null);
+        clearWorkspaceInviteApproverDraft(policyID);
         clearWorkspaceInviteWorkArrangementDraft(policyID);
         clearDraftValues(ONYXKEYS.FORMS.WORKSPACE_INVITE_MESSAGE_FORM);
 
@@ -239,7 +274,6 @@ function WorkspaceInviteMessageComponent({
                 Navigation.goBack(nestedBackTo as Routes);
             } else if (approvalWorkflow?.isFastEdit) {
                 const invitedEmails = new Set(Object.keys(invitedEmailsToAccountIDsDraft ?? {}));
-                const shouldExcludeInvitedMembers = shouldShowApproverRow && !!approverDraft && !!validatedApprover && validatedApprover !== approvalWorkflow.approvers.at(0)?.email;
                 // An explicit approver choice owns the invited members. Saving them with the edited workflow would overwrite that choice.
                 const approvalWorkflowToSave = shouldExcludeInvitedMembers
                     ? {...approvalWorkflow, members: approvalWorkflow.members.filter((member) => !invitedEmails.has(member.email))}

@@ -962,7 +962,10 @@ function buildAddMembersToWorkspaceOnyxData(
             submitsTo: approverEmail ?? getDefaultApprover(policy),
             ...(hasOfficeWorkArrangement !== undefined ? {hasOfficeWorkArrangement} : {}),
         };
-        successMembersState[email] = {pendingAction: null};
+        successMembersState[email] = {
+            pendingAction: null,
+            submitsTo: approverEmail ?? getDefaultApprover(policy),
+        };
         failureMembersState[email] = {
             pendingAction: null,
             errors: ErrorUtils.getMicroSecondOnyxErrorWithTranslationKey('workspace.people.error.genericAdd'),

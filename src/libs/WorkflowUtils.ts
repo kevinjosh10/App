@@ -122,6 +122,16 @@ function getApproversFromImportedApprovers(importedApprovers: ImportedSpreadshee
     ]);
 }
 
+/**
+ * Convert workflow approvers into imported spreadsheet approvers format.
+ */
+function getImportedApproversFromApprovers(approvers: Approver[]): ImportedSpreadsheetApprover[] {
+    return approvers.map((approver) => ({
+        email: approver.email,
+        ...(approver.overLimitAmount ? {approvalLimit: approver.overLimitAmount, overLimitForwardsTo: approver.forwardsTo} : {}),
+    }));
+}
+
 /** Whether the email names someone, rather than the "no one" Expensify Classic can store for nobody */
 function isApproverEmail(email: string | undefined): email is string {
     return !!email && email.toLowerCase() !== CONST.POLICY.EMPLOYEE_NO_ONE;
@@ -2265,6 +2275,7 @@ export {
     extractSubmitterEmails,
     getApproverTitles,
     getApproversFromImportedApprovers,
+    getImportedApproversFromApprovers,
     getFirstApproverByMemberEmail,
     getEnforcedApprovalWorkflows,
     getEnforcedApprovalWorkflowsForMembers,
