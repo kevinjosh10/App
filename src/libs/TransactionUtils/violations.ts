@@ -396,6 +396,10 @@ function isViolationDismissed(
         return false;
     }
 
+    if (violation.name === CONST.VIOLATIONS.DUPLICATED_TRANSACTION) {
+        return false;
+    }
+
     const violationDismissals = transaction.comment?.dismissedViolations?.[violation.name];
     if (!violationDismissals) {
         return false;
