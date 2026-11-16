@@ -1,4 +1,5 @@
 import Log from '@libs/Log';
+import {getIsOffline} from '@libs/NetworkState';
 import {rand64} from '@libs/NumberUtils';
 import type {Followup} from '@libs/ReportActionFollowupUtils';
 import type {Ancestor, OptimisticReportAction} from '@libs/ReportUtils';
@@ -86,6 +87,9 @@ function resolveSuggestedFollowup(
         return;
     }
 
+    const targetReportID = notifyReportID ?? reportID;
+    const isOffline = getIsOffline();
+
     // If there's a pre-generated response, queue it for delayed display.
     const optimisticConciergeReportActionID = rand64();
 
@@ -95,9 +99,9 @@ function resolveSuggestedFollowup(
     const optimisticConciergeAction = buildOptimisticAddCommentReportAction({
         text: selectedFollowup.response,
         actorAccountID: CONST.ACCOUNT_ID.CONCIERGE,
-        createdOffset: CONCIERGE_RESPONSE_DELAY_MS,
+        createdOffset: isOffline ? 1 : CONCIERGE_RESPONSE_DELAY_MS,
         reportActionID: optimisticConciergeReportActionID,
-        reportID,
+        reportID: targetReportID,
         isHTML: true,
         currentUserEmail,
         currentUserAccountID,
@@ -107,7 +111,7 @@ function resolveSuggestedFollowup(
     // Post user's comment immediately
     addComment({
         report,
-        notifyReportID: notifyReportID ?? reportID,
+        notifyReportID: targetReportID,
         ancestors,
         text: selectedFollowup.text,
         timezoneParam,
@@ -123,7 +127,11 @@ function resolveSuggestedFollowup(
         conciergeReportID,
     });
 
-    addOptimisticConciergeActionWithDelay(reportID, optimisticConciergeAction);
+    if (isOffline) {
+        applyPendingConciergeAction(targetReportID, optimisticConciergeAction.reportAction);
+    } else {
+        addOptimisticConciergeActionWithDelay(targetReportID, optimisticConciergeAction);
+    }
 }
 
 /**

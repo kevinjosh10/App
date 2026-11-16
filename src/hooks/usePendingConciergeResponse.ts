@@ -146,10 +146,10 @@ function usePendingConciergeResponse(reportID: string | undefined) {
 
         // Anchors are character-level. Short replies (~50–100 chars) keep the
         // binary reveal; longer ones (paragraphs / lists) cross the threshold
-        // and get the smooth trickle.
-        const shouldTrickle = snapshotTokens.length >= MIN_TRICKLE_TOKEN_COUNT && !!snapshotHtml;
+        // and get the smooth trickle. When offline, immediately reveal the response.
+        const shouldTrickle = snapshotTokens.length >= MIN_TRICKLE_TOKEN_COUNT && !!snapshotHtml && !isOffline;
         if (!shouldTrickle) {
-            const timer = setTimeout(() => applyPendingConciergeAction(reportID, reportAction), Math.max(0, remainingDelay));
+            const timer = setTimeout(() => applyPendingConciergeAction(reportID, reportAction), isOffline ? 0 : Math.max(0, remainingDelay));
             return () => clearTimeout(timer);
         }
 
