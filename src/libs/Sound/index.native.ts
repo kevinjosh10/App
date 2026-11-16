@@ -1,13 +1,12 @@
+import type {AudioPlayer, AudioSource} from 'expo-audio';
+import {createAudioPlayer, setAudioModeAsync} from 'expo-audio';
+import {AppState} from 'react-native';
+import type {ValueOf} from 'type-fest';
 import attentionSound from '@assets/sounds/attention.mp3';
 import doneSound from '@assets/sounds/done.mp3';
 import receiveSound from '@assets/sounds/receive.mp3';
 import successSound from '@assets/sounds/success.mp3';
-
-import type {AudioSource} from 'expo-audio';
-import type {ValueOf} from 'type-fest';
-
-import {createAudioPlayer, setAudioModeAsync} from 'expo-audio';
-
+import Log from '@libs/Log';
 import {getIsMuted, SOUNDS, withMinimalExecutionTime} from './BaseSound';
 
 // Sound assets are statically imported for bundling.
@@ -22,10 +21,16 @@ const SOUND_ASSETS = {
 // - playsInSilentMode: false — respect the device's silent/mute switch (iOS)
 // - shouldPlayInBackground: false — push notification sounds are played by the system
 // - interruptionMode: 'mixWithOthers' — don't interrupt other audio (e.g. music)
-const audioModeConfigured = setAudioModeAsync({playsInSilentMode: false, shouldPlayInBackground: false, interruptionMode: 'mixWithOthers'});
+const audioModeConfigured = setAudioModeAsync({
+    playsInSilentMode: false,
+    shouldPlayInBackground: false,
+    interruptionMode: 'mixWithOthers',
+}).catch((error: unknown) => {
+    Log.hmmm('[Sound] Failed to configure audio mode', {error});
+});
 
 const playSound = async (soundFile: ValueOf<typeof SOUNDS>) => {
-    if (getIsMuted()) {
+    if (getIsMuted() || AppState.currentState !== 'active') {
         return;
     }
 
@@ -38,19 +43,32 @@ const playSound = async (soundFile: ValueOf<typeof SOUNDS>) => {
     // uses the .ambient category (which won't interrupt music or other audio)
     await audioModeConfigured;
 
-    const player = createAudioPlayer(source);
+    if (AppState.currentState !== 'active') {
+        return;
+    }
 
-    // Listen for playback completion to release resources
-    const subscription = player.addListener('playbackStatusUpdate', (status) => {
-        if (!status.didJustFinish) {
-            return;
-        }
+    let player: AudioPlayer | undefined;
+    let subscription: {remove: () => void} | undefined;
 
-        subscription.remove();
-        player.remove();
-    });
+    try {
+        player = createAudioPlayer(source);
 
-    player.play();
+        // Listen for playback completion to release resources
+        subscription = player.addListener('playbackStatusUpdate', (status) => {
+            if (!status.didJustFinish) {
+                return;
+            }
+
+            subscription?.remove();
+            player?.remove();
+        });
+
+        player.play();
+    } catch (error) {
+        subscription?.remove();
+        player?.remove();
+        Log.hmmm('[Sound] Failed to play sound', {soundFile, error});
+    }
 };
 
 function clearSoundAssetsCache() {}
