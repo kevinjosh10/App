@@ -455,15 +455,23 @@ function MoneyReportHeaderSecondaryActionsInner({reportID, primaryAction, isRepo
         ...lifecycleActionEntries,
         ...expenseActions,
         ...holdRejectActions,
-        [CONST.REPORT.SECONDARY_ACTIONS.PAY]: {
-            text: translate('iou.settlePayment', totalAmount),
-            icon: expensifyIcons.Cash,
-            rightIcon: expensifyIcons.ArrowRight,
-            value: CONST.REPORT.SECONDARY_ACTIONS.PAY,
-            backButtonText: translate('iou.settlePayment', totalAmount),
-            sentryLabel: CONST.SENTRY_LABEL.MORE_MENU.PAY,
-            subMenuItems: paymentSubMenuItems,
-        },
+        [CONST.REPORT.SECONDARY_ACTIONS.PAY]: onlyShowPayElsewhere
+            ? {
+                  text: translate('iou.payElsewhere'),
+                  icon: expensifyIcons.Cash,
+                  value: CONST.REPORT.SECONDARY_ACTIONS.PAY,
+                  sentryLabel: CONST.SENTRY_LABEL.MORE_MENU.PAY,
+                  onSelected: () => confirmPayment({paymentType: CONST.IOU.PAYMENT_TYPE.ELSEWHERE}),
+              }
+            : {
+                  text: translate('iou.settlePayment', totalAmount),
+                  icon: expensifyIcons.Cash,
+                  rightIcon: expensifyIcons.ArrowRight,
+                  value: CONST.REPORT.SECONDARY_ACTIONS.PAY,
+                  backButtonText: translate('iou.settlePayment', totalAmount),
+                  sentryLabel: CONST.SENTRY_LABEL.MORE_MENU.PAY,
+                  subMenuItems: paymentSubMenuItems,
+              },
     };
 
     const applicableSecondaryActions = sortAndSectionPopoverMenuItems(

@@ -173,6 +173,7 @@ function canPay(
     const isReportFinished = (isApproved || isClosed) && !report.isWaitingOnBankAccount;
     const spendBreakdown = getMoneyRequestSpendBreakdown(report);
     const {reimbursableSpend, nonReimbursableSpend} = spendBreakdown;
+    const isSettledZeroReport = hasSettledZeroReimbursableSpend(spendBreakdown, report, transactions) && nonReimbursableSpend === 0;
     const isReimbursed = isSettled(report);
 
     const isExported = report.isExportedToIntegration ?? false;
@@ -184,6 +185,7 @@ function canPay(
         canPayReport &&
         isPaymentsEnabled &&
         isReportFinished &&
+        !isSettledZeroReport &&
         (reimbursableSpend !== 0 ||
             ((nonReimbursableSpend !== 0 || hasSettledZeroReimbursableSpend(spendBreakdown, report, transactions)) &&
                 !(policy?.preventPayoutNonReimbursableReports && hasOnlyNonReimbursableTransactions(report?.reportID, transactions))))

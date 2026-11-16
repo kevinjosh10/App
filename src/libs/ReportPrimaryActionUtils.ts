@@ -253,6 +253,7 @@ function isPrimaryPayAction({
     const isReportFinished = (isReportApproved && !report.isWaitingOnBankAccount) || isSubmittedWithoutApprovalsEnabled || isReportClosed;
     const spendBreakdown = getMoneyRequestSpendBreakdown(report);
     const {reimbursableSpend, nonReimbursableSpend} = spendBreakdown;
+    const isSettledZeroReport = hasSettledZeroReimbursableSpend(spendBreakdown, report, reportTransactions) && nonReimbursableSpend === 0;
 
     if (
         canPayReport &&
@@ -260,7 +261,7 @@ function isPrimaryPayAction({
         arePaymentsEnabled &&
         isReportFinished &&
         (reimbursableSpend !== 0 ||
-            ((nonReimbursableSpend !== 0 || hasSettledZeroReimbursableSpend(spendBreakdown, report, reportTransactions)) &&
+            ((nonReimbursableSpend !== 0 || (isSettledZeroReport && isSecondaryAction)) &&
                 !(policy?.preventPayoutNonReimbursableReports && hasOnlyNonReimbursableTransactions(report?.reportID, reportTransactions))))
     ) {
         return isSecondaryAction ?? !didExportFail;

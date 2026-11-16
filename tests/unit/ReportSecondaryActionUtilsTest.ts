@@ -300,6 +300,49 @@ describe('getSecondaryAction', () => {
         expect(result.includes(CONST.REPORT.SECONDARY_ACTIONS.PAY)).toBe(true);
     });
 
+    it('includes PAY in secondary actions for an approved expense report whose expenses cancel out to 0', () => {
+        const report = createMock<Report>({
+            reportID: REPORT_ID,
+            type: CONST.REPORT.TYPE.EXPENSE,
+            policyID: POLICY_ID,
+            ownerAccountID: EMPLOYEE_ACCOUNT_ID,
+            stateNum: CONST.REPORT.STATE_NUM.APPROVED,
+            statusNum: CONST.REPORT.STATUS_NUM.APPROVED,
+            total: 0,
+            nonReimbursableTotal: 0,
+            isWaitingOnBankAccount: false,
+        });
+        const policy = createMock<Policy>({
+            id: POLICY_ID,
+            type: CONST.POLICY.TYPE.CORPORATE,
+            role: CONST.POLICY.ROLE.ADMIN,
+            owner: ADMIN_EMAIL,
+            approvalMode: CONST.POLICY.APPROVAL_MODE.OPTIONAL,
+            reimbursementChoice: CONST.POLICY.REIMBURSEMENT_CHOICES.REIMBURSEMENT_YES,
+            outputCurrency: CONST.CURRENCY.USD,
+        });
+        const expense = createMock<Transaction>({transactionID: '1', reportID: REPORT_ID, amount: -5000, reimbursable: true});
+        const credit = createMock<Transaction>({transactionID: '2', reportID: REPORT_ID, amount: 5000, reimbursable: true});
+
+        const result = getSecondaryReportActions({
+            currentUserLogin: ADMIN_EMAIL,
+            currentUserAccountID: ADMIN_ACCOUNT_ID,
+            submitterLogin: EMPLOYEE_EMAIL,
+            report,
+            chatReport,
+            reportTransactions: [expense, credit],
+            originalTransaction: createMock<Transaction>({}),
+            violations: {},
+            bankAccountList: {},
+            policy,
+            reportActions: [],
+            rules: undefined,
+            cardList: undefined,
+        });
+
+        expect(result.includes(CONST.REPORT.SECONDARY_ACTIONS.PAY)).toBe(true);
+    });
+
     it('includes CANCEL_PAYMENT for a non-reimburser admin who could pay on a manual-reimbursement workspace', async () => {
         // beforeEach's Onyx.clear isn't awaited; explicit clear guarantees a clean policy collection for this seed.
         await Onyx.clear();

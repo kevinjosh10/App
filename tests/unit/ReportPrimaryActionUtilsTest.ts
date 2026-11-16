@@ -1451,7 +1451,7 @@ describe('getPrimaryAction', () => {
         ).toBe(CONST.REPORT.PRIMARY_ACTIONS.PAY);
     });
 
-    it('should return PAY for expense report whose reimbursable expenses cancel out to 0', async () => {
+    it('should not return PAY as primary action for expense report whose reimbursable expenses cancel out to 0', async () => {
         // Given a closed $0 report holding a $50 and a -$50 reimbursable expense
         const report = createMock<Report>({
             reportID: REPORT_ID,
@@ -1469,7 +1469,7 @@ describe('getPrimaryAction', () => {
         const credit = createMock<Transaction>({transactionID: '2', reportID: `${REPORT_ID}`, amount: 5000, reimbursable: true});
 
         // When the primary action is computed
-        // Then PAY is offered, since there is nothing left to reimburse and the report can only be closed out by marking it as paid
+        // Then PAY is not offered as primary, since there is nothing left to reimburse and the report total is $0.00
         expect(
             getReportPrimaryAction({
                 rules: undefined,
@@ -1484,7 +1484,7 @@ describe('getPrimaryAction', () => {
                 policy,
                 isChatReportArchived: false,
             }),
-        ).toBe(CONST.REPORT.PRIMARY_ACTIONS.PAY);
+        ).toBe('');
     });
 
     it('should not return PAY for a $0 expense report while an expense failed to scan', async () => {

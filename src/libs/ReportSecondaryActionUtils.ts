@@ -65,12 +65,14 @@ import {
     canUserPerformWriteAction as canUserPerformWriteActionReportUtils,
     doesReportContainRequestsFromMultipleUsers,
     getTransactionDetails,
+    getMoneyRequestSpendBreakdown,
     hasExportError as hasExportErrorUtils,
     hasHeldExpensesFromTransactions,
     hasOnlyHeldExpenses,
     hasOnlyNonReimbursableTransactions,
     hasReportBeenReopened as hasReportBeenReopenedUtils,
     hasReportBeenRetracted as hasReportBeenRetractedUtils,
+    hasSettledZeroReimbursableSpend,
     isActionCreator,
     isArchivedReport,
     isAwaitingFirstLevelApproval,
@@ -1078,6 +1080,8 @@ function getSecondaryReportActions({
     const isExported = isExportedUtils(reportActions, report);
     const hasExportError = hasExportErrorUtils(reportActions, report);
     const didExportFail = !isExported && hasExportError;
+    const spendBreakdown = getMoneyRequestSpendBreakdown(report);
+    const isSettledZeroReport = hasSettledZeroReimbursableSpend(spendBreakdown, report, reportTransactions) && spendBreakdown.nonReimbursableSpend === 0;
 
     if (
         isPrimaryPayAction({
@@ -1093,7 +1097,7 @@ function getSecondaryReportActions({
             isSecondaryAction: true,
             canNonPayerAdminPay: true,
         }) &&
-        (hasOnlyHeldExpenses(reportTransactions) || didExportFail)
+        (hasOnlyHeldExpenses(reportTransactions) || didExportFail || isSettledZeroReport)
     ) {
         options.push(CONST.REPORT.SECONDARY_ACTIONS.PAY);
     }

@@ -1340,8 +1340,8 @@ describe('getReportPreviewAction', () => {
         }
     });
 
-    it('canPay should return PAY for an expense report with a zero total that is ready to be paid', async () => {
-        // Given a submitted $0 expense report on a workspace without approvals, so it's ready to be paid and can only be marked as paid
+    it('canPay should return VIEW for an expense report with a zero total', async () => {
+        // Given a submitted $0 expense report on a workspace without approvals, so it's ready to be closed out via secondary action
         const report = {
             ...createRandomReport(REPORT_ID, undefined),
             type: CONST.REPORT.TYPE.EXPENSE,
@@ -1366,7 +1366,7 @@ describe('getReportPreviewAction', () => {
         await waitForBatchedUpdatesWithAct();
 
         // When the report preview action is computed
-        // Then PAY is shown so the report can be closed out by marking it as paid, matching Expensify Classic
+        // Then VIEW is shown because a Pay button should not be displayed for a $0.00 report
         expect(
             getReportPreviewAction({
                 isReportArchived: false,
@@ -1380,7 +1380,7 @@ describe('getReportPreviewAction', () => {
                 ownerLogin: CURRENT_USER_EMAIL,
                 rules: undefined,
             }),
-        ).toBe(CONST.REPORT.REPORT_PREVIEW_ACTIONS.PAY);
+        ).toBe(CONST.REPORT.REPORT_PREVIEW_ACTIONS.VIEW);
     });
 
     it('canPay should return PAY for expense report with only non-reimbursable expenses when payments enabled', async () => {
