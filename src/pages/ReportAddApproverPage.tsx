@@ -19,7 +19,7 @@ import createDynamicRoute from '@libs/Navigation/helpers/dynamicRoutesUtils/crea
 import Navigation from '@libs/Navigation/Navigation';
 import type {PlatformStackScreenProps} from '@libs/Navigation/PlatformStackNavigation/types';
 import type {ReportChangeApproverParamList} from '@libs/Navigation/types';
-import {getMemberAccountIDsForWorkspace} from '@libs/PolicyUtils';
+import {getMemberAccountIDsForWorkspace, hasDynamicExternalWorkflow} from '@libs/PolicyUtils';
 import {
     getDisplayNameForParticipant,
     hasViolations as hasViolationsReportUtils,
@@ -141,7 +141,7 @@ function ReportAddApproverPage({report, isLoadingReportData, policy}: ReportAddA
         setSelectedApproverEmail(approvers.at(0)?.login ?? undefined);
     };
 
-    const shouldShowNotFoundView = !isMoneyRequestReport(report) || isMoneyRequestReportPendingDeletion(report);
+    const shouldShowNotFoundView = !isMoneyRequestReport(report) || isMoneyRequestReportPendingDeletion(report) || hasDynamicExternalWorkflow(policy);
 
     return (
         <ApproverSelectionList

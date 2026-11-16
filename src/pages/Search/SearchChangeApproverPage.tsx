@@ -20,7 +20,7 @@ import useThemeStyles from '@hooks/useThemeStyles';
 import {assignReportToMe} from '@libs/actions/IOU/ReportWorkflow';
 import {openBulkChangeApproverPage} from '@libs/actions/Search';
 import Navigation from '@libs/Navigation/Navigation';
-import {isControlPolicy, isPendingDeletePolicy, isPolicyAdmin} from '@libs/PolicyUtils';
+import {hasDynamicExternalWorkflow, isControlPolicy, isPendingDeletePolicy, isPolicyAdmin} from '@libs/PolicyUtils';
 import {hasViolations as hasViolationsReportUtils, isAllowedToApproveExpenseReport, isMoneyRequestReport, isMoneyRequestReportPendingDeletion, isProcessingReport} from '@libs/ReportUtils';
 
 import {APPROVER_TYPE} from '@pages/DynamicReportChangeApproverPage';
@@ -92,6 +92,7 @@ function canReassignAllReports({
 
             return (
                 !!policy &&
+                !hasDynamicExternalWorkflow(policy) &&
                 !!report &&
                 isPolicyAdmin(policy) &&
                 !isPendingDeletePolicy(policy) &&
@@ -175,7 +176,7 @@ function SearchChangeApproverPage() {
     const areSelectedPoliciesLoaded = selectedReports.every((selectedReport) => !!allPolicies?.[`${ONYXKEYS.COLLECTION.POLICY}${selectedReport.policyID}`]);
 
     const changeApprover = () => {
-        if (selectedApproverType === APPROVER_TYPE.ADD_APPROVER) {
+        if (activeApproverType === APPROVER_TYPE.ADD_APPROVER) {
             const policiesToUpgrade = selectedPolicies.filter((policy) => !isControlPolicy(policy));
             if (policiesToUpgrade.length > 1) {
                 // Bulk upgrade is not supported, so show a general page to guide the user to upgrade manually
@@ -200,7 +201,7 @@ function SearchChangeApproverPage() {
             return;
         }
 
-        if (selectedApproverType === APPROVER_TYPE.REASSIGN_APPROVER) {
+        if (activeApproverType === APPROVER_TYPE.REASSIGN_APPROVER) {
             Navigation.navigate(ROUTES.CHANGE_APPROVER_REASSIGN_APPROVER_SEARCH_RHP);
             return;
         }
@@ -231,14 +232,19 @@ function SearchChangeApproverPage() {
     };
 
     const getApproverTypes = () => {
-        const data: Array<ListItem<ApproverType>> = [
-            {
+        const hasDEW = selectedReports.some((selectedReport) => {
+            const policy = allPolicies?.[`${ONYXKEYS.COLLECTION.POLICY}${selectedReport.policyID}`];
+            return hasDynamicExternalWorkflow(policy);
+        });
+
+        const data: Array<Omit<ListItem<ApproverType>, 'isSelected'>> = [];
+        if (!hasDEW) {
+            data.push({
                 text: translate('iou.changeApprover.actions.addApprover'),
                 keyForList: APPROVER_TYPE.ADD_APPROVER,
                 alternateText: translate('iou.changeApprover.actions.addApproverSubtitle'),
-                isSelected: selectedApproverType === APPROVER_TYPE.ADD_APPROVER,
-            },
-        ];
+            });
+        }
 
         const hasAdminPermission = selectedReports.every((selectedReport) => {
             const policy = allPolicies?.[`${ONYXKEYS.COLLECTION.POLICY}${selectedReport.policyID}`];
@@ -260,7 +266,6 @@ function SearchChangeApproverPage() {
                 text: translate('iou.changeApprover.actions.bypassApprovers'),
                 keyForList: APPROVER_TYPE.BYPASS_APPROVER,
                 alternateText: translate('iou.changeApprover.actions.bypassApproversSubtitle'),
-                isSelected: selectedApproverType === APPROVER_TYPE.BYPASS_APPROVER,
             });
         }
 
@@ -269,13 +274,20 @@ function SearchChangeApproverPage() {
                 text: translate('iou.changeApprover.actions.reassignApprover'),
                 keyForList: APPROVER_TYPE.REASSIGN_APPROVER,
                 alternateText: translate('iou.changeApprover.actions.reassignApproverSubtitle'),
-                isSelected: selectedApproverType === APPROVER_TYPE.REASSIGN_APPROVER,
             });
         }
 
-        return data;
+        const effectiveType = data.some((item) => item.keyForList === selectedApproverType)
+            ? selectedApproverType
+            : data.at(0)?.keyForList;
+
+        return data.map((item) => ({
+            ...item,
+            isSelected: item.keyForList === effectiveType,
+        }));
     };
     const approverTypes = getApproverTypes();
+    const activeApproverType = approverTypes.find((item) => item.isSelected)?.keyForList ?? selectedApproverType;
 
     // useLayoutEffect (not useEffect) so the RHP closes before the browser paints,
     // avoiding a single-frame flash of an empty list after reports are cleared.

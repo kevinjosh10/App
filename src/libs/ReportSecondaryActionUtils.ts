@@ -72,6 +72,7 @@ import {
     hasReportBeenReopened as hasReportBeenReopenedUtils,
     hasReportBeenRetracted as hasReportBeenRetractedUtils,
     isActionCreator,
+    isAllowedToApproveExpenseReport,
     isArchivedReport,
     isAwaitingFirstLevelApproval,
     isClosedReport as isClosedReportUtils,
@@ -1237,7 +1238,9 @@ function getSecondaryReportActions({
 
     const isApprovalEnabled = policy?.approvalMode && policy.approvalMode !== CONST.POLICY.APPROVAL_MODE.OPTIONAL;
     if (isExpenseReportUtils(report) && isProcessingReportUtils(report) && isPolicyAdmin(policy) && isApprovalEnabled) {
-        options.push(CONST.REPORT.SECONDARY_ACTIONS.CHANGE_APPROVER);
+        if (!hasDynamicExternalWorkflow(policy) || isAllowedToApproveExpenseReport(report, currentUserAccountID, policy)) {
+            options.push(CONST.REPORT.SECONDARY_ACTIONS.CHANGE_APPROVER);
+        }
     }
 
     options.push(CONST.REPORT.SECONDARY_ACTIONS.VIEW_DETAILS);

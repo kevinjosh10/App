@@ -145,6 +145,7 @@ import {
     getTagGLCode,
     getValidConnectedIntegration,
     getVendorDisplayName,
+    hasDynamicExternalWorkflow,
     isArchivedOrPendingDeletePolicy,
     isControlPolicy,
     isGroupPolicy,
@@ -2430,7 +2431,9 @@ function getActions(
 
     const isApprovalEnabled = policy?.approvalMode && policy.approvalMode !== CONST.POLICY.APPROVAL_MODE.OPTIONAL;
     if (report && policy && isPolicyAdmin(policy) && isExpenseReportUtil(report) && isProcessingReport(report) && !isMoneyRequestReportPendingDeletion(report) && isApprovalEnabled) {
-        allActions.push(CONST.SEARCH.ACTION_TYPES.CHANGE_APPROVER);
+        if (!hasDynamicExternalWorkflow(policy) || isAllowedToApproveExpenseReportUtils(report, currentUserAccountID, policy)) {
+            allActions.push(CONST.SEARCH.ACTION_TYPES.CHANGE_APPROVER);
+        }
     }
 
     if (reportNVP?.exportFailedTime) {

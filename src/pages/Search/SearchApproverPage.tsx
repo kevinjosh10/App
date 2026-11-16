@@ -18,7 +18,7 @@ import useThemeStyles from '@hooks/useThemeStyles';
 
 import {addReportApprover} from '@libs/actions/IOU/ReportWorkflow';
 import Navigation from '@libs/Navigation/Navigation';
-import {getMemberAccountIDsForWorkspace, isPendingDeletePolicy, isPolicyAdmin} from '@libs/PolicyUtils';
+import {getMemberAccountIDsForWorkspace, hasDynamicExternalWorkflow, isPendingDeletePolicy, isPolicyAdmin} from '@libs/PolicyUtils';
 import {getDisplayNameForParticipant, hasViolations as hasViolationsReportUtils, isAllowedToApproveExpenseReport} from '@libs/ReportUtils';
 
 import CONST from '@src/CONST';
@@ -201,6 +201,11 @@ function SearchApproverPage({isReassignment = false}: SearchApproverPageProps) {
         });
     }, [selectedReports.length]);
 
+    const hasDEW = selectedReports.some((selectedReport) => {
+        const policy = allPolicies?.[`${ONYXKEYS.COLLECTION.POLICY}${selectedReport.policyID}`];
+        return hasDynamicExternalWorkflow(policy);
+    });
+
     const canReassignAllReports = selectedReports.every((selectedReport) => {
         const policy = allPolicies?.[`${ONYXKEYS.COLLECTION.POLICY}${selectedReport.policyID}`];
         return !!policy && isPolicyAdmin(policy) && !isPendingDeletePolicy(policy);
@@ -228,7 +233,7 @@ function SearchApproverPage({isReassignment = false}: SearchApproverPageProps) {
             isLoadingReportData={isLoadingReportData}
             policy={allPolicies?.[`${ONYXKEYS.COLLECTION.POLICY}${selectedReports.at(0)?.policyID}`]}
             shouldShowNotFoundViewLink={false}
-            shouldShowNotFoundView={isReassignment && !canReassignAllReports}
+            shouldShowNotFoundView={hasDEW || (isReassignment && !canReassignAllReports)}
             allApprovers={allApprovers}
             listEmptyContentSubtitle={translate(selectedReports.length === 1 ? 'workflowsPage.emptyContent.approverSubtitle' : 'workflowsPage.emptyContent.bulkApproverSubtitle')}
             allowMultipleSelection={false}

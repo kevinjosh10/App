@@ -21,7 +21,7 @@ import createDynamicRoute from '@libs/Navigation/helpers/dynamicRoutesUtils/crea
 import Navigation from '@libs/Navigation/Navigation';
 import type {PlatformStackScreenProps} from '@libs/Navigation/PlatformStackNavigation/types';
 import type {ReportChangeApproverParamList} from '@libs/Navigation/types';
-import {getMemberAccountIDsForWorkspace, isPendingDeletePolicy, isPolicyAdmin} from '@libs/PolicyUtils';
+import {getMemberAccountIDsForWorkspace, hasDynamicExternalWorkflow, isPendingDeletePolicy, isPolicyAdmin} from '@libs/PolicyUtils';
 import {
     getDisplayNameForParticipant,
     hasViolations as hasViolationsReportUtils,
@@ -69,7 +69,8 @@ function ReportReassignApproverPage({report, policy, isLoadingReportData}: Repor
         !isMoneyRequestReport(report) ||
         isMoneyRequestReportPendingDeletion(report) ||
         !isProcessingReport(report) ||
-        !isApprovalEnabled;
+        !isApprovalEnabled ||
+        hasDynamicExternalWorkflow(policy);
 
     const employeeList = policy?.employeeList;
     const employeePersonalDetails = usePersonalDetailsByLogins(Object.keys(employeeList ?? {}));
