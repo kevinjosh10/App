@@ -69,7 +69,7 @@ function shouldAutoApplyApprover({
         return false;
     }
 
-    return approverTypes.length === 1 && selectedApproverType === approverTypes.at(0)?.keyForList;
+    return approverTypes.length === 1 && selectedApproverType === approverTypes.at(0)?.keyForList && selectedApproverType === APPROVER_TYPE.ADD_APPROVER;
 }
 
 export {shouldAutoApplyApprover};
