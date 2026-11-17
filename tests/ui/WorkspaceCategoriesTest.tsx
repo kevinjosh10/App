@@ -385,4 +385,74 @@ describe('WorkspaceCategories', () => {
         unmount();
         await waitForBatchedUpdatesWithAct();
     });
+
+    it('should not show category visibility blocking modal when bulk disabling categories on a Collect policy', async () => {
+        await TestHelper.signInWithTestUser();
+
+        const policy = {
+            ...LHNTestUtils.getFakePolicy(),
+            type: CONST.POLICY.TYPE.TEAM,
+            role: CONST.POLICY.ROLE.ADMIN,
+            areCategoriesEnabled: true,
+            requiresCategory: false,
+        };
+
+        const categories = {
+            [FIRST_CATEGORY]: {
+                name: FIRST_CATEGORY,
+                enabled: true,
+            },
+            [SECOND_CATEGORY]: {
+                name: SECOND_CATEGORY,
+                enabled: true,
+            },
+        };
+
+        await act(async () => {
+            await Onyx.merge(`${ONYXKEYS.COLLECTION.POLICY}${policy.id}`, policy);
+            await Onyx.merge(`${ONYXKEYS.COLLECTION.POLICY_CATEGORIES}${policy.id}`, categories);
+        });
+
+        const {unmount} = renderPage(SCREENS.WORKSPACE.CATEGORIES, {policyID: policy.id});
+
+        await waitForBatchedUpdatesWithAct();
+
+        await waitFor(() => {
+            expect(screen.getByText(FIRST_CATEGORY)).toBeOnTheScreen();
+        });
+
+        const selectAll = screen.getAllByLabelText(TestHelper.translateLocal('workspace.common.selectAll')).at(0);
+        if (!selectAll) {
+            throw new Error('Select all button not found');
+        }
+        fireEvent.press(selectAll);
+
+        const dropdownMenuButtonTestID = 'WorkspaceCategoriesPage-header-dropdown-menu-button';
+        await waitFor(() => {
+            expect(screen.getByTestId(dropdownMenuButtonTestID)).toBeOnTheScreen();
+        });
+
+        const dropdownButton = screen.getByTestId(dropdownMenuButtonTestID);
+        fireEvent.press(dropdownButton);
+        await waitForBatchedUpdatesWithAct();
+
+        const disableMenuItem = screen.getByTestId('PopoverMenuItem-Disable categories');
+        expect(disableMenuItem).toBeOnTheScreen();
+
+        const mockEvent = {
+            nativeEvent: {},
+            type: 'press',
+            target: disableMenuItem,
+            currentTarget: disableMenuItem,
+        };
+        fireEvent.press(disableMenuItem, mockEvent);
+
+        await waitForBatchedUpdatesWithAct();
+
+        const bulkVisibilityPrompt = TestHelper.translateLocal('workspace.categories.cannotDisableCategoryForMembers.bulkTitle');
+        expect(screen.queryByText(bulkVisibilityPrompt)).not.toBeOnTheScreen();
+
+        unmount();
+        await waitForBatchedUpdatesWithAct();
+    });
 });

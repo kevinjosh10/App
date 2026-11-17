@@ -241,7 +241,7 @@ function WorkspaceCategoriesPage({route}: WorkspaceCategoriesPageProps) {
             return;
         }
 
-        if (!enabled) {
+        if (isControlPolicy(policy) && !enabled) {
             const membersWithoutVisibleCategories = getMembersWithoutVisibleCategories(policyCategories, [category.name], policyMemberAccountIDs);
             if (membersWithoutVisibleCategories.length > 0) {
                 showMembersNeedCategoryModal(membersWithoutVisibleCategories, [category.name]);
@@ -487,8 +487,9 @@ function WorkspaceCategoriesPage({route}: WorkspaceCategoriesPageProps) {
                         };
                         return acc;
                     }, {});
+                const isControl = isControlPolicy(policy);
                 const isDisablingLastEnabledCategory = isDisablingOrDeletingLastEnabledCategory(policy, policyCategories, selectedCategoriesObject);
-                const membersWithoutVisibleCategories = getMembersWithoutVisibleCategories(policyCategories, enabledCategories, policyMemberAccountIDs);
+                const membersWithoutVisibleCategories = isControl ? getMembersWithoutVisibleCategories(policyCategories, enabledCategories, policyMemberAccountIDs) : [];
                 options.push({
                     icon: icons.Close,
                     text: translate(enabledCategories.length === 1 ? 'workspace.categories.disableCategory' : 'workspace.categories.disableCategories'),
@@ -500,7 +501,7 @@ function WorkspaceCategoriesPage({route}: WorkspaceCategoriesPageProps) {
                             showCannotDeleteOrDisableLastCategoryModal();
                             return;
                         }
-                        if (membersWithoutVisibleCategories.length > 0) {
+                        if (isControl && membersWithoutVisibleCategories.length > 0) {
                             showMembersNeedCategoryModal(membersWithoutVisibleCategories, enabledCategories);
                             return;
                         }
