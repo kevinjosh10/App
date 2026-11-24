@@ -50,10 +50,11 @@ function getOptionLabel(option: DynamicFormFieldOption, translate: LocalizedTran
 function getChoices(options: DynamicFormFieldOption[], translate: LocalizedTranslate, isCountryList: boolean): DynamicFormChoice[] {
     return options.map((option) => {
         const label = getOptionLabel(option, translate);
+        const hasCountryCode = isCountryList || isCountryCode(option.key);
         return {
             value: option.key,
             label,
-            searchValue: isCountryList ? StringUtils.sanitizeString(`${option.key}${label}`) : undefined,
+            searchValue: hasCountryCode ? StringUtils.sanitizeString(`${option.key}${label}`) : undefined,
         };
     });
 }
@@ -61,7 +62,7 @@ function getChoices(options: DynamicFormFieldOption[], translate: LocalizedTrans
 function getFieldChoices(field: DynamicFormOptionField, values: DynamicFormValues, translate: LocalizedTranslate): DynamicFormChoice[] {
     const options = getFieldOptions(field, values);
     // Wise sends some country lists, like the account holder's address country, as a `select` of country codes, so those search by code too
-    const isCountryField = field.type === 'country' || field.type === 'countryMultiselect' || (options.length > 0 && options.every((option) => isCountryCode(option.key)));
+    const isCountryField = field.type === 'country' || field.type === 'countryMultiselect' || (options.length > 0 && options.some((option) => isCountryCode(option.key)));
     return getChoices(options, translate, isCountryField);
 }
 

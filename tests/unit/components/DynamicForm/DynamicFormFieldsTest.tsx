@@ -567,6 +567,28 @@ describe('DynamicFormFields', () => {
         expect(rendered.get(addressKeys.country)?.items?.find((item) => item.value === 'GB')?.searchValue).toMatch(/^gb/);
     });
 
+    it('searches select field countries by their code even with non-canonical options or placeholders', () => {
+        // Given a dynamic select field whose options contain country codes mixed with non-canonical keys or placeholders
+        const countrySelect: DynamicFormField = {
+            key: 'address.country',
+            type: 'select',
+            required: true,
+            values: [
+                {key: '', label: 'Select a country'},
+                {key: 'GB', label: 'United Kingdom'},
+                {key: 'US', label: 'United States'},
+                {key: 'OTHER', label: 'Other'},
+            ],
+        };
+
+        // When it renders
+        const rendered = renderFields([countrySelect]);
+
+        // Then valid country options have a searchValue matching their code
+        expect(rendered.get('address.country')?.items?.find((item) => item.value === 'GB')?.searchValue).toMatch(/^gb/);
+        expect(rendered.get('address.country')?.items?.find((item) => item.value === 'US')?.searchValue).toMatch(/^us/);
+    });
+
     it('opens the numeric keyboard for a text field whose regex takes digits only', () => {
         // Given a sort code that must be six digits, and a reference that takes letters too
         const sortCode: DynamicFormField = {key: 'sortCode', type: 'text', required: true, regex: '^\\d{6}$'};
