@@ -8223,6 +8223,10 @@ const translations = {
             receiptPartners: {
                 title: 'Receipt partners',
             },
+            hr: {
+                title: 'HR',
+                subtitle: 'Connect HR tools and keep employee approvals in sync.',
+            },
             connectionsWarningModal: {
                 featureEnabledTitle: 'Not so fast...',
                 featureEnabledText: "To enable or disable this feature, you'll need to change your accounting import settings.",
