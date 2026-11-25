@@ -118,6 +118,9 @@ type DatePresetFilterBaseProps = {
     /** Force vertical stacking of calendars in range picker */
     forceVerticalCalendars?: boolean;
 
+    /** The maximum selectable date in the calendar and year picker */
+    maxDate?: Date;
+
     ref: Ref<DatePresetFilterBaseHandle>;
 };
 
@@ -139,6 +142,7 @@ function DatePresetFilterBase({
     onDateValuesChange,
     onRangeValidationErrorChange,
     forceVerticalCalendars = false,
+    maxDate,
     ref,
 }: DatePresetFilterBaseProps) {
     const theme = useTheme();
@@ -490,6 +494,7 @@ function DatePresetFilterBase({
                     onRangeValidationErrorChange?.(false);
                 }}
                 forceVertical={forceVerticalCalendars}
+                maxDate={maxDate}
             />
         );
     }
@@ -500,6 +505,7 @@ function DatePresetFilterBase({
                 value={DateUtils.parseCalendarDate(ephemeralDateValue)}
                 onSelected={handleSingleDateSelected}
                 isDateSelectable={DateUtils.isWithinCalendarPickerRange}
+                maxDate={maxDate}
             />
             {allowedCustomDateModifiers.length > 1 && (
                 <>

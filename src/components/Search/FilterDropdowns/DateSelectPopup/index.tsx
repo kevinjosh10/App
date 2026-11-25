@@ -41,6 +41,9 @@ type DateSelectPopupProps = {
     /** Function to set the popover width dynamically */
     setPopoverWidth?: (width: number | undefined) => void;
 
+    /** The maximum selectable date in the calendar and year picker */
+    maxDate?: Date;
+
     applySentryLabel: SentryLabel;
 };
 
@@ -53,6 +56,7 @@ function DateSelectPopup({
     closeOverlay,
     onChange,
     setPopoverWidth,
+    maxDate,
     applySentryLabel,
 }: DateSelectPopupProps) {
     // eslint-disable-next-line rulesdir/prefer-shouldUseNarrowLayout-instead-of-isSmallScreenWidth
@@ -212,6 +216,7 @@ function DateSelectPopup({
                     onSelectDateModifier={setSelectedDateModifier}
                     presets={presets}
                     allowedCustomDateModifiers={allowedCustomDateModifiers}
+                    maxDate={maxDate}
                     onDateValuesChange={updateRangeText}
                     onRangeValidationErrorChange={setShouldShowRangeError}
                 />

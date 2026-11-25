@@ -21,9 +21,12 @@ type RangeDatePickerProps = {
 
     /** Force vertical stacking of calendars */
     forceVertical?: boolean;
+
+    /** The maximum selectable date in the calendar and year picker */
+    maxDate?: Date;
 };
 
-function RangeDatePicker({fromValue, toValue, onFromSelected, onToSelected, forceVertical = false}: RangeDatePickerProps) {
+function RangeDatePicker({fromValue, toValue, onFromSelected, onToSelected, forceVertical = false, maxDate}: RangeDatePickerProps) {
     const styles = useThemeStyles();
     const {translate} = useLocalize();
     // eslint-disable-next-line rulesdir/prefer-shouldUseNarrowLayout-instead-of-isSmallScreenWidth
@@ -43,6 +46,7 @@ function RangeDatePicker({fromValue, toValue, onFromSelected, onToSelected, forc
                         onSelected={(date) => onFromSelected(format(date, CONST.DATE.FNS_FORMAT_STRING))}
                         isDateSelectable={(date) => DateUtils.isWithinCalendarPickerRange(date) && (!toDate || date <= toDate)}
                         headerContainerStyle={styles.ph4}
+                        maxDate={maxDate}
                     />
                 </View>
             </View>
@@ -56,6 +60,7 @@ function RangeDatePicker({fromValue, toValue, onFromSelected, onToSelected, forc
                         onSelected={(date) => onToSelected(format(date, CONST.DATE.FNS_FORMAT_STRING))}
                         isDateSelectable={(date) => DateUtils.isWithinCalendarPickerRange(date) && (!fromDate || date >= fromDate)}
                         headerContainerStyle={styles.ph4}
+                        maxDate={maxDate}
                     />
                 </View>
             </View>
