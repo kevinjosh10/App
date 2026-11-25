@@ -1,6 +1,7 @@
 import ActivityIndicator from '@components/ActivityIndicator';
 import FullPageOfflineBlockingView from '@components/BlockingViews/FullPageOfflineBlockingView';
 
+import useAndroidBackButtonHandler from '@hooks/useAndroidBackButtonHandler';
 import useCurrentUserPersonalDetails from '@hooks/useCurrentUserPersonalDetails';
 import useDefaultExpensePolicy from '@hooks/useDefaultExpensePolicy';
 import useNetwork from '@hooks/useNetwork';
@@ -23,7 +24,9 @@ import ONYXKEYS from '@src/ONYXKEYS';
 import ROUTES, {DYNAMIC_ROUTES} from '@src/ROUTES';
 import type SCREENS from '@src/SCREENS';
 import type {Policy} from '@src/types/onyx';
+import {isEmptyObject} from '@src/types/utils/EmptyObject';
 
+import {useIsFocused} from '@react-navigation/native';
 import type {OnyxEntry} from 'react-native-onyx';
 
 import React, {useEffect, useState} from 'react';
@@ -46,6 +49,7 @@ function IOURequestStepPerDiemWorkspace({route, navigation, transaction}: IOUReq
     const defaultExpensePolicy = useDefaultExpensePolicy();
     const personalPolicy = usePersonalPolicy();
     const {isOffline} = useNetwork();
+    const isFocused = useIsFocused();
     const [pendingPolicyID, setPendingPolicyID] = useState<string>();
     const [pendingPolicy] = useOnyx(`${ONYXKEYS.COLLECTION.POLICY}${pendingPolicyID}`);
 
@@ -64,12 +68,13 @@ function IOURequestStepPerDiemWorkspace({route, navigation, transaction}: IOUReq
         }
 
         const perDiemUnit = getPerDiemCustomUnit(policy);
-        if (!perDiemUnit && policy?.id) {
+        const hasRates = !isEmptyObject(perDiemUnit?.rates);
+        if (!hasRates && policy?.id && !isOffline) {
             fetchPerDiemRates(policy.id);
         }
 
-        const canDestinationResolvePolicy = !!perDiemUnit || (!!targetReport.policyID && targetReport.policyID !== CONST.POLICY.ID_FAKE);
-        if (!canDestinationResolvePolicy) {
+        const canDestinationResolveRates = hasRates || isOffline;
+        if (!canDestinationResolveRates) {
             setPendingPolicyID(policy?.id);
             return;
         }
@@ -98,13 +103,34 @@ function IOURequestStepPerDiemWorkspace({route, navigation, transaction}: IOUReq
     };
 
     useEffect(() => {
-        if (!pendingPolicyID || !getPerDiemCustomUnit(pendingPolicy)) {
+        if (!pendingPolicyID || isEmptyObject(getPerDiemCustomUnit(pendingPolicy)?.rates)) {
             return;
         }
         const frame = requestAnimationFrame(() => selectWorkspace(pendingPolicy));
         return () => cancelAnimationFrame(frame);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pendingPolicy, pendingPolicyID]);
+
+    useEffect(() => {
+        if (isOffline || !pendingPolicyID || !isEmptyObject(getPerDiemCustomUnit(pendingPolicy)?.rates)) {
+            return;
+        }
+        fetchPerDiemRates(pendingPolicyID);
+    }, [isOffline, pendingPolicyID, pendingPolicy]);
+
+    useEffect(() => {
+        if (!isFocused && pendingPolicyID) {
+            setPendingPolicyID(undefined);
+        }
+    }, [isFocused, pendingPolicyID]);
+
+    useAndroidBackButtonHandler(() => {
+        if (pendingPolicyID) {
+            setPendingPolicyID(undefined);
+            return true;
+        }
+        return false;
+    });
 
     if (pendingPolicyID) {
         if (isOffline) {
