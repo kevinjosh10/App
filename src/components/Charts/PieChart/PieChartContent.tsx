@@ -1,5 +1,6 @@
 import {useReportChartLoading} from '@components/Charts/components/ChartReveal';
 import ChartTooltipLayer from '@components/Charts/components/ChartTooltipLayer';
+import {useChartFontManager} from '@components/Charts/context/ChartFontsContext';
 import {CHART_GESTURE_TOUCH_ACTION, TOOLTIP_BAR_GAP, useChartLabelFormats, useTouchPinnedTooltip} from '@components/Charts/hooks';
 import type {ChartDataPoint, ChartProps, PieSlice, UnitPosition} from '@components/Charts/types';
 import {findSliceAtPosition, getPrimaryValue, processDataIntoSlices} from '@components/Charts/utils';
@@ -97,7 +98,8 @@ function PieChartCanvas({
     const [{key: primarySeriesKey}] = series;
     const processedSlices = processDataIntoSlices(data, primarySeriesKey, pieGeometry);
 
-    const {formatValue, formatExactValue, formatTotalValue} = useChartLabelFormats({data, unit: valueUnit, unitPosition: valueUnitPosition, formatValue: formatValueOverride});
+    const fontManager = useChartFontManager();
+    const {formatValue, formatExactValue, formatTotalValue} = useChartLabelFormats({data, unit: valueUnit, unitPosition: valueUnitPosition, formatValue: formatValueOverride, fontManager});
     const total = data.reduce((sum, point) => sum + getPrimaryValue(point, primarySeriesKey), 0);
 
     /** Data index of the slice at the given point, or -1 when the point is outside the slices */

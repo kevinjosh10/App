@@ -244,7 +244,7 @@ function SearchChartView({
 
     const firstItem = data.at(0);
     const currency = sanitizeCurrencyCode(firstItem?.currency ?? CONST.CURRENCY.USD);
-    const parts = formatToParts(preferredLocale, 0, {style: 'currency', currency});
+    const parts = formatToParts(preferredLocale, 0, {style: 'currency', currency, currencyDisplay: 'narrowSymbol'});
     const currencyIndex = parts.findIndex((p) => p.type === 'currency');
     const integerIndex = parts.findIndex((p) => p.type === 'integer');
     const intlSymbol = parts.find((p) => p.type === 'currency')?.value;

@@ -121,6 +121,7 @@ function LineChartCanvas({
         unit: yAxisUnit,
         unitPosition: yAxisUnitPosition,
         formatValue: formatValueOverride,
+        fontManager,
     });
 
     const {ticks: yAxisTicks, tickCount: yAxisTickCount, domain: yAxisTickDomain} = getYAxisTickLayout(yAxisDomain, yAxisTickStep);
