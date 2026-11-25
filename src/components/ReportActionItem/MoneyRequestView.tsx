@@ -632,6 +632,8 @@ function MoneyRequestView({
     const isTaxEnabled = isTaxTrackingEnabled(isPolicyExpenseChat || isExpenseUnreported, policy, isDistanceRequest, isPerDiemRequest, isTimeRequest);
     const shouldShowTaxDisabledAlert = !isTaxEnabled && !!transaction?.taxCode && !isTimeRequest && !isPerDiemRequest;
     const shouldShowTax = isFromMergeTransaction ? !!transaction?.taxName : isTaxEnabled || shouldShowTaxDisabledAlert;
+    const canDeleteDisabledTax = canEdit && shouldShowTaxDisabledAlert;
+    const canInteractWithTax = canEditTaxFields || canDeleteDisabledTax;
 
     let amountDescription = `${translate('iou.amount')} ${CONST.DOT_SEPARATOR} ${translate(getDetailedExpenseTypeTranslationKey(transaction, transactionCard))}`;
     let dateDescription = `${translate('common.date')}`;
@@ -918,7 +920,7 @@ function MoneyRequestView({
             confirmText: translate('iou.taxDisabledAlert.confirmText'),
             cancelText: translate('common.cancel'),
         }).then(({action}) => {
-            if (action !== ModalActions.CONFIRM || !canEditTaxFields) {
+            if (action !== ModalActions.CONFIRM || (!canEditTaxFields && !canDeleteDisabledTax)) {
                 return;
             }
 
@@ -1653,7 +1655,7 @@ function MoneyRequestView({
                             sentryLabel={CONST.SENTRY_LABEL.MONEY_REQUEST_VIEW.TAX_RATE_FIELD}
                             shouldAllowTextSelection={!!taxRateCopyValue}
                             onPress={
-                                canEditTaxFields
+                                canInteractWithTax
                                     ? callIfAuthenticated(() => {
                                           if (shouldShowTaxDisabledAlert) {
                                               showTaxDisabledAlert();
@@ -1681,8 +1683,8 @@ function MoneyRequestView({
                                 isValueSelectable={!!taxRateCopyValue}
                             >
                                 {!!getErrorForField('tax') && <MenuItem.BrickRoadIndicator status={CONST.BRICK_ROAD_INDICATOR_STATUS.ERROR} />}
-                                {canEditTaxFields && <MenuItem.Chevron />}
-                                {!canEditTaxFields && !!taxRateCopyValue && <MenuItem.Copy value={taxRateCopyValue} />}
+                                {canInteractWithTax && <MenuItem.Chevron />}
+                                {!canInteractWithTax && !!taxRateCopyValue && <MenuItem.Copy value={taxRateCopyValue} />}
                             </MenuItemField.Row>
                             {!!getErrorForField('tax') && (
                                 <MenuItem.HelpText
@@ -1699,7 +1701,7 @@ function MoneyRequestView({
                             sentryLabel={CONST.SENTRY_LABEL.MONEY_REQUEST_VIEW.TAX_AMOUNT_FIELD}
                             shouldAllowTextSelection={!!taxAmountCopyValue}
                             onPress={
-                                canEditTaxFields
+                                canInteractWithTax
                                     ? callIfAuthenticated(() => {
                                           if (shouldShowTaxDisabledAlert) {
                                               showTaxDisabledAlert();
@@ -1726,8 +1728,8 @@ function MoneyRequestView({
                                 numberOfLinesValue={2}
                                 isValueSelectable={!!taxAmountCopyValue}
                             >
-                                {canEditTaxFields && <MenuItem.Chevron />}
-                                {!canEditTaxFields && !!taxAmountCopyValue && <MenuItem.Copy value={taxAmountCopyValue} />}
+                                {canInteractWithTax && <MenuItem.Chevron />}
+                                {!canInteractWithTax && !!taxAmountCopyValue && <MenuItem.Copy value={taxAmountCopyValue} />}
                             </MenuItemField.Row>
                         </MenuItem.Root>
                     </OfflineWithFeedback>
