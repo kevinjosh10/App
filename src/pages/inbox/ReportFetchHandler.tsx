@@ -483,6 +483,16 @@ function ReportFetchHandler() {
     }, [prevTransactionThreadReportID, transactionThreadReportID, isInPreloadedTab]);
 
     useEffect(() => {
+        if (!transactionThreadReportID || transactionThreadReportID === CONST.FAKE_REPORT_ID || !!transactionThreadReport?.reportID || isOffline || isInPreloadedTab) {
+            return;
+        }
+
+        openReport({
+            reportID: transactionThreadReportID,
+        });
+    }, [transactionThreadReportID, transactionThreadReport?.reportID, isOffline, isInPreloadedTab]);
+
+    useEffect(() => {
         if (!reportID || !isFocused || isInSidePanel || isHiddenPreMount) {
             return;
         }
