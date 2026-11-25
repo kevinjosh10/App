@@ -24,7 +24,6 @@ import ONYXKEYS from '@src/ONYXKEYS';
 import ROUTES, {DYNAMIC_ROUTES} from '@src/ROUTES';
 import type SCREENS from '@src/SCREENS';
 import type {Policy} from '@src/types/onyx';
-import {isEmptyObject} from '@src/types/utils/EmptyObject';
 
 import {useIsFocused} from '@react-navigation/native';
 import type {OnyxEntry} from 'react-native-onyx';
@@ -68,12 +67,12 @@ function IOURequestStepPerDiemWorkspace({route, navigation, transaction}: IOUReq
         }
 
         const perDiemUnit = getPerDiemCustomUnit(policy);
-        const hasRates = !isEmptyObject(perDiemUnit?.rates);
-        if (!hasRates && policy?.id && !isOffline) {
+        const areRatesLoaded = perDiemUnit?.rates !== undefined;
+        if (!areRatesLoaded && policy?.id && !isOffline) {
             fetchPerDiemRates(policy.id);
         }
 
-        const canDestinationResolveRates = hasRates || isOffline;
+        const canDestinationResolveRates = areRatesLoaded || isOffline;
         if (!canDestinationResolveRates) {
             setPendingPolicyID(policy?.id);
             return;
@@ -103,7 +102,7 @@ function IOURequestStepPerDiemWorkspace({route, navigation, transaction}: IOUReq
     };
 
     useEffect(() => {
-        if (!pendingPolicyID || isEmptyObject(getPerDiemCustomUnit(pendingPolicy)?.rates)) {
+        if (!pendingPolicyID || getPerDiemCustomUnit(pendingPolicy)?.rates === undefined) {
             return;
         }
         const frame = requestAnimationFrame(() => selectWorkspace(pendingPolicy));
@@ -112,7 +111,7 @@ function IOURequestStepPerDiemWorkspace({route, navigation, transaction}: IOUReq
     }, [pendingPolicy, pendingPolicyID]);
 
     useEffect(() => {
-        if (isOffline || !pendingPolicyID || !isEmptyObject(getPerDiemCustomUnit(pendingPolicy)?.rates)) {
+        if (isOffline || !pendingPolicyID || getPerDiemCustomUnit(pendingPolicy)?.rates !== undefined) {
             return;
         }
         fetchPerDiemRates(pendingPolicyID);
