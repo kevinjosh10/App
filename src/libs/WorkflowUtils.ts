@@ -1852,7 +1852,11 @@ function buildApproverChainFromRules({submitter, rules, employees, personalDetai
 
             // No matching rule means the backend approves the report here
             const matchingRule = approverRules.find((rule) => evaluateApprovalWorkflowRule(rule, {submitterEmail: submitter, currentApproverEmail: email, reportTotal: amount}));
-            return matchingRule ? getForwardApprover(matchingRule) : undefined;
+            const nextApprover = matchingRule ? getForwardApprover(matchingRule) : undefined;
+            if (nextApprover === email) {
+                return undefined;
+            }
+            return nextApprover;
         },
         getApprovalLimit: (email) => (getApproverRules(email).length === 0 ? getEmployeeApprovalLimit(employees[email]) : undefined),
         canRouteTo: () => true,

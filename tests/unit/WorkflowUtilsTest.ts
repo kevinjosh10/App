@@ -2845,6 +2845,36 @@ describe('WorkflowUtils', () => {
                 expect(getChainEmails('6@example.com')).toEqual(['1@example.com']);
                 expect(getChainEmails('1@example.com')).toEqual(['2@example.com']);
             });
+
+            it('Should collapse self-forwarding rule into a single approver step', () => {
+                const ownerEmail = 'owner@example.com';
+                const selfForwardingRules = {
+                    rule_1: createMock<ApprovalRule>({
+                        id: 'rule_1',
+                        approver: ownerEmail,
+                        action: CONST.APPROVAL_WORKFLOW.ACTION.FORWARD,
+                        forwardsTo: ownerEmail,
+                        filters: [
+                            {
+                                type: CONST.SEARCH.SYNTAX_FILTER_KEYS.TO,
+                                operator: CONST.SEARCH.SYNTAX_OPERATORS.EQUAL,
+                                right: ownerEmail,
+                            },
+                        ],
+                    }),
+                };
+
+                const chain = buildApproverChainFromRules({
+                    submitter: 'submitter@example.com',
+                    rules: selfForwardingRules,
+                    employees: {[ownerEmail]: {email: ownerEmail, role: CONST.POLICY.ROLE.ADMIN}},
+                    personalDetailsByEmail: {},
+                });
+
+                expect(chain).toHaveLength(1);
+                expect(chain.at(0)?.email).toBe(ownerEmail);
+                expect(chain.at(0)?.isCircularReference).toBe(false);
+            });
         });
 
         describe('convertApprovalWorkflowRulesToWorkflows', () => {
