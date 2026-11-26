@@ -4574,13 +4574,19 @@ function getWorkspaceUpdateFieldMessage(translate: LocalizedTranslate, action: R
     }
     if (
         updatedField &&
-        updatedField === CONST.POLICY.COLLECTION_KEYS.AUTOREPORTING_OFFSET &&
-        (typeof oldValue === 'string' || typeof oldValue === 'number') &&
+        (updatedField === CONST.POLICY.COLLECTION_KEYS.AUTOREPORTING_OFFSET || updatedField === CONST.POLICY.COLLECTION_KEYS.AUTOREPORTING_OFFSET_SECOND_SEMI_MONTHLY) &&
+        (typeof oldValue === 'string' || typeof oldValue === 'number' || typeof oldValue === 'undefined' || oldValue === null) &&
         (typeof newValue === 'string' || typeof newValue === 'number')
     ) {
-        const getAutoReportingOffsetToDisplay = (autoReportingOffset: string | number) =>
-            getAutoReportingOffsetDisplayName(parseAutoReportingOffset(autoReportingOffset), translate, (day) => toLocaleOrdinal(IntlStore.getCurrentLocale(), day));
-        return translate('workspaceActions.updateMonthlyOffset', getAutoReportingOffsetToDisplay(oldValue), getAutoReportingOffsetToDisplay(newValue));
+        const getAutoReportingOffsetToDisplay = (autoReportingOffset: string | number | undefined | null) =>
+            autoReportingOffset !== undefined && autoReportingOffset !== null
+                ? getAutoReportingOffsetDisplayName(parseAutoReportingOffset(autoReportingOffset), translate, (day) => toLocaleOrdinal(IntlStore.getCurrentLocale(), day))
+                : '';
+        const translationKey =
+            updatedField === CONST.POLICY.COLLECTION_KEYS.AUTOREPORTING_OFFSET_SECOND_SEMI_MONTHLY
+                ? 'workspaceActions.updateSecondSemiMonthlyOffset'
+                : 'workspaceActions.updateMonthlyOffset';
+        return translate(translationKey, getAutoReportingOffsetToDisplay(oldValue), getAutoReportingOffsetToDisplay(newValue));
     }
     if (updatedField && updatedField === CONST.POLICY.COLLECTION_KEYS.TIME_ZONE && (typeof oldValue === 'string' || typeof oldValue === 'undefined') && typeof newValue === 'string') {
         return translate('workspaceActions.updateWorkspaceTimezone', oldValue ?? '', newValue);

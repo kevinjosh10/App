@@ -5881,6 +5881,48 @@ describe('ReportActionsUtils', () => {
             expect(result).toBe('set the monthly report submission date to "Last Friday"');
         });
 
+        it('should translate the second semi-monthly submission date change instead of falling back to server message', () => {
+            // Given an action updating the second semi-monthly offset
+            const action = {
+                actionName: CONST.REPORT.ACTIONS.TYPE.POLICY_CHANGE_LOG.UPDATE_FIELD,
+                reportActionID: '1',
+                created: '',
+                message: [{type: 'COMMENT', text: 'server message'}],
+                originalMessage: {
+                    updatedField: CONST.POLICY.COLLECTION_KEYS.AUTOREPORTING_OFFSET_SECOND_SEMI_MONTHLY,
+                    oldValue: CONST.POLICY.AUTO_REPORTING_OFFSET.LAST_DAY_OF_MONTH,
+                    newValue: 15,
+                },
+            } as ReportAction;
+
+            // When building the admin log message
+            const result = getWorkspaceUpdateFieldMessage(translateLocal, action);
+
+            // Then the second semi-monthly date is translated properly
+            expect(result).toBe('updated the second semi-monthly report submission date to "15th" (previously "Last day of the month")');
+        });
+
+        it('should use set wording when the previous second semi-monthly offset is empty or undefined', () => {
+            // Given a newly configured second semi-monthly offset
+            const action = {
+                actionName: CONST.REPORT.ACTIONS.TYPE.POLICY_CHANGE_LOG.UPDATE_FIELD,
+                reportActionID: '1',
+                created: '',
+                message: [{type: 'COMMENT', text: 'server message'}],
+                originalMessage: {
+                    updatedField: CONST.POLICY.COLLECTION_KEYS.AUTOREPORTING_OFFSET_SECOND_SEMI_MONTHLY,
+                    oldValue: '',
+                    newValue: CONST.POLICY.AUTO_REPORTING_OFFSET.LAST_DAY_OF_MONTH,
+                },
+            } as ReportAction;
+
+            // When building the admin log message
+            const result = getWorkspaceUpdateFieldMessage(translateLocal, action);
+
+            // Then set wording is used for second semi-monthly date
+            expect(result).toBe('set the second semi-monthly report submission date to "Last day of the month"');
+        });
+
         it('should return the App message when the workspace timezone changes', () => {
             // Given a timezone update whose server text would otherwise be shown as is
             const action = {

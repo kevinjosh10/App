@@ -11004,6 +11004,12 @@ const translations = {
             }
             return `updated the monthly report submission date to "${newValue}" (previously "${oldValue}")`;
         },
+        updateSecondSemiMonthlyOffset: (oldValue: string, newValue: string) => {
+            if (!oldValue) {
+                return `set the second semi-monthly report submission date to "${newValue}"`;
+            }
+            return `updated the second semi-monthly report submission date to "${newValue}" (previously "${oldValue}")`;
+        },
         updateWorkspaceTimezone: (oldValue: string, newValue: string) => {
             if (!oldValue) {
                 return `set the workspace timezone to "${newValue}"`;
