@@ -98,6 +98,7 @@ function TransactionItemRow({
     canEditAmount,
     canEditTag,
     shouldSkipDeferRBR = false,
+    shouldExcludeTransactionErrors = false,
 }: TransactionItemRowProps) {
     const shouldDeferRBR = !shouldSkipDeferRBR;
     const [isTrackIntentUser] = useOnyx(ONYXKEYS.NVP_INTRO_SELECTED, {selector: isTrackIntentUserSelector});
@@ -168,6 +169,7 @@ function TransactionItemRow({
             radioButtonContainerStyle,
             radioButtonWrapperStyle,
             shouldShowErrors,
+            shouldExcludeTransactionErrors,
             isDisabled,
             violations,
             shouldShowBottomBorder,
@@ -223,6 +225,7 @@ function TransactionItemRow({
         shouldStopRadioButtonMouseDownPropagation,
         radioButtonContainerStyle,
         shouldShowErrors,
+        shouldExcludeTransactionErrors,
         shouldHighlightItemWhenSelected,
         isDisabled,
         shouldDisableActionPointerEvents,

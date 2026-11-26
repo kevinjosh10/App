@@ -162,6 +162,9 @@ type TransactionItemRowProps = CheckboxSentryLabelProps & {
 
     /** When true, RBR content renders immediately instead of via useDeferredValue. Use in FlashList contexts. */
     shouldSkipDeferRBR?: boolean;
+
+    /** When true, excludes transaction-level message errors from RBR because they are already displayed in an external ErrorMessageRow */
+    shouldExcludeTransactionErrors?: boolean;
 };
 
 /** Derived from shouldSkipDeferRBR; passed to layout variants for DeferredTransactionItemRowRBR. */

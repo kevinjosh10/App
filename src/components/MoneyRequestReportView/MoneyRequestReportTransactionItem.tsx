@@ -350,6 +350,7 @@ function MoneyRequestReportTransactionItemBody({
                             onEditTag={inlineEdit?.onEditTag}
                             shouldSkipDeferRBR={shouldSkipDeferRBR}
                             transactionThreadReportID={transactionThreadReportID}
+                            shouldExcludeTransactionErrors
                         />
                         <ErrorMessageRow
                             errors={transactionErrors}

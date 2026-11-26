@@ -120,6 +120,7 @@ function TransactionItemRowWide({
     shouldStopRadioButtonMouseDownPropagation = false,
     radioButtonContainerStyle,
     shouldShowErrors = true,
+    shouldExcludeTransactionErrors = false,
     shouldDeferRBR = true,
     isDisabled = false,
     shouldDisableActionPointerEvents = false,
@@ -821,6 +822,7 @@ function TransactionItemRowWide({
                         missingFieldError={missingFieldError}
                         transactionThreadReportID={transactionThreadReportID}
                         containerStyles={shouldUseFullHeightEditableCellHoverTarget ? [styles.pb2] : undefined}
+                        shouldExcludeTransactionErrors={shouldExcludeTransactionErrors}
                     />
                 )}
             </View>

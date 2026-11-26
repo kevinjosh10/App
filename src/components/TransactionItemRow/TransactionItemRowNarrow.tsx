@@ -47,6 +47,7 @@ type TransactionItemRowNarrowProps = DistributedPick<
     | 'radioButtonContainerStyle'
     | 'radioButtonWrapperStyle'
     | 'shouldShowErrors'
+    | 'shouldExcludeTransactionErrors'
     | 'isDisabled'
     | 'violations'
     | 'shouldShowBottomBorder'
@@ -74,6 +75,7 @@ function TransactionItemRowNarrow({
     radioButtonContainerStyle,
     radioButtonWrapperStyle,
     shouldShowErrors = true,
+    shouldExcludeTransactionErrors = false,
     isDisabled = false,
     violations,
     shouldShowBottomBorder,
@@ -203,6 +205,7 @@ function TransactionItemRowNarrow({
                         missingFieldError={missingFieldError}
                         transactionThreadReportID={transactionThreadReportID}
                         shouldUseNarrowLayout
+                        shouldExcludeTransactionErrors={shouldExcludeTransactionErrors}
                     />
                 )}
             </View>

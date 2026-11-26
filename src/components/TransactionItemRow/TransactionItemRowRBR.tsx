@@ -14,6 +14,7 @@ import useThemeStyles from '@hooks/useThemeStyles';
 import {getIOUActionForTransactionID, wasActionTakenByCurrentUser} from '@libs/ReportActionsUtils';
 import {isMarkAsCashActionForTransaction} from '@libs/ReportPrimaryActionUtils';
 import {isSettled} from '@libs/ReportUtils';
+import {isReceiptError} from '@libs/ErrorUtils';
 import ViolationsUtils from '@libs/Violations/ViolationsUtils';
 
 import variables from '@styles/variables';
@@ -28,7 +29,7 @@ import {isEmptyObject} from '@src/types/utils/EmptyObject';
 import type {ViewStyle} from 'react-native';
 
 import {accountIDSelector} from '@selectors/Session';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {View} from 'react-native';
 
 type TransactionItemRowRBRInnerProps = {
@@ -44,6 +45,9 @@ type TransactionItemRowRBRInnerProps = {
 
     /** Whether to use the narrow (mobile) layout */
     shouldUseNarrowLayout?: boolean;
+
+    /** Whether to exclude transaction-level errors already handled by ErrorMessageRow */
+    shouldExcludeTransactionErrors?: boolean;
 };
 
 type TransactionItemRowRBRProps = TransactionItemRowRBRInnerProps & {
@@ -51,7 +55,15 @@ type TransactionItemRowRBRProps = TransactionItemRowRBRInnerProps & {
     transactionThreadReportID?: string;
 };
 
-function TransactionItemRowRBRInner({transaction, violations, report, containerStyles, missingFieldError, shouldUseNarrowLayout}: TransactionItemRowRBRInnerProps) {
+function TransactionItemRowRBRInner({
+    transaction,
+    violations,
+    report,
+    containerStyles,
+    missingFieldError,
+    shouldUseNarrowLayout,
+    shouldExcludeTransactionErrors,
+}: TransactionItemRowRBRInnerProps) {
     const styles = useThemeStyles();
     const {translate, dateFnsLocale} = useLocalize();
     const {convertToDisplayString} = useCurrencyListActions();
@@ -73,9 +85,33 @@ function TransactionItemRowRBRInner({transaction, violations, report, containerS
     const isMarkAsCash = parentReport && currentUserLogin && violations ? isMarkAsCashActionForTransaction(currentUserLogin, parentReport, violations, policy) : false;
 
     const canEdit = wasActionTakenByCurrentUser(iouAction, currentUserAccountID);
+
+    const transactionForRBR = useMemo(() => {
+        if (!shouldExcludeTransactionErrors || !transaction?.errors) {
+            return transaction;
+        }
+
+        const filteredErrors = Object.fromEntries(
+            Object.entries(transaction.errors).filter(([, errorValue]) => {
+                if (typeof errorValue === 'string') {
+                    return false;
+                }
+                if (isReceiptError(errorValue) && errorValue.message?.trim()) {
+                    return false;
+                }
+                return true;
+            }),
+        );
+
+        return {
+            ...transaction,
+            errors: filteredErrors,
+        };
+    }, [shouldExcludeTransactionErrors, transaction]);
+
     const RBRMessages = ViolationsUtils.getRBRMessages({
         dateFnsLocale,
-        transaction,
+        transaction: transactionForRBR,
         transactionViolations: isSettled(report) ? [] : (violations ?? []),
         translate,
         convertToDisplayString,
@@ -121,14 +157,41 @@ function TransactionItemRowRBRInner({transaction, violations, report, containerS
     );
 }
 
-function TransactionItemRowRBR({transaction, violations, report, containerStyles, missingFieldError, transactionThreadReportID, shouldUseNarrowLayout}: TransactionItemRowRBRProps) {
+function TransactionItemRowRBR({
+    transaction,
+    violations,
+    report,
+    containerStyles,
+    missingFieldError,
+    transactionThreadReportID,
+    shouldUseNarrowLayout,
+    shouldExcludeTransactionErrors,
+}: TransactionItemRowRBRProps) {
     const [transactionThreadActions] = useOnyx(`${ONYXKEYS.COLLECTION.REPORT_ACTIONS}${transactionThreadReportID}`);
 
     const hasThreadErrors = transactionThreadActions ? Object.values(transactionThreadActions).some((action) => !isEmptyObject(action.errors)) : false;
 
+    const hasVisibleTransactionErrors = useMemo(() => {
+        if (isEmptyObject(transaction.errors)) {
+            return false;
+        }
+        if (!shouldExcludeTransactionErrors) {
+            return true;
+        }
+        return Object.values(transaction.errors).some((errorValue) => {
+            if (typeof errorValue === 'string') {
+                return false;
+            }
+            if (isReceiptError(errorValue) && errorValue.message?.trim()) {
+                return false;
+            }
+            return !!errorValue;
+        });
+    }, [shouldExcludeTransactionErrors, transaction.errors]);
+
     // When transactionThreadReportID is not provided (e.g. MoneyRequestReportView), we can't reliably detect thread errors,
     // so we skip the early-return and always mount the inner component to avoid suppressing RBR messages.
-    if (transactionThreadReportID !== undefined && !violations?.length && !missingFieldError && isEmptyObject(transaction.errors) && !hasThreadErrors) {
+    if (transactionThreadReportID !== undefined && !violations?.length && !missingFieldError && !hasVisibleTransactionErrors && !hasThreadErrors) {
         return null;
     }
 
@@ -140,6 +203,7 @@ function TransactionItemRowRBR({transaction, violations, report, containerStyles
             containerStyles={containerStyles}
             missingFieldError={missingFieldError}
             shouldUseNarrowLayout={shouldUseNarrowLayout}
+            shouldExcludeTransactionErrors={shouldExcludeTransactionErrors}
         />
     );
 }

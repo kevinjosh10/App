@@ -197,4 +197,33 @@ describe('MoneyRequestReportTransactionItem - reject errors', () => {
         expect(transaction?.errorFields?.reject).toBeFalsy();
         expect(transaction).toBeTruthy();
     });
+
+    it('should show server creation/reconnection error once under the row, not duplicated in RBR', async () => {
+        // Given an expense with a server rejection error string
+        const serverErrorMessage = 'new expenses cannot be added to this report';
+        const transactionWithServerError = buildTransaction({
+            errors: {[ERROR_TIMESTAMP]: serverErrorMessage},
+        });
+        await renderTransactionItem(transactionWithServerError);
+
+        // Then: The error message is rendered exactly once by ErrorMessageRow and not duplicated in RBR
+        expect(screen.getAllByText(serverErrorMessage)).toHaveLength(1);
+        expect(screen.queryByTestId('TransactionItemRowRBR')).not.toBeOnTheScreen();
+    });
+
+    it('should show server scanned receipt error once under the row without duplicating in RBR', async () => {
+        // Given a scanned expense with a server error message preserved in ReceiptError
+        const serverErrorMessage = 'new expenses cannot be added to this report';
+        const transactionWithReceiptServerError = buildTransaction({
+            errors: {
+                [ERROR_TIMESTAMP]: serverErrorMessage,
+                receipt: {message: serverErrorMessage, receiptID: 123},
+            },
+        });
+        await renderTransactionItem(transactionWithReceiptServerError);
+
+        // Then: The error message is rendered exactly once by ErrorMessageRow and not duplicated in RBR
+        expect(screen.getAllByText(serverErrorMessage)).toHaveLength(1);
+        expect(screen.queryByTestId('TransactionItemRowRBR')).not.toBeOnTheScreen();
+    });
 });
