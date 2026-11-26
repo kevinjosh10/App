@@ -43,7 +43,7 @@ import type {WithRequiredSentryLabel} from '@src/types/utils/SentryLabel';
 
 import type {ReactNode} from 'react';
 
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import DatePickerFilterPopup from './DatePickerFilterPopup';
 import useSearchFiltersReset from './useSearchFiltersReset';
@@ -172,8 +172,22 @@ function useSearchFiltersBar(queryJSON: SearchQueryJSON): UseSearchFiltersBarRes
     const {updateFilterQueryParams} = useUpdateFilterQuery(queryJSON);
     const isSavedSearch = !!searchKeyToSavedSearchID(currentSearchKey);
     const shouldReturnTripRooms = useShouldReturnTripRooms(queryJSON.type);
+    const activeFiltersForm = useMemo(() => {
+        const flatFilterKeys = new Set(queryJSON.flatFilters.map((f) => f.key));
+        const sanitizedForm: Partial<SearchAdvancedFiltersForm> = {...searchAdvancedFiltersForm};
+
+        for (const [key] of Object.entries(sanitizedForm)) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+            if (!currentDefaultSearchQueryFilterKeys.has(key as SearchFilterKey) && !flatFilterKeys.has(key as SearchFilterKey)) {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+                delete sanitizedForm[key as keyof SearchAdvancedFiltersForm];
+            }
+        }
+        return sanitizedForm;
+    }, [searchAdvancedFiltersForm, queryJSON.flatFilters, currentDefaultSearchQueryFilterKeys]);
+
     const filters = mapFiltersFormToLabelValueList(
-        shouldReturnTripRooms ? getFiltersFormWithTripRoomStatuses(searchAdvancedFiltersForm) : searchAdvancedFiltersForm,
+        shouldReturnTripRooms ? getFiltersFormWithTripRoomStatuses(activeFiltersForm) : activeFiltersForm,
         currentDefaultSearchQueryFilterKeys,
         SKIPPED_SEARCH_FILTERS,
         translate,

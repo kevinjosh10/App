@@ -24,6 +24,21 @@ function shouldShowInitialCategoryFilterLoading(queryJSON: SearchQueryJSON, areC
     return !areCategoriesLoaded && shouldDeferSearchFilterSync(queryJSON, areCategoriesLoaded, isLoadingCategories, isOffline);
 }
 
+function isFormInSyncWithValues(form: Partial<SearchAdvancedFiltersForm> | undefined, expectedValues: Partial<SearchAdvancedFiltersForm>): boolean {
+    if (!form) {
+        return false;
+    }
+    const formKeys = Object.keys(form) as Array<keyof SearchAdvancedFiltersForm>;
+    for (const key of formKeys) {
+        const formVal = form[key];
+        const expectedVal = expectedValues[key];
+        if (formVal !== undefined && formVal !== null && formVal !== '' && expectedVal === undefined) {
+            return false;
+        }
+    }
+    return true;
+}
+
 /**
  * Syncs computed filter form values to the SEARCH_ADVANCED_FILTERS_FORM Onyx
  * key when the URL query string actually changes. The form is the source for
@@ -45,12 +60,13 @@ function useSearchFilterSync(queryJSON: SearchQueryJSON | undefined, formValues:
             setLastSyncedQuerySignature(null);
             return;
         }
-        if (getLastSyncedQuerySignature() === querySig && !isSearchAdvancedFiltersFormMissing) {
+        const isFormInSync = isFormInSyncWithValues(searchAdvancedFiltersForm, formValues);
+        if (getLastSyncedQuerySignature() === querySig && isFormInSync && !isSearchAdvancedFiltersFormMissing) {
             return;
         }
         setLastSyncedQuerySignature(querySig);
         updateAdvancedFilters(formValues, true);
-    }, [queryJSON, formValues, isFocused, isSearchAdvancedFiltersFormMissing, shouldDeferSync]);
+    }, [queryJSON, formValues, isFocused, isSearchAdvancedFiltersFormMissing, searchAdvancedFiltersForm, shouldDeferSync]);
 }
 
 export default useSearchFilterSync;
