@@ -313,7 +313,8 @@ function MoneyRequestView({
     const isTrackExpense = !mergeTransactionID && isTrackExpenseReportNew(transactionThreadReport, moneyRequestReport, parentReportAction);
     const [reportPolicyType] = useOnyx(`${ONYXKEYS.COLLECTION.POLICY}${moneyRequestReport?.policyID}`, {selector: policyTypeSelector});
     // Collect/Control (group) policies are always tied to an expense chat, so a group policy type means this is a policy expense chat.
-    const isPolicyExpenseChat = isGroupPolicyByType(reportPolicyType);
+    // If the workspace was deleted, the policy is removed from Onyx, but the parent moneyRequestReport retains type: 'expense'.
+    const isPolicyExpenseChat = isGroupPolicyByType(reportPolicyType) || isExpenseReport(moneyRequestReport);
 
     let iouType: ValueOf<typeof CONST.IOU.TYPE>;
     if (isTrackExpense) {

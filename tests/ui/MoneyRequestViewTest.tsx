@@ -1509,5 +1509,43 @@ describe('MoneyRequestView edit fields', () => {
             // Then no nightly hint is shown
             expect(screen.queryByText(reservationNightsHint)).not.toBeOnTheScreen();
         });
+
+        it('displays the Category field on expense thread even when the workspace policy has been deleted', async () => {
+            const expenseReportID = '12345';
+            const transactionID = '67890';
+            const parentReportActionID = '54321';
+            const deletedPolicyID = '99999';
+
+            const threadReport: Report = {
+                ...LHNTestUtils.getFakeReport(),
+                parentReportID: expenseReportID,
+                parentReportActionID,
+            };
+
+            await setupTestData();
+            await act(async () => {
+                // Ensure the parent expense report exists and has type EXPENSE
+                await Onyx.merge(`${ONYXKEYS.COLLECTION.REPORT}${expenseReportID}`, {
+                    reportID: expenseReportID,
+                    type: CONST.REPORT.TYPE.EXPENSE,
+                    policyID: deletedPolicyID,
+                });
+                // Ensure the policy is absent (deleted workspace)
+                await Onyx.set(`${ONYXKEYS.COLLECTION.POLICY}${deletedPolicyID}`, null);
+                // Ensure the transaction has an existing category
+                await Onyx.merge(`${ONYXKEYS.COLLECTION.TRANSACTION}${transactionID}`, {
+                    transactionID,
+                    category: 'Advertising',
+                });
+            });
+            await waitForBatchedUpdatesWithAct();
+
+            renderMoneyRequestView(threadReport, undefined);
+            await waitForBatchedUpdatesWithAct();
+
+            await waitFor(() => {
+                expect(screen.getByLabelText(fieldLabel('common.category'))).toBeOnTheScreen();
+            });
+        });
     });
 });
