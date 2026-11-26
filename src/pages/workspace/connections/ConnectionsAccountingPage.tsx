@@ -109,19 +109,22 @@ function ConnectionsAccountingPage({policy}: ConnectionsAccountingPageProps) {
                             />
                         )}
                         {!hasUnsupportedNDIntegration &&
-                            connectionsMenuItems.map((menuItem) => (
-                                <OfflineWithFeedback
-                                    pendingAction={menuItem.pendingAction}
-                                    key={menuItem.title}
-                                    shouldDisableStrikeThrough
-                                >
-                                    <MenuItem
-                                        brickRoadIndicator={menuItem.brickRoadIndicator}
-                                        key={menuItem.title}
-                                        {...menuItem}
-                                    />
-                                </OfflineWithFeedback>
-                            ))}
+                            connectionsMenuItems.map((menuItem) => {
+                                const itemKey = menuItem.key ?? `${menuItem.description ?? ''}-${menuItem.title}`;
+                                return (
+                                    <OfflineWithFeedback
+                                        pendingAction={menuItem.pendingAction}
+                                        key={itemKey}
+                                        shouldDisableStrikeThrough
+                                    >
+                                        <MenuItem
+                                            brickRoadIndicator={menuItem.brickRoadIndicator}
+                                            key={itemKey}
+                                            {...menuItem}
+                                        />
+                                    </OfflineWithFeedback>
+                                );
+                            })}
                         {hasUnsupportedNDIntegration && hasSyncError && !!policyID && (
                             <FormHelpMessage
                                 isError

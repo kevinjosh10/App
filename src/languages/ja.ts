@@ -5659,6 +5659,8 @@ ${integrationName === CONST.ONBOARDING_ACCOUNTING_MAPPING.other ? 'あなたの'
             atsListing: (providerName: string) => `${providerName}（ATS）`,
             suggestIntegration: 'お探しのものが見つかりませんか？連携を提案してください、こちらで検討します。',
             noResultsPrompt: '<muted-text><centered-text>検索条件を調整するか、<a href="#">連携を提案</a>してください。</centered-text></muted-text>',
+            activeConnections: 'Active connections',
+            otherConnections: 'Other connections',
             allConnectedTitle: 'すべて接続されました',
             allConnectedPrompt: '<muted-text><centered-text>ここにあるものはすべてすでに連携されています。<a href="#">連携を提案</a>することもできます。</centered-text></muted-text>',
         },

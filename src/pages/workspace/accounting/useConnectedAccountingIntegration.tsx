@@ -492,6 +492,89 @@ function useConnectedAccountingIntegration(policy: OnyxEntry<Policy>, {onDisconn
         }
     };
     const integrationSpecificMenuItems = getIntegrationSpecificMenuItems();
+
+    const getConnectionIdentifierMenuItems = (): MenuItemData[] => {
+        if (!connectedIntegration || !policy?.connections) {
+            return [];
+        }
+
+        const items: MenuItemData[] = [];
+
+        const createIdentifierItem = (key: string, description: string, title: string | undefined | null): MenuItemData | null => {
+            if (!title || typeof title !== 'string' || title.trim() === '') {
+                return null;
+            }
+            return {
+                key,
+                description,
+                title: title.trim(),
+                titleStyle: styles.fontWeightNormal,
+                shouldShowDescriptionOnTop: true,
+                interactive: false,
+                numberOfTitleLines: 0,
+            };
+        };
+
+        switch (connectedIntegration) {
+            case CONST.POLICY.CONNECTIONS.NAME.SAGE_INTACCT: {
+                const credentials = policy.connections.intacct?.config?.credentials;
+                const companyItem = createIdentifierItem('sage-company-id', translate('common.companyID'), credentials?.companyID);
+                const userItem = createIdentifierItem('sage-user-id', translate('common.userID'), credentials?.userID);
+                if (companyItem) {
+                    items.push(companyItem);
+                }
+                if (userItem) {
+                    items.push(userItem);
+                }
+                break;
+            }
+            case CONST.POLICY.CONNECTIONS.NAME.NETSUITE: {
+                const accountID = policy.connections.netsuite?.accountID;
+                const accountItem = createIdentifierItem('netsuite-account-id', translate('common.accountID'), accountID);
+                if (accountItem) {
+                    items.push(accountItem);
+                }
+                break;
+            }
+            case CONST.POLICY.CONNECTIONS.NAME.QBO: {
+                const realmId = policy.connections.quickbooksOnline?.config?.realmId;
+                const realmItem = createIdentifierItem('qbo-company-id', translate('common.companyID'), realmId);
+                if (realmItem) {
+                    items.push(realmItem);
+                }
+                break;
+            }
+            case CONST.POLICY.CONNECTIONS.NAME.QBD: {
+                const companyFileName = policy.connections.quickbooksDesktop?.config?.credentials?.companyFileName;
+                const fileItem = createIdentifierItem('qbd-company-file', translate('common.companyFile'), companyFileName);
+                if (fileItem) {
+                    items.push(fileItem);
+                }
+                break;
+            }
+            case CONST.POLICY.CONNECTIONS.NAME.BUSINESS_CENTRAL: {
+                const envName = policy.connections.businessCentral?.config?.credentials?.environmentName;
+                const envItem = createIdentifierItem('bc-environment-name', translate('common.environmentName'), envName);
+                if (envItem) {
+                    items.push(envItem);
+                }
+                break;
+            }
+            case CONST.POLICY.CONNECTIONS.NAME.CERTINIA: {
+                const enterpriseUrl = policy.connections.financialforce?.config?.credentials?.enterpriseUrl;
+                const urlItem = createIdentifierItem('certinia-instance-url', translate('common.salesforceInstanceUrl'), enterpriseUrl);
+                if (urlItem) {
+                    items.push(urlItem);
+                }
+                break;
+            }
+            default:
+                break;
+        }
+
+        return items;
+    };
+
     // Zoho Books' organization row was built to stay through every failed sync, so the authentication rule below leaves it unchanged.
     const shouldKeepIntegrationSpecificMenuItemOnAuthError = connectedIntegration === CONST.POLICY.CONNECTIONS.NAME.ZOHO_BOOKS;
 
@@ -574,11 +657,14 @@ function useConnectedAccountingIntegration(policy: OnyxEntry<Policy>, {onDisconn
               ]
             : [];
 
+        const identifierMenuItems = getConnectionIdentifierMenuItems();
+
         // The selected subsidiary or entity can be what breaks a sync, so only an authentication error hides its row.
         const settingsMenuItems: MenuItemData[] = [
             ...(isEmptyObject(integrationSpecificMenuItems) || (hasAuthError && !shouldKeepIntegrationSpecificMenuItemOnAuthError) || !hasAccountingConnection
                 ? []
                 : [integrationSpecificMenuItems]),
+            ...identifierMenuItems,
             ...(!hasAccountingConnection || !isConnectionVerified ? [] : configurationOptions),
         ];
         return {icon: integrationData?.icon, title: integrationData?.title, connectionMessage, settingsMenuItems};

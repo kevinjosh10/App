@@ -3613,6 +3613,11 @@ type QBDConnectionConfig = OnyxCommon.OnyxValueWithOfflineFeedback<
 
         /** Collections of form field errors */
         errorFields?: OnyxCommon.ErrorFields;
+
+        /** Credentials for QuickBooks Desktop */
+        credentials?: {
+            companyFileName?: string | null;
+        };
     },
     keyof QBDExportConfig
 >;

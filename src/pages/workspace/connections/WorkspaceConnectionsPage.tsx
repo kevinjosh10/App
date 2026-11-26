@@ -314,32 +314,40 @@ function WorkspaceConnectionsPage({policy}: WithPolicyConnectionsProps) {
                 />
                 {connectedListings.length > 0 && (
                     <View style={styles.mb4}>
+                        <Text style={[styles.textLabel, styles.fontWeightBold, styles.mb3]}>
+                            {translate('workspace.connections.activeConnections')}
+                        </Text>
                         <ConnectionsGrid
                             listings={connectedListings}
                             policyID={policyID}
                         />
                     </View>
                 )}
-                <View style={[connectedListings.length > 0 ? styles.mt6 : styles.mt3, !shouldUseSingleColumn && [styles.flexRow, styles.alignItemsCenter, styles.gap5]]}>
-                    <View style={[styles.flex1, styles.flexRow, shouldUseNarrowLayout && styles.mhn5]}>
-                        <TabSelectorContextProvider activeTabKey={selectedTab}>
-                            <TabSelectorBase
-                                tabs={tabs}
-                                activeTabKey={selectedTab}
-                                onTabPress={(tab) => {
-                                    setSearchValue('');
-                                    setLastSelectedTab(tab);
-                                }}
-                                onActiveTabPress={() => setSearchValue('')}
-                                // On mobile the tabs scroll edge to edge, so the page gutter moves inside the scroll content
-                                contentContainerStyles={shouldUseNarrowLayout ? styles.pb0 : [styles.ph0, styles.pb0]}
-                                tabButtonStyles={styles.connectionsTabButton}
-                                // On mobile a hard edge shows more clearly that the tabs scroll
-                                shouldShowScrollFade={!shouldUseNarrowLayout}
-                            />
-                        </TabSelectorContextProvider>
+                <View style={[connectedListings.length > 0 ? styles.mt6 : styles.mt3]}>
+                    <Text style={[styles.textLabel, styles.fontWeightBold, styles.mb3]}>
+                        {translate('workspace.connections.otherConnections')}
+                    </Text>
+                    <View style={[!shouldUseSingleColumn && [styles.flexRow, styles.alignItemsCenter, styles.gap5]]}>
+                        <View style={[styles.flex1, styles.flexRow, shouldUseNarrowLayout && styles.mhn5]}>
+                            <TabSelectorContextProvider activeTabKey={selectedTab}>
+                                <TabSelectorBase
+                                    tabs={tabs}
+                                    activeTabKey={selectedTab}
+                                    onTabPress={(tab) => {
+                                        setSearchValue('');
+                                        setLastSelectedTab(tab);
+                                    }}
+                                    onActiveTabPress={() => setSearchValue('')}
+                                    // On mobile the tabs scroll edge to edge, so the page gutter moves inside the scroll content
+                                    contentContainerStyles={shouldUseNarrowLayout ? styles.pb0 : [styles.ph0, styles.pb0]}
+                                    tabButtonStyles={styles.connectionsTabButton}
+                                    // On mobile a hard edge shows more clearly that the tabs scroll
+                                    shouldShowScrollFade={!shouldUseNarrowLayout}
+                                />
+                            </TabSelectorContextProvider>
+                        </View>
+                        <View style={shouldUseSingleColumn && [styles.flexRow, styles.mt5]}>{searchBar}</View>
                     </View>
-                    <View style={shouldUseSingleColumn && [styles.flexRow, styles.mt5]}>{searchBar}</View>
                 </View>
                 {shouldShowEmptyState ? (
                     <GenericEmptyStateComponent

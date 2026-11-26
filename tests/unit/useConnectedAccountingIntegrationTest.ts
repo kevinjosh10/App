@@ -398,4 +398,165 @@ describe('useConnectedAccountingIntegration', () => {
             expect(descriptions).not.toContain('workspace.digits.entity');
         });
     });
+
+    describe('Connection identifier rows', () => {
+        const sagePolicy: Policy = {
+            ...policy,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+            connections: {
+                [CONST.POLICY.CONNECTIONS.NAME.SAGE_INTACCT]: {
+                    config: {
+                        credentials: {
+                            companyID: 'ACME-HOLDINGS',
+                            userID: 'expensify_sync',
+                        },
+                    },
+                },
+            } as Policy['connections'],
+        };
+
+        const nsPolicy: Policy = {
+            ...policy,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+            connections: {
+                [CONST.POLICY.CONNECTIONS.NAME.NETSUITE]: {
+                    accountID: 'NS-12345',
+                },
+            } as Policy['connections'],
+        };
+
+        const qboPolicy: Policy = {
+            ...policy,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+            connections: {
+                [CONST.POLICY.CONNECTIONS.NAME.QBO]: {
+                    config: {
+                        realmId: 'QBO-98765',
+                    },
+                },
+            } as Policy['connections'],
+        };
+
+        const qbdPolicy: Policy = {
+            ...policy,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+            connections: {
+                [CONST.POLICY.CONNECTIONS.NAME.QBD]: {
+                    config: {
+                        credentials: {
+                            companyFileName: 'company.qbw',
+                        },
+                    },
+                },
+            } as Policy['connections'],
+        };
+
+        const bcPolicy: Policy = {
+            ...policy,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+            connections: {
+                [CONST.POLICY.CONNECTIONS.NAME.BUSINESS_CENTRAL]: {
+                    config: {
+                        credentials: {
+                            environmentName: 'ProductionEnv',
+                        },
+                    },
+                },
+            } as Policy['connections'],
+        };
+
+        const certiniaPolicy: Policy = {
+            ...policy,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+            connections: {
+                [CONST.POLICY.CONNECTIONS.NAME.CERTINIA]: {
+                    config: {
+                        credentials: {
+                            enterpriseUrl: 'https://login.salesforce.com/test',
+                        },
+                    },
+                },
+            } as Policy['connections'],
+        };
+
+        it('should show Company ID and User ID for Sage Intacct', () => {
+            mockConnectedIntegration = CONST.POLICY.CONNECTIONS.NAME.SAGE_INTACCT;
+            const companyItem = getSettingsMenuItem(sagePolicy, 'common.companyID');
+            const userItem = getSettingsMenuItem(sagePolicy, 'common.userID');
+
+            expect(companyItem?.title).toBe('ACME-HOLDINGS');
+            expect(companyItem?.interactive).toBe(false);
+            expect(userItem?.title).toBe('expensify_sync');
+            expect(userItem?.interactive).toBe(false);
+        });
+
+        it('should show Account ID for NetSuite', () => {
+            mockConnectedIntegration = CONST.POLICY.CONNECTIONS.NAME.NETSUITE;
+            const item = getSettingsMenuItem(nsPolicy, 'common.accountID');
+
+            expect(item?.title).toBe('NS-12345');
+            expect(item?.interactive).toBe(false);
+        });
+
+        it('should show Company ID for QuickBooks Online', () => {
+            mockConnectedIntegration = CONST.POLICY.CONNECTIONS.NAME.QBO;
+            const item = getSettingsMenuItem(qboPolicy, 'common.companyID');
+
+            expect(item?.title).toBe('QBO-98765');
+            expect(item?.interactive).toBe(false);
+        });
+
+        it('should show Company file for QuickBooks Desktop', () => {
+            mockConnectedIntegration = CONST.POLICY.CONNECTIONS.NAME.QBD;
+            const item = getSettingsMenuItem(qbdPolicy, 'common.companyFile');
+
+            expect(item?.title).toBe('company.qbw');
+            expect(item?.interactive).toBe(false);
+        });
+
+        it('should show Environment name for Business Central', () => {
+            mockConnectedIntegration = CONST.POLICY.CONNECTIONS.NAME.BUSINESS_CENTRAL;
+            const item = getSettingsMenuItem(bcPolicy, 'common.environmentName');
+
+            expect(item?.title).toBe('ProductionEnv');
+            expect(item?.interactive).toBe(false);
+        });
+
+        it('should show Salesforce instance URL for Certinia', () => {
+            mockConnectedIntegration = CONST.POLICY.CONNECTIONS.NAME.CERTINIA;
+            const item = getSettingsMenuItem(certiniaPolicy, 'common.salesforceInstanceUrl');
+
+            expect(item?.title).toBe('https://login.salesforce.com/test');
+            expect(item?.interactive).toBe(false);
+        });
+
+        it('should keep identifier rows visible during an authentication error', () => {
+            mockConnectedIntegration = CONST.POLICY.CONNECTIONS.NAME.SAGE_INTACCT;
+            mockSynchronizationError = 'Authentication failed';
+            mockIsAuthenticationError = true;
+
+            const descriptions = getSettingsMenuItemDescriptions(sagePolicy);
+
+            expect(descriptions).toContain('common.companyID');
+            expect(descriptions).toContain('common.userID');
+        });
+
+        it('should omit identifier rows when values are missing or null', () => {
+            mockConnectedIntegration = CONST.POLICY.CONNECTIONS.NAME.SAGE_INTACCT;
+            const emptyPolicy: Policy = {
+                ...policy,
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion
+                connections: {
+                    [CONST.POLICY.CONNECTIONS.NAME.SAGE_INTACCT]: {
+                        config: {},
+                    },
+                } as Policy['connections'],
+            };
+
+            const descriptions = getSettingsMenuItemDescriptions(emptyPolicy);
+
+            expect(descriptions).not.toContain('common.companyID');
+            expect(descriptions).not.toContain('common.userID');
+        });
+    });
 });
