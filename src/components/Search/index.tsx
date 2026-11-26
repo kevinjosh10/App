@@ -50,7 +50,7 @@ import {isCreatedTaskReportAction} from '@libs/ReportActionsUtils';
 import {isOneTransactionReport} from '@libs/ReportUtils';
 import {searchKeyToSavedSearchID} from '@libs/SearchKeyUtils';
 import {getPinnedColumnOrder, getQueryWithPinnedColumns, NO_PINNED_COLUMNS} from '@libs/SearchPinnedColumnsUtils';
-import {buildCannedSearchQuery, buildSearchQueryString, getFilterFromQuery} from '@libs/SearchQueryUtils';
+import {buildCannedSearchQuery, buildSearchQueryString, getCurrentSearchQueryJSON, getFilterFromQuery} from '@libs/SearchQueryUtils';
 import {
     canEditSearchColumns,
     createAndOpenSearchTransactionThread,
@@ -478,6 +478,11 @@ function Search({
     useEffect(() => {
         // A preloaded tab sends no request while hidden, including from the migrated-modal and reconnect branches below.
         if (isLoadingApp || isInPreloadedTab) {
+            return;
+        }
+
+        // If navigation already holds another query, wait for Search component props to update
+        if (getCurrentSearchQueryJSON()?.hash !== queryJSON.hash) {
             return;
         }
 

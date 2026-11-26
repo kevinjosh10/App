@@ -5,6 +5,7 @@ import {saveLastSearchParams} from '@libs/actions/ReportNavigation';
 import {clearPageRequestedSearch, isFirstPageSearchInFlight, markPageRequestedSearch, openSearch, search} from '@libs/actions/Search';
 import isSearchTopmostFullScreenRoute from '@libs/Navigation/helpers/isSearchTopmostFullScreenRoute';
 import {hasPendingSearchWrite} from '@libs/pendingSearchWrite';
+import {getCurrentSearchQueryJSON} from '@libs/SearchQueryUtils';
 import {isSearchDataLoaded, isSearchPending} from '@libs/SearchUIUtils';
 
 import CONST from '@src/CONST';
@@ -108,6 +109,12 @@ function useSearchPageSetup(queryJSON: Readonly<SearchQueryJSON> | undefined) {
         }
 
         const isFirstOpenOfPreloadedTab = isFirstOpenOfPreloadedTabRef.current;
+
+        // Skip render if the route params in navigation have already moved to a new query
+        // before context/props have caught up, preventing stale preloaded requests with save flag
+        if (isFirstOpenOfPreloadedTab && getCurrentSearchQueryJSON()?.hash !== hash) {
+            return;
+        }
 
         if (shouldUseLiveData) {
             // Search requests live (to-do) results on mount, which a hidden preloaded tab skips, so its first open requests them here.
