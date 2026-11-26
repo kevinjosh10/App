@@ -519,7 +519,7 @@ function buildExpenseDefaultActions(formValues: Partial<ExpenseDefaultFormValues
         [FIELD.TAX]: buildTaxActionValue(formValues.tax, policy),
         [FIELD.AMOUNT]: buildAmountActionValue(formValues.amount),
         [FIELD.VENDOR_ID]: emptyToUndefined(formValues.vendorID),
-        [FIELD.COMMENT]: comment ? Parser.replace(comment) : undefined,
+        [FIELD.COMMENT]: comment,
         [FIELD.REIMBURSABLE]: formValues.reimbursable,
         [FIELD.BILLABLE]: formValues.billable,
     };

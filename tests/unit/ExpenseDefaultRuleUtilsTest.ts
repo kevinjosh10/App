@@ -105,11 +105,21 @@ describe('ExpenseDefaultRuleUtils', () => {
                     // eslint-disable-next-line @typescript-eslint/naming-convention
                     {name: ACTION.SET, field: FIELD.TAX, value: {field_id_TAX: {externalID: TAX_KEY, value: '10%', name: 'GST'}}},
                     {name: ACTION.SET, field: FIELD.VENDOR_ID, value: 'vendor-1'},
-                    {name: ACTION.SET, field: FIELD.COMMENT, value: Parser.replace('A description')},
+                    {name: ACTION.SET, field: FIELD.COMMENT, value: 'A description'},
                     {name: ACTION.SET, field: FIELD.REIMBURSABLE, value: true},
                     {name: ACTION.SET, field: FIELD.BILLABLE, value: false},
                 ]),
             });
+        });
+
+        it('preserves raw markdown formatting in description without converting to HTML', () => {
+            const markdownComment = '*bold* _italic_ `code`';
+            const rule = buildExpenseDefaultRule({merchantToMatch: 'Uber', comment: markdownComment}, policy);
+
+            expect(Object.values(rule?.actions ?? {})).toEqual([
+                {name: ACTION.SET, field: FIELD.COMMENT, value: markdownComment},
+            ]);
+            expect(getExpenseDefaultFormValues(rule)?.comment).toBe(markdownComment);
         });
 
         it('defaults the match type to contains and trims the matched merchant', () => {
