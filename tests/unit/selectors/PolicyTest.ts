@@ -276,6 +276,123 @@ describe('createTimeSensitiveAdminPoliciesSelector', () => {
         expect(result.policies).toHaveLength(1);
     });
 
+    it('suppresses the error while a Merge connection is syncing', () => {
+        const brokenAndSyncingMergeAts = createMock<Policy['connections']>({
+            mergeAts: {
+                lastSync: {
+                    isSuccessful: false,
+                    errorDate: '2026-08-01',
+                    syncStatus: CONST.MERGE.SYNC_STATUS.SYNCING,
+                },
+            },
+        });
+        const policies: OnyxCollection<Policy> = {
+            policy1: buildSelectorPolicy(1, {id: 'policy1', name: 'Syncing Merge ATS', role: CONST.POLICY.ROLE.ADMIN, connections: brokenAndSyncingMergeAts}),
+        };
+
+        const result = createTimeSensitiveAdminPoliciesSelector(TEST_LOGIN, undefined)(policies);
+        expect(result.brokenConnections).toEqual([]);
+        expect(result.policies).toHaveLength(1);
+    });
+
+    it('reports the broken Merge connection when sync fails', () => {
+        const failedMergeAts = createMock<Policy['connections']>({
+            mergeAts: {
+                lastSync: {
+                    isSuccessful: false,
+                    errorDate: '2026-08-01',
+                    syncStatus: CONST.MERGE.SYNC_STATUS.FAILED,
+                },
+            },
+        });
+        const policies: OnyxCollection<Policy> = {
+            policy1: buildSelectorPolicy(1, {id: 'policy1', name: 'Failed Merge ATS', role: CONST.POLICY.ROLE.ADMIN, connections: failedMergeAts}),
+        };
+
+        const result = createTimeSensitiveAdminPoliciesSelector(TEST_LOGIN, undefined)(policies);
+        expect(result.brokenConnections).toEqual([
+            {
+                policyID: 'policy1',
+                policyName: 'Failed Merge ATS',
+                connectionName: CONST.POLICY.CONNECTIONS.NAME.MERGE_ATS,
+                integrationName: CONST.POLICY.CONNECTIONS.NAME_USER_FRIENDLY[CONST.POLICY.CONNECTIONS.NAME.MERGE_ATS],
+            },
+        ]);
+    });
+
+    it('does not suppress broken Merge connection error when a different connection (e.g. QBO) is syncing on the same workspace', () => {
+        const failedMergeAtsAndQbo = createMock<Policy['connections']>({
+            mergeAts: {
+                lastSync: {
+                    isSuccessful: false,
+                    errorDate: '2026-08-01',
+                    syncStatus: CONST.MERGE.SYNC_STATUS.FAILED,
+                },
+            },
+            quickbooksOnline: {
+                lastSync: {
+                    isSuccessful: true,
+                },
+            },
+        });
+        const policies: OnyxCollection<Policy> = {
+            policy1: buildSelectorPolicy(1, {id: 'policy1', name: 'Workspace With Multiple Connections', role: CONST.POLICY.ROLE.ADMIN, connections: failedMergeAtsAndQbo}),
+        };
+        const connectionSyncProgress = {
+            [`${ONYXKEYS.COLLECTION.POLICY_CONNECTION_SYNC_PROGRESS}policy1`]: {
+                stageInProgress: CONST.POLICY.CONNECTIONS.SYNC_STAGE_NAME.QBO_SYNC_STEP,
+                connectionName: CONST.POLICY.CONNECTIONS.NAME.QBO,
+                timestamp: new Date().toISOString(),
+            },
+        };
+
+        const result = createTimeSensitiveAdminPoliciesSelector(TEST_LOGIN, connectionSyncProgress)(policies);
+        expect(result.brokenConnections).toEqual([
+            {
+                policyID: 'policy1',
+                policyName: 'Workspace With Multiple Connections',
+                connectionName: CONST.POLICY.CONNECTIONS.NAME.MERGE_ATS,
+                integrationName: CONST.POLICY.CONNECTIONS.NAME_USER_FRIENDLY[CONST.POLICY.CONNECTIONS.NAME.MERGE_ATS],
+            },
+        ]);
+    });
+
+    it('does not suppress broken Xero error when QBO is syncing on the same workspace', () => {
+        const brokenXeroAndQbo = createMock<Policy['connections']>({
+            xero: {
+                lastSync: {
+                    isSuccessful: false,
+                    errorDate: '2026-08-01',
+                },
+            },
+            quickbooksOnline: {
+                lastSync: {
+                    isSuccessful: true,
+                },
+            },
+        });
+        const policies: OnyxCollection<Policy> = {
+            policy1: buildSelectorPolicy(1, {id: 'policy1', name: 'Broken Xero + QBO', role: CONST.POLICY.ROLE.ADMIN, connections: brokenXeroAndQbo}),
+        };
+        const connectionSyncProgress = {
+            [`${ONYXKEYS.COLLECTION.POLICY_CONNECTION_SYNC_PROGRESS}policy1`]: {
+                stageInProgress: CONST.POLICY.CONNECTIONS.SYNC_STAGE_NAME.QBO_SYNC_STEP,
+                connectionName: CONST.POLICY.CONNECTIONS.NAME.QBO,
+                timestamp: new Date().toISOString(),
+            },
+        };
+
+        const result = createTimeSensitiveAdminPoliciesSelector(TEST_LOGIN, connectionSyncProgress)(policies);
+        expect(result.brokenConnections).toEqual([
+            {
+                policyID: 'policy1',
+                policyName: 'Broken Xero + QBO',
+                connectionName: CONST.POLICY.CONNECTIONS.NAME.XERO,
+                integrationName: CONST.POLICY.CONNECTIONS.NAME_USER_FRIENDLY[CONST.POLICY.CONNECTIONS.NAME.XERO],
+            },
+        ]);
+    });
+
     it('ignores workspaces the user does not administer', () => {
         const policies: OnyxCollection<Policy> = {
             policy1: buildSelectorPolicy(1, {id: 'policy1', role: CONST.POLICY.ROLE.USER, connections: brokenXero}),

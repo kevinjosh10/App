@@ -4,6 +4,7 @@ import {hasSynchronizationErrorMessage, isConnectionInProgress, isConnectionUnve
 import {getDisplayNameForWorkspace} from '@libs/actions/Policy/Policy';
 import isTeachersUnitePolicyID from '@libs/isTeachersUnitePolicyID';
 import {getConnectedHRProvider} from '@libs/merge/HRUtils';
+import {isMergeConnectionName, isMergeSyncing} from '@libs/merge/MergeUtils';
 import type {PolicyPaymentAttribution} from '@libs/PolicyPaymentUtils';
 import {
     canCreateExpensesOnPolicy,
@@ -244,9 +245,14 @@ const createTimeSensitiveAdminPoliciesSelector =
             // Check if there's a sync in progress for this policy using the proper check that handles JOB_DONE and timeout
             const syncProgress = connectionSyncProgress?.[`${ONYXKEYS.COLLECTION.POLICY_CONNECTION_SYNC_PROGRESS}${policy.id}`];
             const isSyncInProgress = isConnectionInProgress(syncProgress, policy);
+            const isQBOInitialSyncing = !policyConnections.quickbooksOnline?.data && !!policyConnections.quickbooksOnline?.config?.credentials;
 
             for (const [connectionName] of ObjectUtils.typedEntries(policyConnections)) {
-                if (!hasSynchronizationErrorMessage(policy, connectionName, isSyncInProgress)) {
+                const isThisConnectionSyncing = isMergeConnectionName(connectionName)
+                    ? isMergeSyncing(policy, connectionName)
+                    : isSyncInProgress && (syncProgress?.connectionName === connectionName || (connectionName === CONST.POLICY.CONNECTIONS.NAME.QBO && isQBOInitialSyncing));
+
+                if (!hasSynchronizationErrorMessage(policy, connectionName, isThisConnectionSyncing)) {
                     continue;
                 }
                 const integrationName =

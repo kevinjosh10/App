@@ -30,6 +30,11 @@ function isMergeSyncDone(policy: OnyxEntry<Policy>, connectionName: MergeConnect
     return policy?.connections?.[connectionName]?.lastSync?.syncStatus === CONST.MERGE.SYNC_STATUS.DONE;
 }
 
+/** Returns true when the sync of the given Merge connection is currently in progress. */
+function isMergeSyncing(policy: OnyxEntry<Policy>, connectionName: MergeConnectionName): boolean {
+    return policy?.connections?.[connectionName]?.lastSync?.syncStatus === CONST.MERGE.SYNC_STATUS.SYNCING;
+}
+
 /** Returns true when the given Merge connection needs to be reconnected because its last sync failed to authenticate. */
 function hasMergeAuthenticationError(policy: OnyxEntry<Policy>, connectionName: MergeConnectionName): boolean {
     return !!policy?.connections?.[connectionName]?.lastSync?.isAuthenticationError;
@@ -123,6 +128,7 @@ export {
     isMergeConnectionName,
     isMergeManualSyncLimitReached,
     isMergeSyncDone,
+    isMergeSyncing,
     showMergeManualSyncLimitModalIfReached,
 };
 
