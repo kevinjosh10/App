@@ -4,6 +4,7 @@ import {hasSynchronizationErrorMessage, isConnectionInProgress, isConnectionUnve
 import {getDisplayNameForWorkspace} from '@libs/actions/Policy/Policy';
 import isTeachersUnitePolicyID from '@libs/isTeachersUnitePolicyID';
 import {getConnectedHRProvider} from '@libs/merge/HRUtils';
+import {getConnectedATSProvider} from '@libs/merge/RecruitingUtils';
 import type {PolicyPaymentAttribution} from '@libs/PolicyPaymentUtils';
 import {
     canCreateExpensesOnPolicy,
@@ -252,6 +253,8 @@ const createTimeSensitiveAdminPoliciesSelector =
                 const integrationName =
                     connectionName === CONST.POLICY.CONNECTIONS.NAME.MERGE_HR
                         ? (getConnectedHRProvider(policy)?.displayName ?? CONST.POLICY.CONNECTIONS.NAME_USER_FRIENDLY[connectionName])
+                        : connectionName === CONST.POLICY.CONNECTIONS.NAME.MERGE_ATS
+                        ? (getConnectedATSProvider(policy)?.displayName ?? CONST.POLICY.CONNECTIONS.NAME_USER_FRIENDLY[connectionName])
                         : CONST.POLICY.CONNECTIONS.NAME_USER_FRIENDLY[connectionName];
                 result.brokenConnections.push({
                     policyID: policy.id,

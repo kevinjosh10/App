@@ -259,6 +259,38 @@ describe('createTimeSensitiveAdminPoliciesSelector', () => {
         ]);
     });
 
+    it('reports the connection in an error state for merge_ats with provider display name', () => {
+        const brokenGreenhouse = createMock<Policy['connections']>({
+            merge_ats: {
+                lastSync: {isSuccessful: false, errorDate: '2026-08-01'},
+                config: {integration: 'greenhouse'},
+            },
+        });
+        const brokenAshby = createMock<Policy['connections']>({
+            merge_ats: {
+                lastSync: {isSuccessful: false, errorDate: '2026-08-01'},
+                config: {integration: 'ashby'},
+            },
+        });
+        const brokenUnknownATS = createMock<Policy['connections']>({
+            merge_ats: {
+                lastSync: {isSuccessful: false, errorDate: '2026-08-01'},
+            },
+        });
+
+        const policies: OnyxCollection<Policy> = {
+            policy1: buildSelectorPolicy(1, {id: 'policy1', name: 'Greenhouse Policy', role: CONST.POLICY.ROLE.ADMIN, connections: brokenGreenhouse}),
+            policy2: buildSelectorPolicy(2, {id: 'policy2', name: 'Ashby Policy', role: CONST.POLICY.ROLE.ADMIN, connections: brokenAshby}),
+            policy3: buildSelectorPolicy(3, {id: 'policy3', name: 'Fallback Policy', role: CONST.POLICY.ROLE.ADMIN, connections: brokenUnknownATS}),
+        };
+
+        expect(createTimeSensitiveAdminPoliciesSelector(TEST_LOGIN, undefined)(policies).brokenConnections).toEqual([
+            {policyID: 'policy1', policyName: 'Greenhouse Policy', connectionName: CONST.POLICY.CONNECTIONS.NAME.MERGE_ATS, integrationName: 'Greenhouse'},
+            {policyID: 'policy2', policyName: 'Ashby Policy', connectionName: CONST.POLICY.CONNECTIONS.NAME.MERGE_ATS, integrationName: 'Ashby'},
+            {policyID: 'policy3', policyName: 'Fallback Policy', connectionName: CONST.POLICY.CONNECTIONS.NAME.MERGE_ATS, integrationName: CONST.POLICY.CONNECTIONS.NAME_USER_FRIENDLY.merge_ats},
+        ]);
+    });
+
     it('suppresses the error while a sync for that policy is in progress', () => {
         const policies: OnyxCollection<Policy> = {
             policy1: buildSelectorPolicy(1, {id: 'policy1', name: 'Broken Xero', role: CONST.POLICY.ROLE.ADMIN, connections: brokenXero}),
