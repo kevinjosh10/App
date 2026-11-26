@@ -7836,15 +7836,23 @@ function getColumnsToShow({
             // Don't return early — fall through to updateColumns to detect empty columns
             customResult = result;
         } else {
-            // Search page: prepend TYPE
-            result.push(CONST.SEARCH.TABLE_COLUMNS.TYPE);
-            addedColumns.add(CONST.SEARCH.TABLE_COLUMNS.TYPE);
-
-            // Add remaining visible columns that weren't already added
+            // Add visible columns
             for (const col of filteredVisibleColumns) {
                 if (!addedColumns.has(col)) {
                     result.push(col);
+                    addedColumns.add(col);
                 }
+            }
+
+            // If RECEIPT is first, TYPE goes second; otherwise TYPE goes first
+            if (!addedColumns.has(CONST.SEARCH.TABLE_COLUMNS.TYPE)) {
+                const isReceiptFirst = result.at(0) === CONST.SEARCH.TABLE_COLUMNS.RECEIPT;
+                if (isReceiptFirst) {
+                    result.splice(1, 0, CONST.SEARCH.TABLE_COLUMNS.TYPE);
+                } else {
+                    result.unshift(CONST.SEARCH.TABLE_COLUMNS.TYPE);
+                }
+                addedColumns.add(CONST.SEARCH.TABLE_COLUMNS.TYPE);
             }
 
             // Don't return early — fall through to updateColumns to detect empty columns

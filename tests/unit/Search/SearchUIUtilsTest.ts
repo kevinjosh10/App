@@ -15076,6 +15076,25 @@ describe('SearchUIUtils', () => {
             });
             expect(columnsWithoutComments).not.toContain(CONST.SEARCH.TABLE_COLUMNS.COMMENTS);
         });
+
+        test('Should keep Receipt before Type when visibleColumns is customized on Search page', () => {
+            const visibleColumns = [
+                CONST.SEARCH.TABLE_COLUMNS.RECEIPT,
+                CONST.SEARCH.TABLE_COLUMNS.DATE,
+                CONST.SEARCH.TABLE_COLUMNS.STATUS,
+                CONST.SEARCH.TABLE_COLUMNS.MERCHANT,
+                CONST.SEARCH.TABLE_COLUMNS.TOTAL_AMOUNT,
+            ];
+            const columns = SearchUIUtils.getColumnsToShow({
+                currentAccountID: 1,
+                data: [createRandomTransaction(1)],
+                visibleColumns,
+                type: CONST.SEARCH.DATA_TYPES.EXPENSE,
+            });
+
+            expect(columns.indexOf(CONST.SEARCH.TABLE_COLUMNS.RECEIPT)).toBe(0);
+            expect(columns.indexOf(CONST.SEARCH.TABLE_COLUMNS.TYPE)).toBe(1);
+        });
     });
 
     describe('Test getCustomColumns', () => {
