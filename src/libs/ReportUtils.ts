@@ -12665,8 +12665,14 @@ function navigateToLinkedReportAction(
         const routeBelow = rhpIndex > 0 ? rhpState?.routes.at(rhpIndex - 1) : undefined;
         const routeBelowParams = routeBelow?.params as {reportID?: string} | undefined;
 
-        if (routeBelow?.key && routeBelowParams?.reportID === ancestor.report.reportID) {
-            Navigation.setParams({reportActionID: ancestor.reportAction.reportActionID}, routeBelow.key, rhpState?.key);
+        const routeBelowReport = deprecatedAllReports?.[`${ONYXKEYS.COLLECTION.REPORT}${routeBelowParams?.reportID}`];
+        const isRouteBelowOneTransactionParent =
+            routeBelow?.name === SCREENS.RIGHT_MODAL.SEARCH_REPORT &&
+            isOneTransactionReport(routeBelowReport) &&
+            routeBelowParams?.reportID === getDisplayedReportID(ancestor.report.reportID, isOffline);
+
+        if (routeBelow?.key && (routeBelowParams?.reportID === ancestor.report.reportID || isRouteBelowOneTransactionParent)) {
+            Navigation.setParams({reportID: ancestor.report.reportID, reportActionID: ancestor.reportAction.reportActionID}, routeBelow.key, rhpState?.key);
             Navigation.goBack();
             return;
         }
