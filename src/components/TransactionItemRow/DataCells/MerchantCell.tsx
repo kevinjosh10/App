@@ -31,14 +31,15 @@ function MerchantOrDescriptionCell({merchantOrDescription, shouldShowTooltip, sh
     const {translate} = useLocalize();
     const inputRef = useRef<ComponentRef<typeof RNTextInput> | null>(null);
 
-    const text = !isDescription ? merchantOrDescription : StringUtils.lineBreaksToSpaces(Parser.htmlToText(merchantOrDescription));
+    const displayText = !isDescription ? merchantOrDescription : StringUtils.lineBreaksToSpaces(Parser.htmlToText(merchantOrDescription));
+    const editableValue = !isDescription ? merchantOrDescription : Parser.htmlToMarkdown(merchantOrDescription);
 
     // Normalize merchant values for save/equality checks (descriptions can keep whitespace)
     const getNormalizedValue = (value: string) => (isDescription ? value : value.trim());
 
     const {isEditing, localValue, setLocalValue, startEditing, save, cancelEditing} = useInlineEditState(
         canEdit,
-        text,
+        isEditing ? editableValue : displayText,
         onSave ? (value) => onSave(getNormalizedValue(value)) : undefined,
         (value, originalValue) => getNormalizedValue(value) === getNormalizedValue(originalValue),
     );
@@ -88,6 +89,7 @@ function MerchantOrDescriptionCell({merchantOrDescription, shouldShowTooltip, sh
                     ref={handleRef}
                     accessibilityLabel={translate(isDescription ? 'common.description' : 'common.merchant')}
                     value={localValue}
+                    multiline={isDescription}
                     onChangeText={handleChangeText}
                     onBlur={save}
                     onSubmitEditing={save}
@@ -105,7 +107,7 @@ function MerchantOrDescriptionCell({merchantOrDescription, shouldShowTooltip, sh
         >
             <TextWithTooltip
                 shouldShowTooltip={shouldShowTooltip}
-                text={localValue}
+                text={isEditing ? localValue : displayText}
                 numberOfLines={1}
                 style={shouldUseNarrowLayout ? [styles.lh20, styles.pre, styles.justifyContentCenter, styles.flex1] : [styles.lineHeightXLarge]}
                 isSelectable
