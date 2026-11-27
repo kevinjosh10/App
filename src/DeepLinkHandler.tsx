@@ -240,6 +240,7 @@ function DeepLinkHandler({onInitialUrl}: DeepLinkHandlerProps) {
         if (allReports?.[`${ONYXKEYS.COLLECTION.REPORT}${reportID}`]?.reportID) {
             pendingPublicRoomReportID.current = '';
             hasRefetchedPublicRoom.current = false;
+            Report.doneCheckingPublicRoom();
             return;
         }
         if (hasRefetchedPublicRoom.current) {

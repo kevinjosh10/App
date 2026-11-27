@@ -53,11 +53,12 @@ function ReportNotFoundGuard({children}: ReportNotFoundGuardProps) {
     const [isLoadingReportData = true] = useOnyx(ONYXKEYS.IS_LOADING_REPORT_DATA);
     const [isLoadingApp] = useOnyx(ONYXKEYS.IS_LOADING_APP);
     const [deleteTransactionNavigateBackUrl] = useOnyx(ONYXKEYS.RAM_ONLY_PENDING_TRANSACTION_DELETE_URL);
+    const [isCheckingPublicRoom = false] = useOnyx(ONYXKEYS.RAM_ONLY_IS_CHECKING_PUBLIC_ROOM);
 
     const reportID = report?.reportID;
     const isOptimisticDelete = report?.statusNum === CONST.REPORT.STATUS_NUM.CLOSED;
     const isInvalidReportPath = !!routeParams?.reportID && !isValidReportIDFromPath(routeParams.reportID);
-    const isLoading = isLoadingApp !== false || isLoadingReportData || (!isOffline && !!isLoadingInitialReportActions);
+    const isLoading = isLoadingApp !== false || isLoadingReportData || (!isOffline && !!isLoadingInitialReportActions) || isCheckingPublicRoom;
     const reportExists = !!reportID || isOptimisticDelete || userLeavingStatus;
     // A pre-mounted destination for a report the submit has not created yet: offline drops the actions-loading
     // term above, so the guard would otherwise flash not-found until the optimistic report row lands. Only
