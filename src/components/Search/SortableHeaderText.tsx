@@ -25,6 +25,7 @@ type SearchTableHeaderColumnProps = WithRequiredSentryLabel & {
     isActive: boolean;
     sortOrder: SortOrder;
     isSortable?: boolean;
+    defaultSortOrder?: SortOrder;
     containerStyle?: StyleProp<ViewStyle>;
 
     /** Styles for the inner content row. Put padding/borders here, not on the container, so flex columns stay aligned. */
@@ -83,6 +84,7 @@ export default function SortableHeaderText({
     containerStyle,
     innerContainerStyle,
     isSortable = true,
+    defaultSortOrder,
     onPress,
     sentryLabel,
     children,
@@ -103,7 +105,11 @@ export default function SortableHeaderText({
         );
     }
 
-    const nextSortOrder = isActive && sortOrder === CONST.SEARCH.SORT_ORDER.DESC ? CONST.SEARCH.SORT_ORDER.ASC : CONST.SEARCH.SORT_ORDER.DESC;
+    const nextSortOrder = isActive
+        ? sortOrder === CONST.SEARCH.SORT_ORDER.DESC
+            ? CONST.SEARCH.SORT_ORDER.ASC
+            : CONST.SEARCH.SORT_ORDER.DESC
+        : (defaultSortOrder ?? CONST.SEARCH.SORT_ORDER.DESC);
 
     return (
         <View style={containerStyle}>

@@ -30,6 +30,7 @@ type ColumnConfig = {
     sortColumnName?: SearchSortBy;
     canBeMissing?: boolean;
     canEdit?: boolean;
+    defaultSortOrder?: SortOrder;
 };
 
 type SearchTableHeaderProps = {
@@ -91,7 +92,7 @@ function SortableTableHeader({
     return (
         <View style={[styles.flex1, styles.alignSelfStretch]}>
             <View style={[styles.flex1, styles.flexRow, styles.gap3, containerStyles]}>
-                {columns.map(({columnName, translationKey, icon, isColumnSortable, sortColumnName, canEdit}) => {
+                {columns.map(({columnName, translationKey, icon, isColumnSortable, sortColumnName, canEdit, defaultSortOrder}) => {
                     if (!shouldShowColumn(columnName)) {
                         return null;
                     }
@@ -175,6 +176,7 @@ function SortableTableHeader({
                             innerContainerStyle={innerContainerStyle}
                             containerStyle={containerStyle}
                             isSortable={isSortable}
+                            defaultSortOrder={defaultSortOrder}
                             onPress={(order: SortOrder) => onSortPress(sortByColumnName, order)}
                         >
                             {resizeHandle}
