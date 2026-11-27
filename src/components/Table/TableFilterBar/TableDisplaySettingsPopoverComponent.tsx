@@ -176,8 +176,7 @@ export default function TableDisplaySettingsPopoverComponent({closeOverlay}: Tab
                 onChange={(item) => {
                     const order = item?.value ?? defaultSorting.order;
                     setPendingSorting((previousSorting) => ({...previousSorting, order}));
-                    // Only commit the order — a column picked in the Sort by list but never applied must stay pending
-                    updateSorting({columnKey: activeSorting.columnKey ?? defaultSorting.columnKey, order});
+                    updateSorting({columnKey: pendingSorting.columnKey ?? defaultSorting.columnKey, order});
                 }}
                 applySentryLabel={CONST.SENTRY_LABEL.TABLE.DISPLAY_SETTINGS_POPUP_APPLY.SORT_ORDER}
                 resetSentryLabel={CONST.SENTRY_LABEL.TABLE.DISPLAY_SETTINGS_POPUP_RESET.SORT_ORDER}
