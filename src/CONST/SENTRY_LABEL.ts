@@ -2733,6 +2733,7 @@ const SENTRY_LABEL = {
             MERGE_MENU_RECONNECT: 'WorkspaceConnections-MergeMenuReconnect',
             MERGE_MENU_COMPLETE_SETUP: 'WorkspaceConnections-MergeMenuCompleteSetup',
             MERGE_MENU_SYNC_NOW: 'WorkspaceConnections-MergeMenuSyncNow',
+            MERGE_MENU_MANAGE_CONNECTION: 'WorkspaceConnections-MergeMenuManageConnection',
             MERGE_MENU_DISCONNECT: 'WorkspaceConnections-MergeMenuDisconnect',
             RECEIPT_PARTNERS_MENU_ENTER_CREDENTIALS: 'WorkspaceConnections-ReceiptPartnersMenuEnterCredentials',
             RECEIPT_PARTNERS_MENU_DISCONNECT: 'WorkspaceConnections-ReceiptPartnersMenuDisconnect',
