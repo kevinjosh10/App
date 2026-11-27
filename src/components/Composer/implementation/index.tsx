@@ -338,9 +338,20 @@ function Composer({
                 return;
             }
 
+            // Guard forward delete on range selection to prevent duplicate text insertion
+            if (e.nativeEvent.key === 'Delete' && selection && selection.start !== selection.end && value) {
+                const minPos = Math.min(selection.start, selection.end);
+                const maxPos = Math.max(selection.start, selection.end);
+                if (maxPos > minPos) {
+                    const nextVal = value.slice(0, minPos) + value.slice(maxPos);
+                    setSelection({start: minPos, end: minPos});
+                    props.onChangeText?.(nextVal);
+                }
+            }
+
             onKeyPress(e);
         },
-        [onKeyPress],
+        [onKeyPress, selection, value, props],
     );
 
     const scrollStyleMemo = useMemo(() => {
