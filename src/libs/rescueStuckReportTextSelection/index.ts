@@ -14,7 +14,7 @@ type TextPoint = {
     offset: number;
 };
 
-type CaretPositionFromPoint = (x: number, y: number) => {offsetNode: Node; offset: number} | null;
+type CaretPositionFromPoint = (x: number, y: number) => {offsetNode: Node | null; offset: number} | null;
 
 let primaryPointerDown = false;
 let selectionAnchor: TextPoint | null = null;
@@ -24,39 +24,35 @@ function isTextNode(node: Node | null | undefined): node is Text {
     return !!node && node.nodeType === Node.TEXT_NODE;
 }
 
-function getCaretRange(x: number, y: number): Range | null {
-    const caretPositionFromPoint = (document as Document & {caretPositionFromPoint?: CaretPositionFromPoint}).caretPositionFromPoint;
-    if (typeof caretPositionFromPoint !== 'function') {
-        return null;
-    }
-
-    const position = caretPositionFromPoint.call(document, x, y);
-    if (!position) {
-        return null;
-    }
-
-    const range = document.createRange();
-    range.setStart(position.offsetNode, position.offset);
-    range.collapse(true);
-    return range;
-}
-
 function getReportTextPoint(x: number, y: number): TextPoint | null {
-    const range = getCaretRange(x, y);
-    const node = range?.startContainer;
-    if (!isTextNode(node)) {
+    try {
+        const caretPositionFromPoint = (document as Document & {caretPositionFromPoint?: CaretPositionFromPoint}).caretPositionFromPoint;
+        if (typeof caretPositionFromPoint !== 'function') {
+            return null;
+        }
+
+        const position = caretPositionFromPoint.call(document, x, y);
+        if (!position || !isTextNode(position.offsetNode) || !document.contains(position.offsetNode)) {
+            return null;
+        }
+
+        const text = position.offsetNode.textContent ?? '';
+        if (!text.trim()) {
+            return null;
+        }
+
+        if (!Number.isInteger(position.offset) || position.offset < 0 || position.offset > text.length) {
+            return null;
+        }
+
+        if (!position.offsetNode.parentElement?.closest(REPORT_ACTIONS_LIST_SELECTOR)) {
+            return null;
+        }
+
+        return {node: position.offsetNode, offset: position.offset};
+    } catch {
         return null;
     }
-
-    if (!(node.textContent ?? '').trim()) {
-        return null;
-    }
-
-    if (!node.parentElement?.closest(REPORT_ACTIONS_LIST_SELECTOR)) {
-        return null;
-    }
-
-    return {node, offset: range?.startOffset ?? 0};
 }
 
 function shouldRescueDrag(target: EventTarget | null): boolean {
