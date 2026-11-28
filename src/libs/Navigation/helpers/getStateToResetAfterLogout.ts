@@ -17,7 +17,10 @@ function getStateToResetAfterLogout(rootState: NavigationState | undefined): Nav
     // ValidateLogin's /v/ code is spent by logout; keeping it strands the user. Reset to
     // TAB_NAVIGATOR — this runs only post-logout (NavigationRoot gates on !authenticated), when
     // PublicScreens is mounted and TAB_NAVIGATOR (SignInPage) is its top-level route.
-    if (lastRoute.name === SCREENS.VALIDATE_LOGIN) {
+    // Similarly, TestToolsModalNavigator is mounted over the authenticated app; when a forced
+    // sign-out occurs (e.g. SAML re-auth on invalid token), reset to TAB_NAVIGATOR so SignInPage
+    // mounts and initiates the SAML sign-on transition instead of leaving the user on the modal.
+    if (lastRoute.name === SCREENS.VALIDATE_LOGIN || lastRoute.name === NAVIGATORS.TEST_TOOLS_MODAL_NAVIGATOR) {
         return {index: 0, routes: [{name: NAVIGATORS.TAB_NAVIGATOR}]};
     }
 

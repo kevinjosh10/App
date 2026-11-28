@@ -44,6 +44,12 @@ describe('getStateToResetAfterLogout', () => {
         expect(result).toEqual({index: 0, routes: [{name: NAVIGATORS.TAB_NAVIGATOR}]});
     });
 
+    it('resets to TAB_NAVIGATOR when TestToolsModalNavigator is the last route (e.g. after Invalidate auth token triggers SAML sign out)', () => {
+        const result = getStateToResetAfterLogout(buildRootState([{name: NAVIGATORS.TAB_NAVIGATOR}, {name: NAVIGATORS.TEST_TOOLS_MODAL_NAVIGATOR}]));
+
+        expect(result).toEqual({index: 0, routes: [{name: NAVIGATORS.TAB_NAVIGATOR}]});
+    });
+
     it('PRESERVES params and does NOT redirect to TAB_NAVIGATOR for a non-security-link login/logout route (TransitionBetweenApps — a29d2e24c6a)', () => {
         const transitionParams = {shortLivedAuthToken: 'tok', exitTo: 'settings'};
         const result = getStateToResetAfterLogout(buildRootState([{name: SCREENS.TRANSITION_BETWEEN_APPS, params: transitionParams}]));
